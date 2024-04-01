@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 
+# Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -17,19 +18,42 @@ Transition = namedtuple(
     'Transition',
     ('state', 'action', 'next_state', 'reward')
 )
+Transition.__doc__ = """\
+A data record of the environment transition.
+"""
 
 
 class ReplayMemory:
+    """A memory buffer to store and sample transitions.
+    
+    Attributes:
+        memory: A `collection.deque` object to hold transitions.
+    """
 
     def __init__(self, capacity: int):
+        """
+        Args:
+            capacity: Maximum number of stored transitions.
+        """
         self.memory = deque([], maxlen=capacity)
 
     def push(self, *args):
-        """Save a transition"""
+        """Saves a transition.
+        
+        Args:
+            *args: Transition elements.
+        """
         self.memory.append(Transition(*args))
 
     def sample(self, batch_size: int) -> list[Transition]:
-        """Sample a random number of transitions"""
+        """Samples a random number of transitions.
+        
+        Args:
+            batch_size: Number of randomly sampled transitions.
+        
+        Returns:
+            A list of sampled transitions.
+        """
         return random.sample(self.memory, batch_size)
 
     def __len__(self) -> int:
@@ -37,8 +61,18 @@ class ReplayMemory:
 
 
 class DQN(nn.Module):
+    """A CNN to predict Q-values.
+    
+    Attributes:
+        layer_stack: A sequence containing the network's layers.
+    """
 
     def __init__(self, n_observations: int, n_actions: int):
+        """
+        Args:
+            n_observations: Number of input channels.
+            n_actions: Number of output values associated with actions.
+        """
         super(DQN, self).__init__()
         self.layer_stack = nn.Sequential(
             nn.Conv2d(3, 16, 7, 3),
@@ -59,19 +93,19 @@ class DQN(nn.Module):
         return self.layer_stack(x)
 
 
-# BATCH_SIZE is the number of transitions sampled from the replay buffer
-# GAMMA is the discount factor as mentioned in the previous section
-# EPS_START is the starting value of epsilon
-# EPS_END is the final value of epsilon
-# EPS_DECAY controls the rate of exponential decay of epsilon, higher means a slower decay
-# TAU is the update rate of the target network
-# LR is the learning rate of the ``AdamW`` optimizer
+# The number of transitions sampled from the replay buffer
 BATCH_SIZE = 32
+# The discount factor of future state-action values
 GAMMA = 0.99
+# The starting value of epsilon
 EPS_START = 0.9
+# The final value of epsilon
 EPS_END = 0.05
+# Controls the rate of exponential decay of epsilon, higher means a slower decay
 EPS_DECAY = 1000
+# The update rate of the target network
 TAU = 0.005
+# The learning rate of the ``AdamW`` optimizer
 LR = 1e-4
 
 n_actions = 4
@@ -88,6 +122,14 @@ steps_done = 0
 
 
 def select_action(state):
+    """Given a state, selects an action using epsilon greedy policy.
+    
+    Args:
+        state: A state from the environment.
+    
+    Returns:
+        An action index wrapped in a 2D tensor.
+    """
     global steps_done
     sample = random.random()
     eps_threshold = EPS_END + (EPS_START - EPS_END) * \
@@ -109,6 +151,11 @@ episode_durations = []
 
 
 def plot_durations(show_result=False):
+    """Plots the duration of episodes, along with an average over the last 100 episodes.
+    
+    Args:
+        show_result: A flag to indicate the plot is showing the final results.
+    """
     plt.figure(1)
     durations_t = torch.tensor(episode_durations, dtype=torch.float)
     if show_result:
@@ -129,6 +176,7 @@ def plot_durations(show_result=False):
 
 
 def optimize_model():
+    """Performs the model optimization step using batch gradient descent."""
     if len(memory) < BATCH_SIZE:
         return
     transitions = memory.sample(BATCH_SIZE)
@@ -179,6 +227,11 @@ def optimize_model():
 
 
 def main(num_episodes=50):
+    """Performs the main training loops for the given number of episodes.
+    
+    Args:
+        num_episodes: Number of episodes to use in training.
+    """
     for i_episode in range(num_episodes):
         # Initialize the environment and get its state
         state = env.reset()
