@@ -67,11 +67,10 @@ class DQN(nn.Module):
         layer_stack: A sequence containing the network's layers.
     """
 
-    def __init__(self, n_observations: int, n_actions: int):
+    def __init__(self, n_actions: int):
         """
         Args:
-            n_observations: Number of input channels.
-            n_actions: Number of output values associated with actions.
+            n_actions: Number of output Q values associated with actions.
         """
         super(DQN, self).__init__()
         self.layer_stack = nn.Sequential(
@@ -109,10 +108,9 @@ TAU = 0.005
 LR = 1e-4
 
 n_actions = 4
-n_observations = 256 * 144
 
-policy_net = DQN(n_observations, n_actions).to(device)
-target_net = DQN(n_observations, n_actions).to(device)
+policy_net = DQN(n_actions).to(device)
+target_net = DQN(n_actions).to(device)
 target_net.load_state_dict(policy_net.state_dict())
 
 optimizer = optim.AdamW(policy_net.parameters(), lr=LR, amsgrad=True)
