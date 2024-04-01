@@ -89,7 +89,7 @@ class DQN(nn.Module):
 
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         return self.layer_stack(x)
 
 
@@ -121,7 +121,7 @@ memory = ReplayMemory(2000)
 steps_done = 0
 
 
-def select_action(state):
+def select_action(state: torch.Tensor) -> torch.Tensor:
     """Given a state, selects an action using epsilon greedy policy.
     
     Args:
@@ -150,7 +150,7 @@ def select_action(state):
 episode_durations = []
 
 
-def plot_durations(show_result=False):
+def plot_durations(show_result: bool = False):
     """Plots the duration of episodes, along with an average over the last 100 episodes.
     
     Args:
@@ -226,7 +226,7 @@ def optimize_model():
     optimizer.step()
 
 
-def main(num_episodes=50):
+def main(num_episodes: int = 50):
     """Performs the main training loops for the given number of episodes.
     
     Args:
