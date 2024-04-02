@@ -92,6 +92,7 @@ class DQN(nn.Module):
         return self.layer_stack(x)
 
 
+# UPDATE dot variables
 # The number of transitions sampled from the replay buffer
 BATCH_SIZE = 32
 # The discount factor of future state-action values
@@ -224,11 +225,12 @@ def optimize_model():
     optimizer.step()
 
 
-def main(num_episodes: int = 50):
+def main(num_episodes: int = 50, checkpoints: bool = False):
     """Performs the main training loops for the given number of episodes.
     
     Args:
         num_episodes: Number of episodes to use in training.
+        checkpoints: A flag to enable saving of the model after each episode.
     """
     for i_episode in range(num_episodes):
         # Initialize the environment and get its state
@@ -269,6 +271,10 @@ def main(num_episodes: int = 50):
                 episode_durations.append(t + 1)
                 plot_durations()
                 break
+        
+        if checkpoints is True:
+            torch.save(target_net.state_dict(), "models/target_net.pt")
+            torch.save(policy_net.state_dict(), "models/policy_net.pt")
 
     print('Complete')
     plot_durations(show_result=True)
