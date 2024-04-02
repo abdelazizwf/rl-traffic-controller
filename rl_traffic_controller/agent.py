@@ -108,6 +108,7 @@ class Agent:
         policy_net: The policy Q-network.
         target_net: The target Q-network.
         optimizer: The optimization function.
+        loss_fn: The loss function.
         memory: The replay memory.
         steps_done: A time step counter used to calculate the epsilon threshold.
         episode_durations: A list of the durations of each episode.
@@ -128,6 +129,7 @@ class Agent:
     target_net.load_state_dict(policy_net.state_dict())
 
     optimizer = optim.AdamW(policy_net.parameters(), lr=LR, amsgrad=True)
+    loss_fn = nn.SmoothL1Loss()
     memory = ReplayMemory(2000)
 
     steps_done = 0
@@ -144,7 +146,6 @@ class Agent:
         Returns:
             An action index wrapped in a 2D tensor.
         """
-        global steps_done
         sample = random.random()
         eps_threshold = cls.EPS_END + (cls.EPS_START - cls.EPS_END) * \
             math.exp(-1. * cls.steps_done / cls.EPS_DECAY)
@@ -226,8 +227,7 @@ class Agent:
         expected_state_action_values = (next_state_values * cls.GAMMA) + reward_batch
 
         # Compute Huber loss
-        criterion = nn.SmoothL1Loss()
-        loss = criterion(state_action_values, expected_state_action_values.unsqueeze(1))
+        loss = cls.loss_fn(state_action_values, expected_state_action_values.unsqueeze(1))
 
         # Optimize the model
         cls.optimizer.zero_grad()
