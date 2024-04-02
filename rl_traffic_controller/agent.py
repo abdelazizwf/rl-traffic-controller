@@ -93,21 +93,32 @@ class DQN(nn.Module):
 
 
 class Agent:
-    """The Reinforcement Learning agent."""
+    """The Reinforcement Learning agent.
+    
+    Attributes:
+        BATCH_SIZE: The number of transitions sampled from the replay buffer.
+        GAMMA: The discount factor of future state-action values.
+        EPS_START: The starting value of epsilon.
+        EPS_END: The final value of epsilon.
+        EPS_DECAY: Controls the rate of exponential decay of epsilon,
+            higher means a slower decay.
+        TAU: The update rate of the target network.
+        LR: The learning rate of the optimizer
+        n_actions: The number of available actions.
+        policy_net: The policy Q-network.
+        target_net: The target Q-network.
+        optimizer: The optimization function.
+        memory: The replay memory.
+        steps_done: A time step counter used to calculate the epsilon threshold.
+        episode_durations: A list of the durations of each episode.
+    """
     # UPDATE dot variables
-    # The number of transitions sampled from the replay buffer
     BATCH_SIZE = 32
-    # The discount factor of future state-action values
     GAMMA = 0.99
-    # The starting value of epsilon
     EPS_START = 0.9
-    # The final value of epsilon
     EPS_END = 0.05
-    # Controls the rate of exponential decay of epsilon, higher means a slower decay
     EPS_DECAY = 1000
-    # The update rate of the target network
     TAU = 0.005
-    # The learning rate of the ``AdamW`` optimizer
     LR = 1e-4
 
     n_actions = 4
