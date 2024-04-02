@@ -15,7 +15,7 @@ class VNCController:
     """
     # UPDATE dot variables
     client = api.connect("localhost::5901", password="abcabc")
-    image_path = "image.png"
+    image_path = "data/simulation.png"
     
     @classmethod
     def get_image(cls, x: int, y: int, w: int, h: int) -> torch.Tensor:
@@ -35,9 +35,9 @@ class VNCController:
         return read_image(cls.image_path)
     
     @classmethod
-    def disconnect(cls):
+    def shutdown(cls):
         """Disconnect the VNC client."""
-        cls.client.disconnect()
+        api.shutdown()
 
 
 if __name__ == "__main__":
@@ -49,3 +49,5 @@ if __name__ == "__main__":
     image = VNCController.get_image(x, y, w, h)
     plt.imshow(image.permute(1, 2, 0))
     plt.show()
+    
+    VNCController.shutdown()
