@@ -121,11 +121,7 @@ class Agent:
     TAU = 0.005
     LR = 1e-4
     
-    def __init__(
-        self,
-        policy_net: nn.Module,
-        target_net: nn.Module,
-    ):
+    def __init__(self, policy_net: nn.Module, target_net: nn.Module):
         """
         Args:
             policy_net: The policy Q-network.
@@ -133,7 +129,6 @@ class Agent:
         """
         self.policy_net = policy_net
         self.target_net = target_net
-        self.target_net.load_state_dict(policy_net.state_dict())
 
         self.optimizer = optim.AdamW(policy_net.parameters(), lr=self.LR, amsgrad=True)
         self.loss_fn = nn.SmoothL1Loss()
