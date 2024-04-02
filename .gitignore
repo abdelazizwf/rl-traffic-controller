@@ -2,3 +2,4 @@
 __pycache__/
 .mise.toml
 data/simulation.png
+models/
