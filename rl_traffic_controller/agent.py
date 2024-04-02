@@ -9,6 +9,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
+from rl_traffic_controller.environment import Environment
+
 
 # Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -237,10 +239,11 @@ class Agent:
         cls.optimizer.step()
     
     @classmethod
-    def main(cls, num_episodes: int = 50, checkpoints: bool = False):
+    def run(cls, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
         """Performs the main training loops for the given number of episodes.
         
         Args:
+            env: The problem environment.
             num_episodes: Number of episodes to use in training.
             checkpoints: A flag to enable saving of the model after each episode.
         """
@@ -250,11 +253,10 @@ class Agent:
             state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
             for t in count():
                 action = cls.select_action(state)
-                observation, reward, terminated, truncated, _ = env.step(action.item())
+                observation, reward, done = env.step(action.item())
                 reward = torch.tensor([reward], device=device)
-                done = terminated or truncated
 
-                if terminated:
+                if done:
                     next_state = None
                 else:
                     next_state = torch.tensor(
