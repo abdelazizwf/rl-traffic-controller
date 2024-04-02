@@ -107,15 +107,12 @@ class Agent:
         TAU: The update rate of the target network.
         LR: The learning rate of the optimizer
         n_actions: The number of available actions.
-        policy_net: The policy Q-network.
-        target_net: The target Q-network.
         optimizer: The optimization function.
         loss_fn: The loss function.
         memory: The replay memory.
         steps_done: A time step counter used to calculate the epsilon threshold.
         episode_durations: A list of the durations of each episode.
     """
-    # UPDATE dot variables
     BATCH_SIZE = 32
     GAMMA = 0.99
     EPS_START = 0.9
@@ -123,23 +120,30 @@ class Agent:
     EPS_DECAY = 1000
     TAU = 0.005
     LR = 1e-4
-
-    n_actions = 4
-
-    policy_net = DQN(n_actions).to(device)
-    target_net = DQN(n_actions).to(device)
-    target_net.load_state_dict(policy_net.state_dict())
-
-    optimizer = optim.AdamW(policy_net.parameters(), lr=LR, amsgrad=True)
-    loss_fn = nn.SmoothL1Loss()
-    memory = ReplayMemory(2000)
-
-    steps_done = 0
     
-    episode_durations = []
+    def __init__(
+        self,
+        policy_net: nn.Module,
+        target_net: nn.Module,
+    ):
+        """
+        Args:
+            policy_net: The policy Q-network.
+            target_net: The target Q-network.
+        """
+        self.policy_net = policy_net
+        self.target_net = target_net
+        self.target_net.load_state_dict(policy_net.state_dict())
+
+        self.optimizer = optim.AdamW(policy_net.parameters(), lr=self.LR, amsgrad=True)
+        self.loss_fn = nn.SmoothL1Loss()
+        self.memory = ReplayMemory(2000)
+
+        self.steps_done = 0
+        
+        self.episode_durations = []
     
-    @classmethod
-    def select_action(cls, state: torch.Tensor) -> torch.Tensor:
+    def select_action(self, state: torch.Tensor) -> torch.Tensor:
         """Given a state, selects an action using epsilon greedy policy.
         
         Args:
@@ -149,29 +153,28 @@ class Agent:
             An action index wrapped in a 2D tensor.
         """
         sample = random.random()
-        eps_threshold = cls.EPS_END + (cls.EPS_START - cls.EPS_END) * \
-            math.exp(-1. * cls.steps_done / cls.EPS_DECAY)
-        cls.steps_done += 1
+        eps_threshold = self.EPS_END + (self.EPS_START - self.EPS_END) * \
+            math.exp(-1. * self.steps_done / self.EPS_DECAY)
+        self.steps_done += 1
         if sample > eps_threshold:
             with torch.no_grad():
                 # t.max(1) will return the largest column value of each row.
                 # second column on max result is index of where max element was
                 # found, so we pick action with the largest expected reward.
-                return cls.policy_net(state).max(1).indices.view(1, 1)
+                return self.policy_net(state).max(1).indices.view(1, 1)
         else:
             return torch.tensor(
                 [[random.randint(0, 3)]], device=device, dtype=torch.long
             )
     
-    @classmethod
-    def plot_durations(cls, show_result: bool = False):
+    def plot_durations(self, show_result: bool = False):
         """Plots the duration of episodes, along with an average over the last 100 episodes.
         
         Args:
             show_result: A flag to indicate the plot is showing the final results.
         """
         plt.figure(1)
-        durations_t = torch.tensor(cls.episode_durations, dtype=torch.float)
+        durations_t = torch.tensor(self.episode_durations, dtype=torch.float)
         if show_result:
             plt.title('Result')
         else:
@@ -188,12 +191,11 @@ class Agent:
 
         plt.pause(0.001)  # pause a bit so that plots are updated
     
-    @classmethod
-    def optimize_model(cls):
+    def optimize_model(self):
         """Performs the model optimization step using batch gradient descent."""
-        if len(cls.memory) < cls.BATCH_SIZE:
+        if len(self.memory) < self.BATCH_SIZE:
             return
-        transitions = cls.memory.sample(cls.BATCH_SIZE)
+        transitions = self.memory.sample(self.BATCH_SIZE)
         # Transpose the batch (see https://stackoverflow.com/a/19343/3343043 for
         # detailed explanation). This converts batch-array of Transitions
         # to Transition of batch-arrays.
@@ -215,31 +217,30 @@ class Agent:
         # Compute Q(s_t, a) - the model computes Q(s_t), then we select the
         # columns of actions taken. These are the actions which would've been taken
         # for each batch state according to policy_net
-        state_action_values = cls.policy_net(state_batch).gather(1, action_batch)
+        state_action_values = self.policy_net(state_batch).gather(1, action_batch)
 
         # Compute V(s_{t+1}) for all next states.
         # Expected values of actions for non_final_next_states are computed based
         # on the "older" target_net; selecting their best reward with max(1).values
         # This is merged based on the mask, such that we'll have either the expected
         # state value or 0 in case the state was final.
-        next_state_values = torch.zeros(cls.BATCH_SIZE, device=device)
+        next_state_values = torch.zeros(self.BATCH_SIZE, device=device)
         with torch.no_grad():
-            next_state_values[non_final_mask] = cls.target_net(non_final_next_states).max(1).values
+            next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1).values
         # Compute the expected Q values
-        expected_state_action_values = (next_state_values * cls.GAMMA) + reward_batch
+        expected_state_action_values = (next_state_values * self.GAMMA) + reward_batch
 
         # Compute Huber loss
-        loss = cls.loss_fn(state_action_values, expected_state_action_values.unsqueeze(1))
+        loss = self.loss_fn(state_action_values, expected_state_action_values.unsqueeze(1))
 
         # Optimize the model
-        cls.optimizer.zero_grad()
+        self.optimizer.zero_grad()
         loss.backward()
         # In-place gradient clipping
-        torch.nn.utils.clip_grad_value_(cls.policy_net.parameters(), 100)
-        cls.optimizer.step()
+        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
+        self.optimizer.step()
     
-    @classmethod
-    def run(cls, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
+    def run(self, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
         """Performs the main training loops for the given number of episodes.
         
         Args:
@@ -252,7 +253,7 @@ class Agent:
             state = env.reset()
             state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
             for t in count():
-                action = cls.select_action(state)
+                action = self.select_action(state)
                 observation, reward, done = env.step(action.item())
                 reward = torch.tensor([reward], device=device)
 
@@ -264,33 +265,33 @@ class Agent:
                     ).unsqueeze(0)
 
                 # Store the transition in memory
-                cls.memory.push(state, action, next_state, reward)
+                self.memory.push(state, action, next_state, reward)
 
                 # Move to the next state
                 state = next_state
 
                 # Perform one step of the optimization (on the policy network)
-                cls.optimize_model()
+                self.optimize_model()
 
                 # Soft update of the target network's weights
                 # θ′ ← τ θ + (1 −τ )θ′
-                target_net_state_dict = cls.target_net.state_dict()
-                policy_net_state_dict = cls.policy_net.state_dict()
+                target_net_state_dict = self.target_net.state_dict()
+                policy_net_state_dict = self.policy_net.state_dict()
                 for key in policy_net_state_dict:
-                    target_net_state_dict[key] = (policy_net_state_dict[key] * cls.TAU) + \
-                        (target_net_state_dict[key] * (1 - cls.TAU))
-                cls.target_net.load_state_dict(target_net_state_dict)
+                    target_net_state_dict[key] = (policy_net_state_dict[key] * self.TAU) + \
+                        (target_net_state_dict[key] * (1 - self.TAU))
+                self.target_net.load_state_dict(target_net_state_dict)
 
                 if done:
-                    cls.episode_durations.append(t + 1)
-                    cls.plot_durations()
+                    self.episode_durations.append(t + 1)
+                    self.plot_durations()
                     break
             
             if checkpoints is True:
-                torch.save(cls.target_net.state_dict(), "models/target_net.pt")
-                torch.save(cls.policy_net.state_dict(), "models/policy_net.pt")
+                torch.save(self.target_net.state_dict(), "models/target_net.pt")
+                torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
 
         print('Complete')
-        cls.plot_durations(show_result=True)
+        self.plot_durations(show_result=True)
         plt.ioff()
         plt.show()
