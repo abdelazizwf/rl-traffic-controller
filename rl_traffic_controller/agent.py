@@ -3,8 +3,6 @@ import math
 from collections import namedtuple, deque
 from itertools import count
 
-import matplotlib.pyplot as plt
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -111,7 +109,6 @@ class Agent:
         loss_fn: The loss function.
         memory: The replay memory.
         steps_done: A time step counter used to calculate the epsilon threshold.
-        episode_durations: A list of the durations of each episode.
     """
     BATCH_SIZE = 32
     GAMMA = 0.99
@@ -136,8 +133,6 @@ class Agent:
 
         self.steps_done = 0
         
-        self.episode_durations = []
-    
     def select_action(self, state: torch.Tensor) -> torch.Tensor:
         """Given a state, selects an action using epsilon greedy policy.
         
@@ -161,30 +156,6 @@ class Agent:
             return torch.tensor(
                 [[random.randint(0, 3)]], device=device, dtype=torch.long
             )
-    
-    def plot_durations(self, show_result: bool = False):
-        """Plots the duration of episodes, along with an average over the last 100 episodes.
-        
-        Args:
-            show_result: A flag to indicate the plot is showing the final results.
-        """
-        plt.figure(1)
-        durations_t = torch.tensor(self.episode_durations, dtype=torch.float)
-        if show_result:
-            plt.title('Result')
-        else:
-            plt.clf()
-            plt.title('Training...')
-        plt.xlabel('Episode')
-        plt.ylabel('Duration')
-        plt.plot(durations_t.numpy())
-        # Take 100 episode averages and plot them too
-        if len(durations_t) >= 100:
-            means = durations_t.unfold(0, 100, 1).mean(1).view(-1)
-            means = torch.cat((torch.zeros(99), means))
-            plt.plot(means.numpy())
-
-        plt.pause(0.001)  # pause a bit so that plots are updated
     
     def optimize_model(self):
         """Performs the model optimization step using batch gradient descent."""
@@ -278,8 +249,6 @@ class Agent:
                 self.target_net.load_state_dict(target_net_state_dict)
 
                 if done:
-                    self.episode_durations.append(t + 1)
-                    self.plot_durations()
                     break
             
             if checkpoints is True:
@@ -287,6 +256,3 @@ class Agent:
                 torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
 
         print('Complete')
-        self.plot_durations(show_result=True)
-        plt.ioff()
-        plt.show()
