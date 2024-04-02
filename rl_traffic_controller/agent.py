@@ -85,7 +85,7 @@ class DQN(nn.Module):
             nn.Conv2d(128, 256, 3, 1),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(256 * 17 * 36, n_actions)
+            nn.Linear(256 * 30 * 24, n_actions)
         )
 
     # Called with either one element to determine next action, or a batch
