@@ -19,11 +19,11 @@ class VNCController:
         image_path: Path of the output image.
     """
     
-    def __init__(self, vnc_server, image_path):
+    def __init__(self, vnc_server, password, image_path):
         self.vnc_server = vnc_server
         
         try:
-            self.client = api.connect(vnc_server, password="abcabc")
+            self.client = api.connect(vnc_server, password=password)
             logger.info(f"VNC connection to {vnc_server} established.")
         except Exception:
             logger.exception("VNC connection error.")
