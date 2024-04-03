@@ -19,7 +19,12 @@ class VNCController:
         image_path: Path of the output image.
     """
     
-    def __init__(self, vnc_server, password, image_path):
+    def __init__(
+        self,
+        vnc_server: str,
+        password: str,
+        image_path: str
+    ) -> None:
         self.vnc_server = vnc_server
         
         try:
@@ -51,7 +56,7 @@ class VNCController:
             logger.exception("Error while capturing image.")
             exit()
     
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Disconnect the VNC client."""
         api.shutdown()
         logger.info("VNC connection closed.")

@@ -9,7 +9,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class Environment:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.t = 0
         self.vnc_controller = VNCController(
             "localhost::5901",
@@ -33,7 +33,7 @@ class Environment:
     def reset(self) -> torch.Tensor:
         return self._get_state()
     
-    def step(self, action):
+    def step(self, action) -> tuple[torch.Tensor, int, bool]:
         state = self._get_state()
         if self.t == 10:
             self.t = 0
@@ -43,5 +43,5 @@ class Environment:
             done = False
         return state, 1, done
 
-    def destroy(self):
+    def destroy(self) -> None:
         self.vnc_controller.shutdown()

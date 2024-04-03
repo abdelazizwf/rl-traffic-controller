@@ -38,7 +38,7 @@ class ReplayMemory:
         memory: A `collection.deque` object to hold transitions.
     """
 
-    def __init__(self, capacity: int):
+    def __init__(self, capacity: int) -> None:
         """
         Args:
             capacity: Maximum number of stored transitions.
@@ -75,7 +75,7 @@ class DQN(nn.Module):
         layer_stack: A sequence containing the network's layers.
     """
 
-    def __init__(self, n_actions: int):
+    def __init__(self, n_actions: int) -> None:
         """
         Args:
             n_actions: Number of output Q values associated with actions.
@@ -98,7 +98,7 @@ class DQN(nn.Module):
 
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).
-    def forward(self, x: torch.Tensor):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.layer_stack(x)
 
 
@@ -128,7 +128,7 @@ class Agent:
     TAU = 0.005
     LR = 1e-4
     
-    def __init__(self, policy_net: nn.Module, target_net: nn.Module):
+    def __init__(self, policy_net: nn.Module, target_net: nn.Module) -> None:
         """
         Args:
             policy_net: The policy Q-network.
@@ -182,7 +182,7 @@ class Agent:
         
         return action
     
-    def optimize_model(self):
+    def optimize_model(self) -> None:
         """Performs the model optimization step using batch gradient descent."""
         if len(self.memory) < self.BATCH_SIZE:
             logger.debug(
@@ -237,7 +237,12 @@ class Agent:
         self.optimizer.step()
         logger.debug("Finished optimization step.")
     
-    def train(self, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
+    def train(
+        self,
+        env: Environment,
+        num_episodes: int = 50,
+        checkpoints: bool = False
+    ) -> None:
         """Performs the main training loops for the given number of episodes.
         
         Args:

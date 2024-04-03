@@ -14,7 +14,7 @@ def run(
     load_nets: bool = False,
     num_episodes: int = 50,
     checkpoints: bool = True
-):
+) -> None:
     n_actions = 4
     
     policy_net = DQN(n_actions).to(device)
