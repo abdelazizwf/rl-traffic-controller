@@ -28,7 +28,3 @@ def run(
     agent = Agent(policy_net, target_net)
     
     agent.run(env, num_episodes, checkpoints)
-
-
-if __name__ == "__main__":
-    run()

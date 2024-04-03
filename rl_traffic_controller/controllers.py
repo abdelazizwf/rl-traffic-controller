@@ -36,16 +36,3 @@ class VNCController:
     def shutdown(cls):
         """Disconnect the VNC client."""
         api.shutdown()
-
-
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    
-    w, h = 1100, 960 - 30
-    x, y = 800, 0 + 90
-    
-    image = VNCController.get_image(x, y, w, h)
-    plt.imshow(image.permute(1, 2, 0))
-    plt.show()
-    
-    VNCController.shutdown()
