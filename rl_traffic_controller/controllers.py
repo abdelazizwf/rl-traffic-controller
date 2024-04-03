@@ -9,15 +9,22 @@ class VNCController:
     class handles the connection, takes screenshots, and read images.
     
     Attributes:
+        vnc_server: The address of the VNC server.
         client: Client connection handler.
         image_path: Path of the output image.
     """
-    # UPDATE dot variables
-    client = api.connect("localhost::5901", password="abcabc")
-    image_path = "data/simulation.png"
     
-    @classmethod
-    def get_image(cls, x: int, y: int, w: int, h: int) -> Image.Image:
+    def __init__(self, vnc_server, image_path):
+        self.vnc_server = vnc_server
+        
+        try:
+            self.client = api.connect(vnc_server, password="abcabc")
+        except Exception:
+            exit()
+        
+        self.image_path = image_path
+    
+    def get_image(self, x: int, y: int, w: int, h: int) -> Image.Image:
         """Gets an image of the simulation using the VNC client.
         
         Args:
@@ -29,10 +36,12 @@ class VNCController:
         Returns:
             The output image as `PIL.Image`.
         """
-        cls.client.captureRegion(cls.image_path, x, y, w, h)
-        return Image.open(cls.image_path)
+        try:
+            self.client.captureRegion(self.image_path, x, y, w, h)
+            return Image.open(self.image_path)
+        except Exception:
+            exit()
     
-    @classmethod
-    def shutdown(cls):
+    def shutdown(self):
         """Disconnect the VNC client."""
         api.shutdown()
