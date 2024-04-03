@@ -1,6 +1,5 @@
 from vncdotool import api
-from torchvision.io import read_image
-import torch
+from PIL import Image
 
 
 class VNCController:
@@ -18,7 +17,7 @@ class VNCController:
     image_path = "data/simulation.png"
     
     @classmethod
-    def get_image(cls, x: int, y: int, w: int, h: int) -> torch.Tensor:
+    def get_image(cls, x: int, y: int, w: int, h: int) -> Image.Image:
         """Gets an image of the simulation using the VNC client.
         
         Args:
@@ -28,11 +27,10 @@ class VNCController:
             h: Height of the simulation window.
         
         Returns:
-            The output image as `torch.Tensor`.
+            The output image as `PIL.Image`.
         """
         cls.client.captureRegion(cls.image_path, x, y, w, h)
-        
-        return read_image(cls.image_path)
+        return Image.open(cls.image_path)
     
     @classmethod
     def shutdown(cls):
