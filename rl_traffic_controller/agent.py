@@ -2,7 +2,6 @@ import random
 import math
 import logging
 from collections import namedtuple, deque
-from itertools import count
 
 import torch
 import torch.nn as nn
@@ -23,6 +22,12 @@ Transition = namedtuple(
 )
 Transition.__doc__ = """\
 A data record of the environment transition.
+
+Attributes:
+    state: Current state.
+    action: Action taken.
+    next_state: Resulting observation.
+    reward: Reward earned.
 """
 
 
@@ -232,7 +237,7 @@ class Agent:
         self.optimizer.step()
         logger.debug("Finished optimization step.")
     
-    def run(self, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
+    def train(self, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
         """Performs the main training loops for the given number of episodes.
         
         Args:
@@ -244,9 +249,8 @@ class Agent:
             logger.info(f"Starting episode number {i_episode + 1}.")
             
             # Initialize the environment and get its state
-            state = env.reset()
-            state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-            for t in count():
+            state = env.reset().unsqueeze(0)
+            while True:
                 action = self.select_action(state)
                 observation, reward, done = env.step(action.item())
                 reward = torch.tensor([reward], device=device)
@@ -256,9 +260,7 @@ class Agent:
                 if done:
                     next_state = None
                 else:
-                    next_state = torch.tensor(
-                        observation, dtype=torch.float32, device=device
-                    ).unsqueeze(0)
+                    next_state = observation.unsqueeze(0)
 
                 # Store the transition in memory
                 self.memory.push(state, action, next_state, reward)
@@ -291,5 +293,3 @@ class Agent:
                     logger.debug("Saved models.")
                 except Exception:
                     logger.exception("Couldn't save models.")
-
-        logger.info('Complete.')
