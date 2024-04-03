@@ -1,5 +1,6 @@
 import random
 import math
+import logging
 from collections import namedtuple, deque
 from itertools import count
 
@@ -12,6 +13,8 @@ from rl_traffic_controller.environment import Environment
 
 # Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+logger = logging.getLogger(__name__)
 
 
 Transition = namedtuple(
@@ -85,6 +88,8 @@ class DQN(nn.Module):
             nn.Flatten(),
             nn.Linear(256 * 30 * 24, n_actions)
         )
+        
+        logger.debug(f"Created DQN.\n{self.layer_stack}")
 
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).
@@ -133,6 +138,17 @@ class Agent:
 
         self.steps_done = 0
         
+        logger.debug(
+            "Created agent with hyperparameters:\n" +
+            f"Batch size: {self.BATCH_SIZE}\n" +
+            f"Gamma: {self.GAMMA}\n" +
+            f"Starting epsilon: {self.EPS_START}\n" +
+            f"Final epsilon: {self.EPS_END}\n" +
+            f"Epsilon exponential decay rate: {self.EPS_DECAY}\n" +
+            f"Tau: {self.TAU}\n" +
+            f"Learning rate: {self.LR}"
+        )
+        
     def select_action(self, state: torch.Tensor) -> torch.Tensor:
         """Given a state, selects an action using epsilon greedy policy.
         
@@ -151,16 +167,24 @@ class Agent:
                 # t.max(1) will return the largest column value of each row.
                 # second column on max result is index of where max element was
                 # found, so we pick action with the largest expected reward.
-                return self.policy_net(state).max(1).indices.view(1, 1)
+                action = self.policy_net(state).max(1).indices.view(1, 1)
+                logger.debug(f"Selected action {action.item()} using the policy.")
         else:
-            return torch.tensor(
+            action = torch.tensor(
                 [[random.randint(0, 3)]], device=device, dtype=torch.long
             )
+            logger.debug(f"Selected action {action.item()} randomly.")
+        
+        return action
     
     def optimize_model(self):
         """Performs the model optimization step using batch gradient descent."""
         if len(self.memory) < self.BATCH_SIZE:
+            logger.debug(
+                f"Memory size ({len(self.memory)}) is less than the batch size ({self.BATCH_SIZE})."
+            )
             return
+        
         transitions = self.memory.sample(self.BATCH_SIZE)
         # Transpose the batch (see https://stackoverflow.com/a/19343/3343043 for
         # detailed explanation). This converts batch-array of Transitions
@@ -198,6 +222,7 @@ class Agent:
 
         # Compute Huber loss
         loss = self.loss_fn(state_action_values, expected_state_action_values.unsqueeze(1))
+        logger.info(f"Training loss: {loss}")
 
         # Optimize the model
         self.optimizer.zero_grad()
@@ -205,6 +230,7 @@ class Agent:
         # In-place gradient clipping
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
         self.optimizer.step()
+        logger.debug("Finished optimization step.")
     
     def run(self, env: Environment, num_episodes: int = 50, checkpoints: bool = False):
         """Performs the main training loops for the given number of episodes.
@@ -215,6 +241,8 @@ class Agent:
             checkpoints: A flag to enable saving of the model after each episode.
         """
         for i_episode in range(num_episodes):
+            logger.info(f"Starting episode number {i_episode + 1}.")
+            
             # Initialize the environment and get its state
             state = env.reset()
             state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
@@ -222,6 +250,8 @@ class Agent:
                 action = self.select_action(state)
                 observation, reward, done = env.step(action.item())
                 reward = torch.tensor([reward], device=device)
+                
+                logger.debug(f"Received reward {reward.item()}.")
 
                 if done:
                     next_state = None
@@ -247,12 +277,19 @@ class Agent:
                     target_net_state_dict[key] = (policy_net_state_dict[key] * self.TAU) + \
                         (target_net_state_dict[key] * (1 - self.TAU))
                 self.target_net.load_state_dict(target_net_state_dict)
+                
+                logger.debug("Updated target network.")
 
                 if done:
+                    logger.debug(f"Finished episode {i_episode + 1}.")
                     break
             
             if checkpoints is True:
-                torch.save(self.target_net.state_dict(), "models/target_net.pt")
-                torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
+                try:
+                    torch.save(self.target_net.state_dict(), "models/target_net.pt")
+                    torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
+                    logger.debug("Saved models.")
+                except Exception:
+                    logger.exception("Couldn't save models.")
 
-        print('Complete')
+        logger.info('Complete.')
