@@ -75,6 +75,18 @@ class SUMOController:
 
     This class provides methods to control SUMO simulations, such as setting traffic
     phases and retrieving vehicle counts.
+    
+    Examples:
+        Using `SUMOController` to run a simulation and print the number
+        of vehicles::
+        
+            simulation = SUMOController(r"./simulation/sumo_config.sumocfg")
+            simulation.start()
+            done = True
+            while done:
+                done = simulation.step(seconds=1)
+                print(simulation.get_vehicle_count())
+            simulation.shutdown()
 
     Attributes:
         config_file (str): The file path of the SUMO configuration file.
@@ -124,7 +136,7 @@ class SUMOController:
         traci.start(
             [
                 "sumo-gui",
-                "-c", simulation.config_file,
+                "-c", self.config_file,
                 "--step-length", str(self.step_time)
             ]
         )
