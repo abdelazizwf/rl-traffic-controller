@@ -93,6 +93,7 @@ class SUMOController:
         phase_states (list): List of strings representing traffic light phases.
         edge_ids (list): List of edge IDs for vehicle count retrieval.
         step_time (float): The time length of each step in seconds [0.001, 1].
+        prev_phase (int): The index of the last phase activated.
     """
 
     def __init__(self, config_file: str, step_time: float = 1.0) -> None:
@@ -103,14 +104,18 @@ class SUMOController:
         """
         self.config_file = config_file
 
-        self.phase_states = [
-            "GGGGrrrrrrGGGGrrrrrr", "yyyyrrrrrryyyyrrrrrr",
-            "rrrrGrrrrrrrrrGrrrrr", "rrrryrrrrrrrrryrrrrr",
-            "rrrrrGGGGrrrrrrGGGGr", "rrrrryyyyrrrrrryyyyr",
-            "GGGGGGGGGGGGGGGGGGGG", "GGGGGGGGGGGGGGGGGGGG"
+        self.phases = [
+            "GGGGrrrrrrGGGGrrrrrr", "rrrrGrrrrrrrrrGrrrrr",
+            "rrrrrGGGGrrrrrrGGGGr", "rrrrrrrrrGrrrrrrrrrG",
         ]
+        self.amber_phases = [
+            "yyyyrrrrrryyyyrrrrrr", "rrrryrrrrrrrrryrrrrr",
+            "rrrrryyyyrrrrrryyyyr", "rrrrrrrrryrrrrrrrrry"
+        ]
+        
         self.edge_ids = ["E2TL", "N2TL", "S2TL", "W2TL"]
         self.step_time = step_time
+        self.prev_phase = -1
 
     def set_traffic_phase(self, phase_index: int) -> None:
         """Sets the traffic phase of the simulation.
@@ -118,8 +123,13 @@ class SUMOController:
         Args:
             phase_index: Index of the phase to be set.
         """
-        traci.trafficlight.setRedYellowGreenState("TL", self.phase_states[phase_index])
-        logger.debug(f"Set the traffic light to phase {phase_index}: {self.phase_states[phase_index]}.")
+        if self.prev_phase != phase_index:
+            traci.trafficlight.setRedYellowGreenState("TL", self.amber_phases[self.prev_phase])
+            self.step(3)
+            traci.trafficlight.setRedYellowGreenState("TL", self.phases[phase_index])
+            self.prev_phase = phase_index
+            
+        logger.debug(f"Set the traffic light to phase {phase_index}: {self.phases[phase_index]}.")
 
     def get_vehicle_count(self) -> int:
         """Retrieves the number of vehicles on each edge and prints the result.
