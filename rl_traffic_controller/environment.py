@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from rl_traffic_controller.controllers import VNCController
+from rl_traffic_controller.controllers import VNCController, SUMOController
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -10,12 +10,15 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class Environment:
 
     def __init__(self) -> None:
-        self.t = 0
         self.vnc_controller = VNCController(
             "localhost::5901",
             "abcabc",
             "data/simulation.png"
         )
+        self.simulation_controller = SUMOController(
+            r"./simulation/sumo_config.sumocfg"
+        )
+        self.prev_count = 0
     
     def _get_state(self) -> torch.Tensor:
         w, h = 1100, 960 - 30
@@ -31,17 +34,28 @@ class Environment:
         ).permute(2, 0, 1)
     
     def reset(self) -> torch.Tensor:
+        self.simulation_controller.start()
         return self._get_state()
     
     def step(self, action) -> tuple[torch.Tensor, int, bool]:
+        done = not self.simulation_controller.set_traffic_phase(action)
+        
         state = self._get_state()
-        if self.t == 10:
-            self.t = 0
-            done = True
+        
+        count = self.simulation_controller.get_vehicle_count()
+        if count > self.prev_count:
+            reward = -1
+        elif count < self.prev_count:
+            reward = 1
         else:
-            self.t += 1
-            done = False
-        return state, 1, done
+            reward = 0
+        
+        self.prev_count = count
+        
+        if not done:
+            self.simulation_controller.step(17)
+        
+        return state, reward, done
 
     def destroy(self) -> None:
         self.vnc_controller.shutdown()
