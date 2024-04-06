@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from rl_traffic_controller.main import run
+from rl_traffic_controller.main import train, evaluate
 
 
 logger = logging.getLogger(__name__)

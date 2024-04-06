@@ -298,3 +298,9 @@ class Agent:
                     logger.debug("Saved models.")
                 except Exception:
                     logger.exception("Couldn't save models.")
+    
+    def evaluate(self, state: torch.Tensor) -> int:
+        with torch.no_grad():
+            actions = self.target_net(state.unsqueeze(0))
+        actions = list(actions.squeeze(0).tolist())
+        return [round(x, 3) for x in actions], actions.index(max(actions))
