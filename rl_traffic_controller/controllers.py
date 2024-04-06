@@ -1,3 +1,4 @@
+import traci.exceptions
 from vncdotool import api
 from PIL import Image
 import traci
@@ -117,19 +118,26 @@ class SUMOController:
         self.step_time = step_time
         self.prev_phase = -1
 
-    def set_traffic_phase(self, phase_index: int) -> None:
+    def set_traffic_phase(self, phase_index: int) -> bool:
         """Sets the traffic phase of the simulation.
 
         Args:
             phase_index: Index of the phase to be set.
+        
+        Returns:
+            A boolean value indicating if the simulation is not over.
         """
         if self.prev_phase != phase_index:
             traci.trafficlight.setRedYellowGreenState("TL", self.amber_phases[self.prev_phase])
-            self.step(3)
+            f = self.step(3)
             traci.trafficlight.setRedYellowGreenState("TL", self.phases[phase_index])
             self.prev_phase = phase_index
+        else:
+            f = self.step(3)
             
         logger.debug(f"Set the traffic light to phase {phase_index}: {self.phases[phase_index]}.")
+
+        return f
 
     def get_vehicle_count(self) -> int:
         """Retrieves the number of vehicles on each edge and prints the result.
@@ -143,14 +151,17 @@ class SUMOController:
     
     def start(self) -> None:
         """Starts the simulation using the provided config file."""
-        traci.start(
-            [
-                "sumo-gui",
-                "-c", self.config_file,
-                "--step-length", str(self.step_time)
-            ]
-        )
-        logger.info(f"Started up the simulation from the config file {self.config_file}.")
+        try:
+            traci.start(
+                [
+                    "sumo-gui",
+                    "-c", self.config_file,
+                    "--step-length", str(self.step_time)
+                ]
+            )
+            logger.info(f"Started up the simulation from the config file {self.config_file}.")
+        except traci.exceptions.TraCIException:
+            traci.load(["-c", self.config_file, "--step-length", str(self.step_time)])
     
     def step(self, seconds: int = 1) -> bool:
         """Runs the simulation for a given amount of time.
