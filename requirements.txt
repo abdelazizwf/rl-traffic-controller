@@ -26,10 +26,12 @@ PyQt5-sip==12.13.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 six==1.16.0
+sumolib==1.19.0
 sympy==1.12
 torch==2.2.2+cpu
 torchaudio==2.2.2+cpu
 torchvision==0.17.2+cpu
+traci==1.19.0
 Twisted==24.3.0
 typing_extensions==4.8.0
 vncdotool==1.2.0
