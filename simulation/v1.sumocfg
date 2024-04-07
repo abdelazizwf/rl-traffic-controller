@@ -9,6 +9,7 @@
         <net-file value="v1.net.xml"/>
         <route-files value="v1.rou.xml"/>
         <junction-taz value="true"/>
+        <gui-settings-file value="view.xml"/>
     </input>
 
 </configuration>

@@ -160,14 +160,20 @@ class SUMOController:
         try:
             traci.start(
                 [
-                    "sumo-gui",
+                    "sumo-gui", "--start", "-G",
                     "-c", self.config_file,
                     "--step-length", str(self.step_time)
                 ]
             )
             logger.info(f"Started up the simulation from the config file {self.config_file}.")
         except traci.exceptions.TraCIException:
-            traci.load(["-c", self.config_file, "--step-length", str(self.step_time)])
+            traci.load(
+                [
+                    "--start", "-G",
+                    "-c", self.config_file,
+                    "--step-length", str(self.step_time)
+                ]
+            )
     
     def step(self, seconds: int = 1) -> bool:
         """Runs the simulation for a given amount of time.
