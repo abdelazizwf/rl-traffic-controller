@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2024-04-07 21:29:37 by Eclipse SUMO netedit Version v1_19_0+1584-f4acdb10a47
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    <flow id="f_0" begin="0.00" fromJunction="J4" toJunction="J6" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_1" begin="0.00" fromJunction="J4" toJunction="J8" end="3600.00" probability="0.5"/>
+    <flow id="f_10" begin="0.00" fromJunction="J7" toJunction="J6" end="3600.00" probability="0.5"/>
+    <flow id="f_11" begin="0.00" fromJunction="J7" toJunction="J4" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_2" begin="0.00" fromJunction="J4" toJunction="J7" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_3" begin="0.00" fromJunction="J6" toJunction="J4" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_4" begin="0.00" fromJunction="J6" toJunction="J8" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_5" begin="0.00" fromJunction="J6" toJunction="J7" end="3600.00" probability="0.5"/>
+    <flow id="f_6" begin="0.00" fromJunction="J8" toJunction="J6" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_7" begin="0.00" fromJunction="J8" toJunction="J4" end="3600.00" probability="0.5"/>
+    <flow id="f_8" begin="0.00" fromJunction="J8" toJunction="J7" end="3600.00" probability="0.2000000000000000111"/>
+    <flow id="f_9" begin="0.00" fromJunction="J7" toJunction="J8" end="3600.00" probability="0.2000000000000000111"/>
+</routes>
