@@ -34,6 +34,7 @@ class Environment:
         ).permute(2, 0, 1)
     
     def reset(self) -> torch.Tensor:
+        self.simulation_controller.tweak_probability()
         self.simulation_controller.start()
         return self._get_state()
     

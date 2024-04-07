@@ -4,6 +4,8 @@ from PIL import Image
 import traci
 
 import logging
+import random
+import xml.etree.ElementTree as ET
 
 
 logger = logging.getLogger(__name__)
@@ -190,3 +192,16 @@ class SUMOController:
         """Closes the simulation."""
         traci.close()
         logger.info("Simulation closed.")
+    
+    def tweak_probability(self) -> None:
+        """Change the probabilities of car flows."""
+        file_path = "simulation/v1.rou.xml"
+        
+        tree = ET.parse(file_path)
+        root = tree.getroot()
+
+        for flow in root.findall('.//flow'):
+            probability = random.uniform(0.05, 0.50)
+            flow.set('probability', str(probability))
+
+        tree.write(file_path)
