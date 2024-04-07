@@ -16,7 +16,7 @@ class Environment:
             "data/simulation.png"
         )
         self.simulation_controller = SUMOController(
-            r"./simulation/sumo_config.sumocfg"
+            r"./simulation/v1.sumocfg"
         )
         self.prev_count = 0
     
