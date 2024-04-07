@@ -12,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 logger = logging.getLogger(__name__)
 
 
-def init_agent(load_nets: bool = False):
+def init_agent(load_nets: bool = False) -> Agent:
     n_actions = 4
     
     policy_net = DQN(n_actions).to(device)
@@ -50,7 +50,7 @@ def train(
     env.destroy()
 
 
-def evaluate(image_paths: list[str], agent: Agent | None = None):
+def evaluate(image_paths: list[str], agent: Agent | None = None) -> None:
     if agent is None:
         agent = init_agent(True)
     

@@ -186,18 +186,7 @@ class SUMOController:
         
         return True
     
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Closes the simulation."""
         traci.close()
         logger.info("Simulation closed.")
-
-
-if __name__ == "__main__":
-    simulation = SUMOController(r"./simulation/sumo_config.sumocfg")
-
-    simulation.start()
-    done = True
-    while done:
-        done = simulation.step(seconds=1)
-        print(simulation.get_vehicle_count())
-    simulation.shutdown()
