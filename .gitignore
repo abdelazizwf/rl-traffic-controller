@@ -1,6 +1,5 @@
 .venv/
 __pycache__/
-.mise.toml
 data/simulation.png
 models/
 logs/
