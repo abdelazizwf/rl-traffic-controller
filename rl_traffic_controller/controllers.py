@@ -106,12 +106,16 @@ class SUMOController:
         self.config_file = config_file
 
         self.phases = [
-            "GGGGrrrrrrGGGGrrrrrr", "rrrrGrrrrrrrrrGrrrrr",
-            "rrrrrGGGGrrrrrrGGGGr", "rrrrrrrrrGrrrrrrrrrG",
+            "GGGGGrrrrrrrGGGGGrrrrrrr",
+            "rrrrrGrrrrrrrrrrrGrrrrrr",
+            "rrrrrrGGGGGrrrrrrrGGGGGr",
+            "rrrrrrrrrrrGrrrrrrrrrrrG",
         ]
         self.amber_phases = [
-            "yyyyrrrrrryyyyrrrrrr", "rrrryrrrrrrrrryrrrrr",
-            "rrrrryyyyrrrrrryyyyr", "rrrrrrrrryrrrrrrrrry"
+            "yyyyyrrrrrrryyyyyrrrrrrr",
+            "rrrrryrrrrrrrrrrryrrrrrr",
+            "rrrrrryyyyyrrrrrrryyyyyr",
+            "rrrrrrrrrrryrrrrrrrrrrry"
         ]
         
         self.edge_ids = ["E2TL", "N2TL", "S2TL", "W2TL"]
