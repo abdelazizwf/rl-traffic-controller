@@ -123,6 +123,15 @@ class SUMOController:
         self.edge_ids = ["E2TL", "N2TL", "S2TL", "W2TL"]
         self.step_time = step_time
         self.prev_phase = -1
+    
+    def get_screenshot(self):
+        image_path = "data/simulation.png"
+        try:
+            traci.gui.screenshot(traci.gui.DEFAULT_VIEW, image_path)
+            self.step(1)
+            return Image.open(image_path)
+        except Exception:
+            logger.exception("Error getting screenshot.")
 
     def set_traffic_phase(self, phase_index: int) -> bool:
         """Sets the traffic phase of the simulation.
@@ -160,7 +169,7 @@ class SUMOController:
         try:
             traci.start(
                 [
-                    "sumo-gui", "--start", "-G",
+                    "sumo-gui", "--start",
                     "-c", self.config_file,
                     "--step-length", str(self.step_time)
                 ]
@@ -169,12 +178,12 @@ class SUMOController:
         except traci.exceptions.TraCIException:
             traci.load(
                 [
-                    "--start", "-G",
+                    "--start",
                     "-c", self.config_file,
                     "--step-length", str(self.step_time)
                 ]
             )
-    
+        
     def step(self, seconds: int = 1) -> bool:
         """Runs the simulation for a given amount of time.
         

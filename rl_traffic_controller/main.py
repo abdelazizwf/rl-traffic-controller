@@ -61,7 +61,7 @@ def evaluate(image_paths: list[str], agent: Agent | None = None) -> None:
             logger.exception(f"Failed to open image {path}.")
             continue
         
-        image = image.resize((220, 186))
+        image = image.resize((220, 186)).convert("RGB")
         
         state = torch.tensor(
             np.array(image),

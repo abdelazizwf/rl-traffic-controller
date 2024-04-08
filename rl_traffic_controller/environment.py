@@ -21,14 +21,9 @@ class Environment:
         self.prev_count = 0
     
     def _get_state(self) -> torch.Tensor:
-        w, h = 1100, 960 - 30
-        x, y = 800, 0 + 90
-        
-        image = self.vnc_controller.get_image(x, y, w, h)
-        image = image.resize((220, 186))
-        
+        image = self.simulation_controller.get_screenshot().resize((220, 186))
         return torch.tensor(
-            np.array(image),
+            np.array(image.convert("RGB")),
             dtype=torch.float32,
             device=device
         ).permute(2, 0, 1)
@@ -54,7 +49,7 @@ class Environment:
         self.prev_count = count
         
         if not done:
-            self.simulation_controller.step(17)
+            self.simulation_controller.step(16)
         
         return state, reward, done
 
