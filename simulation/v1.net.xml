@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2024-04-07 23:37:33 by Eclipse SUMO netedit Version v1_19_0+1584-f4acdb10a47
+<!-- generated on 2024-04-08 20:33:59 by Eclipse SUMO netedit Version v1_19_0+1584-f4acdb10a47
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
 
     <input>
@@ -44,48 +44,88 @@
     </edge>
     <edge id=":J5_1" function="internal">
         <lane id=":J5_1_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-5.31,19.48 -15.94,-12.40"/>
-        <lane id=":J5_1_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-2.28,18.47 -12.90,-13.41"/>
-        <lane id=":J5_1_2" index="2" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="0.76,17.46 -9.87,-14.42"/>
-        <lane id=":J5_1_3" index="3" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="3.79,16.44 -6.83,-15.43"/>
+    </edge>
+    <edge id=":J5_2" function="internal">
+        <lane id=":J5_2_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="4.07" shape="-2.28,18.47 -4.02,14.99 -4.15,14.87"/>
+    </edge>
+    <edge id=":J5_3" function="internal">
+        <lane id=":J5_3_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-2.28,18.47 -12.90,-13.41"/>
+        <lane id=":J5_3_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="0.76,17.46 -9.87,-14.42"/>
     </edge>
     <edge id=":J5_5" function="internal">
-        <lane id=":J5_5_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="29.67" shape="3.79,16.44 2.34,8.44 3.79,1.90 8.16,-3.19 15.43,-6.83"/>
+        <lane id=":J5_5_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="13.36" shape="3.79,16.44 2.34,8.44 3.47,3.34"/>
+    </edge>
+    <edge id=":J5_24" function="internal">
+        <lane id=":J5_24_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="10.13" shape="-4.15,14.87 -6.45,12.90 -9.58,12.21 -13.41,12.90"/>
+    </edge>
+    <edge id=":J5_25" function="internal">
+        <lane id=":J5_25_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="16.31" shape="3.47,3.34 3.79,1.90 8.16,-3.19 15.43,-6.83"/>
     </edge>
     <edge id=":J5_6" function="internal">
         <lane id=":J5_6_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="6.51" length="9.03" shape="19.48,5.31 17.27,6.42 15.94,7.97 15.50,9.96 15.94,12.40"/>
     </edge>
     <edge id=":J5_7" function="internal">
         <lane id=":J5_7_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="19.48,5.31 -12.40,15.94"/>
-        <lane id=":J5_7_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="18.47,2.28 -13.41,12.90"/>
-        <lane id=":J5_7_2" index="2" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="17.46,-0.76 -14.42,9.87"/>
-        <lane id=":J5_7_3" index="3" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="16.44,-3.79 -15.43,6.83"/>
+    </edge>
+    <edge id=":J5_8" function="internal">
+        <lane id=":J5_8_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="4.07" shape="18.47,2.28 14.99,4.02 14.87,4.15"/>
+    </edge>
+    <edge id=":J5_9" function="internal">
+        <lane id=":J5_9_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="18.47,2.28 -13.41,12.90"/>
+        <lane id=":J5_9_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="17.46,-0.76 -14.42,9.87"/>
     </edge>
     <edge id=":J5_11" function="internal">
-        <lane id=":J5_11_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="29.67" shape="16.44,-3.79 8.44,-2.34 1.90,-3.79 -3.19,-8.16 -6.83,-15.43"/>
+        <lane id=":J5_11_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="13.36" shape="16.44,-3.79 8.44,-2.34 3.34,-3.47"/>
+    </edge>
+    <edge id=":J5_26" function="internal">
+        <lane id=":J5_26_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="10.13" shape="14.87,4.15 12.90,6.45 12.21,9.58 12.90,13.41"/>
+    </edge>
+    <edge id=":J5_27" function="internal">
+        <lane id=":J5_27_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="16.31" shape="3.34,-3.47 1.90,-3.79 -3.19,-8.16 -6.83,-15.43"/>
     </edge>
     <edge id=":J5_12" function="internal">
         <lane id=":J5_12_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="6.51" length="9.03" shape="5.31,-19.48 6.42,-17.27 7.97,-15.94 9.96,-15.50 12.40,-15.94"/>
     </edge>
     <edge id=":J5_13" function="internal">
         <lane id=":J5_13_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="5.31,-19.48 15.94,12.40"/>
-        <lane id=":J5_13_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="2.28,-18.47 12.90,13.41"/>
-        <lane id=":J5_13_2" index="2" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-0.76,-17.46 9.87,14.42"/>
-        <lane id=":J5_13_3" index="3" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-3.79,-16.44 6.83,15.43"/>
+    </edge>
+    <edge id=":J5_14" function="internal">
+        <lane id=":J5_14_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="4.07" shape="2.28,-18.47 4.02,-14.99 4.15,-14.87"/>
+    </edge>
+    <edge id=":J5_15" function="internal">
+        <lane id=":J5_15_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="2.28,-18.47 12.90,13.41"/>
+        <lane id=":J5_15_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-0.76,-17.46 9.87,14.42"/>
     </edge>
     <edge id=":J5_17" function="internal">
-        <lane id=":J5_17_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="29.67" shape="-3.79,-16.44 -2.34,-8.44 -3.79,-1.90 -8.16,3.19 -15.43,6.83"/>
+        <lane id=":J5_17_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="13.36" shape="-3.79,-16.44 -2.34,-8.44 -3.47,-3.34"/>
+    </edge>
+    <edge id=":J5_28" function="internal">
+        <lane id=":J5_28_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="10.13" shape="4.15,-14.87 6.45,-12.90 9.58,-12.21 13.41,-12.90"/>
+    </edge>
+    <edge id=":J5_29" function="internal">
+        <lane id=":J5_29_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="16.31" shape="-3.47,-3.34 -3.79,-1.90 -8.16,3.19 -15.43,6.83"/>
     </edge>
     <edge id=":J5_18" function="internal">
         <lane id=":J5_18_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="6.51" length="9.03" shape="-19.48,-5.31 -17.27,-6.42 -15.94,-7.97 -15.50,-9.96 -15.94,-12.40"/>
     </edge>
     <edge id=":J5_19" function="internal">
         <lane id=":J5_19_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-19.48,-5.31 12.40,-15.94"/>
-        <lane id=":J5_19_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-18.47,-2.28 13.41,-12.90"/>
-        <lane id=":J5_19_2" index="2" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-17.46,0.76 14.42,-9.87"/>
-        <lane id=":J5_19_3" index="3" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-16.44,3.79 15.43,-6.83"/>
+    </edge>
+    <edge id=":J5_20" function="internal">
+        <lane id=":J5_20_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="4.07" shape="-18.47,-2.28 -14.99,-4.02 -14.87,-4.15"/>
+    </edge>
+    <edge id=":J5_21" function="internal">
+        <lane id=":J5_21_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-18.47,-2.28 13.41,-12.90"/>
+        <lane id=":J5_21_1" index="1" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="33.60" shape="-17.46,0.76 14.42,-9.87"/>
     </edge>
     <edge id=":J5_23" function="internal">
-        <lane id=":J5_23_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="29.67" shape="-16.44,3.79 -8.44,2.34 -1.90,3.79 3.19,8.16 6.83,15.43"/>
+        <lane id=":J5_23_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="13.36" shape="-16.44,3.79 -8.44,2.34 -3.34,3.47"/>
+    </edge>
+    <edge id=":J5_30" function="internal">
+        <lane id=":J5_30_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="8.00" length="10.13" shape="-14.87,-4.15 -12.90,-6.45 -12.21,-9.58 -12.90,-13.41"/>
+    </edge>
+    <edge id=":J5_31" function="internal">
+        <lane id=":J5_31_0" index="0" disallow="pedestrian tram rail_urban rail rail_electric rail_fast ship" speed="11.36" length="16.31" shape="-3.34,3.47 -1.90,3.79 3.19,8.16 6.83,15.43"/>
     </edge>
 
     <edge id="-E3" from="J5" to="J4" priority="-1">
@@ -138,95 +178,112 @@
     </edge>
 
     <tlLogic id="TL" type="static" programID="6" offset="0">
-        <phase duration="42" state="GGGGGrrrrrrrGGGGGrrrrrrr"/>
-        <phase duration="3"  state="yyyyyrrrrrrryyyyyrrrrrrr"/>
-        <phase duration="42" state="rrrrrGrrrrrrrrrrrGrrrrrr"/>
+        <phase duration="33" state="GGgGGgrrrrrrGGgGGgrrrrrr"/>
+        <phase duration="3"  state="yyyyygrrrrrryyyyygrrrrrr"/>
+        <phase duration="6"  state="rrrrrGrrrrrrrrrrrGrrrrrr"/>
         <phase duration="3"  state="rrrrryrrrrrrrrrrryrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGGrrrrrrrGGGGGr"/>
-        <phase duration="3"  state="rrrrrryyyyyrrrrrrryyyyyr"/>
-        <phase duration="42" state="rrrrrrrrrrrGrrrrrrrrrrrG"/>
+        <phase duration="33" state="rrrrrrGGgGGgrrrrrrGGgGGg"/>
+        <phase duration="3"  state="rrrrrryyyyygrrrrrryyyyyg"/>
+        <phase duration="6"  state="rrrrrrrrrrrGrrrrrrrrrrrG"/>
         <phase duration="3"  state="rrrrrrrrrrryrrrrrrrrrrry"/>
     </tlLogic>
 
     <junction id="J4" type="dead_end" x="-150.00" y="50.00" incLanes="-E3_0 -E3_1 -E3_2 -E3_3" intLanes="" shape="-150.00,50.00 -145.95,62.14 -150.00,50.00"/>
-    <junction id="J5" type="traffic_light" x="0.00" y="0.00" incLanes="N2TL_0 N2TL_1 N2TL_2 N2TL_3 E2TL_0 E2TL_1 E2TL_2 E2TL_3 S2TL_0 S2TL_1 S2TL_2 S2TL_3 W2TL_0 W2TL_1 W2TL_2 W2TL_3" intLanes=":J5_0_0 :J5_1_0 :J5_1_1 :J5_1_2 :J5_1_3 :J5_5_0 :J5_6_0 :J5_7_0 :J5_7_1 :J5_7_2 :J5_7_3 :J5_11_0 :J5_12_0 :J5_13_0 :J5_13_1 :J5_13_2 :J5_13_3 :J5_17_0 :J5_18_0 :J5_19_0 :J5_19_1 :J5_19_2 :J5_19_3 :J5_23_0" shape="-6.83,19.99 17.46,11.89 17.17,9.64 17.46,8.73 18.02,7.95 18.86,7.32 19.99,6.83 11.89,-17.46 9.64,-17.17 8.73,-17.46 7.95,-18.02 7.32,-18.86 6.83,-19.99 -17.46,-11.89 -17.17,-9.64 -17.46,-8.73 -18.02,-7.95 -18.86,-7.32 -19.99,-6.83 -11.89,17.46 -9.64,17.17 -8.73,17.46 -7.95,18.02 -7.32,18.86">
-        <request index="0"  response="000000000000000000000000" foes="000000000000011110000000" cont="0"/>
-        <request index="1"  response="000000000000000000000000" foes="111111100000111110000000" cont="0"/>
-        <request index="2"  response="000000000000000000000000" foes="111111100000111110000000" cont="0"/>
-        <request index="3"  response="000000000000000000000000" foes="111111100000111110000000" cont="0"/>
-        <request index="4"  response="000000000000000000000000" foes="111111100000111110000000" cont="0"/>
-        <request index="5"  response="000000011110000000000000" foes="111110011110111110000000" cont="0"/>
-        <request index="6"  response="000000011110000000000000" foes="000000011110000000000000" cont="0"/>
-        <request index="7"  response="000000111110000000111111" foes="100000111110000000111111" cont="0"/>
-        <request index="8"  response="000000111110000000111111" foes="100000111110000000111111" cont="0"/>
-        <request index="9"  response="000000111110000000111111" foes="100000111110000000111111" cont="0"/>
-        <request index="10" response="000000111110000000111111" foes="100000111110000000111111" cont="0"/>
-        <request index="11" response="011110111110000000111110" foes="011110111110000000111110" cont="0"/>
-        <request index="12" response="000000000000000000000000" foes="011110000000000000000000" cont="0"/>
-        <request index="13" response="000000000000000000000000" foes="111110000000111111100000" cont="0"/>
-        <request index="14" response="000000000000000000000000" foes="111110000000111111100000" cont="0"/>
-        <request index="15" response="000000000000000000000000" foes="111110000000111111100000" cont="0"/>
-        <request index="16" response="000000000000000000000000" foes="111110000000111111100000" cont="0"/>
-        <request index="17" response="000000000000000000011110" foes="111110000000111110011110" cont="0"/>
-        <request index="18" response="000000000000000000011110" foes="000000000000000000011110" cont="0"/>
-        <request index="19" response="000000111111000000111110" foes="000000111111100000111110" cont="0"/>
-        <request index="20" response="000000111111000000111110" foes="000000111111100000111110" cont="0"/>
-        <request index="21" response="000000111111000000111110" foes="000000111111100000111110" cont="0"/>
-        <request index="22" response="000000111111000000111110" foes="000000111111100000111110" cont="0"/>
-        <request index="23" response="000000111110011110111110" foes="000000111110011110111110" cont="0"/>
+    <junction id="J5" type="traffic_light" x="0.00" y="0.00" incLanes="N2TL_0 N2TL_1 N2TL_2 N2TL_3 E2TL_0 E2TL_1 E2TL_2 E2TL_3 S2TL_0 S2TL_1 S2TL_2 S2TL_3 W2TL_0 W2TL_1 W2TL_2 W2TL_3" intLanes=":J5_0_0 :J5_1_0 :J5_24_0 :J5_3_0 :J5_3_1 :J5_25_0 :J5_6_0 :J5_7_0 :J5_26_0 :J5_9_0 :J5_9_1 :J5_27_0 :J5_12_0 :J5_13_0 :J5_28_0 :J5_15_0 :J5_15_1 :J5_29_0 :J5_18_0 :J5_19_0 :J5_30_0 :J5_21_0 :J5_21_1 :J5_31_0" shape="-6.83,19.99 17.46,11.89 17.17,9.64 17.46,8.73 18.02,7.95 18.86,7.32 19.99,6.83 11.89,-17.46 9.64,-17.17 8.73,-17.46 7.95,-18.02 7.32,-18.86 6.83,-19.99 -17.46,-11.89 -17.17,-9.64 -17.46,-8.73 -18.02,-7.95 -18.86,-7.32 -19.99,-6.83 -11.89,17.46 -9.64,17.17 -8.73,17.46 -7.95,18.02 -7.32,18.86">
+        <request index="0"  response="000000000000000000000000" foes="000000000000011010000000" cont="0"/>
+        <request index="1"  response="100100000000000000000000" foes="111111100000011010000100" cont="0"/>
+        <request index="2"  response="000000000000000000000010" foes="000000000000011010000010" cont="1"/>
+        <request index="3"  response="100100000000000000000000" foes="111111100000011010000000" cont="0"/>
+        <request index="4"  response="100100000000000000000000" foes="111111100000011010000000" cont="0"/>
+        <request index="5"  response="100000011010100000000000" foes="100000011010111010000000" cont="1"/>
+        <request index="6"  response="000000011010000000000000" foes="000000011010000000000000" cont="0"/>
+        <request index="7"  response="000000011010000000111111" foes="100000011010000100111111" cont="0"/>
+        <request index="8"  response="000000011010000010000000" foes="000000011010000010000000" cont="1"/>
+        <request index="9"  response="000000011010000000111111" foes="100000011010000000111111" cont="0"/>
+        <request index="10" response="000000011010000000111111" foes="100000011010000000111111" cont="0"/>
+        <request index="11" response="011010111010000000100000" foes="011010111010000000100000" cont="1"/>
+        <request index="12" response="000000000000000000000000" foes="011010000000000000000000" cont="0"/>
+        <request index="13" response="000000000000100100000000" foes="011010000100111111100000" cont="0"/>
+        <request index="14" response="000000000010000000000000" foes="011010000010000000000000" cont="1"/>
+        <request index="15" response="000000000000100100000000" foes="011010000000111111100000" cont="0"/>
+        <request index="16" response="000000000000100100000000" foes="011010000000111111100000" cont="0"/>
+        <request index="17" response="100000000000100000011010" foes="111010000000100000011010" cont="1"/>
+        <request index="18" response="000000000000000000011010" foes="000000000000000000011010" cont="0"/>
+        <request index="19" response="000000111111000000011010" foes="000100111111100000011010" cont="0"/>
+        <request index="20" response="000010000000000000011010" foes="000010000000000000011010" cont="1"/>
+        <request index="21" response="000000111111000000011010" foes="000000111111100000011010" cont="0"/>
+        <request index="22" response="000000111111000000011010" foes="000000111111100000011010" cont="0"/>
+        <request index="23" response="000000100000011010111010" foes="000000100000011010111010" cont="1"/>
     </junction>
     <junction id="J6" type="dead_end" x="50.00" y="150.00" incLanes="E4_0 E4_1 E4_2 E4_3" intLanes="" shape="50.00,150.00 62.14,145.95 50.00,150.00"/>
     <junction id="J7" type="dead_end" x="-50.00" y="-150.00" incLanes="E5_0 E5_1 E5_2 E5_3" intLanes="" shape="-50.00,-150.00 -62.14,-145.95 -50.00,-150.00"/>
     <junction id="J8" type="dead_end" x="150.00" y="-50.00" incLanes="E6_0 E6_1 E6_2 E6_3" intLanes="" shape="150.00,-50.00 145.95,-62.14 150.00,-50.00"/>
 
+    <junction id=":J5_24_0" type="internal" x="-4.15" y="14.87" incLanes=":J5_2_0 N2TL_0" intLanes=":J5_1_0 :J5_7_0 :J5_9_0 :J5_9_1 :J5_17_0"/>
+    <junction id=":J5_25_0" type="internal" x="3.47" y="3.34" incLanes=":J5_5_0 S2TL_0 S2TL_1 S2TL_2" intLanes=":J5_7_0 :J5_9_0 :J5_9_1 :J5_11_0 :J5_12_0 :J5_13_0 :J5_14_0 :J5_15_0 :J5_15_1 :J5_19_0 :J5_21_0 :J5_21_1 :J5_23_0"/>
+    <junction id=":J5_26_0" type="internal" x="14.87" y="4.15" incLanes=":J5_8_0 E2TL_0" intLanes=":J5_7_0 :J5_13_0 :J5_15_0 :J5_15_1 :J5_23_0"/>
+    <junction id=":J5_27_0" type="internal" x="3.34" y="-3.47" incLanes=":J5_11_0 W2TL_0 W2TL_1 W2TL_2" intLanes=":J5_1_0 :J5_3_0 :J5_3_1 :J5_5_0 :J5_13_0 :J5_15_0 :J5_15_1 :J5_17_0 :J5_18_0 :J5_19_0 :J5_20_0 :J5_21_0 :J5_21_1"/>
+    <junction id=":J5_28_0" type="internal" x="4.15" y="-14.87" incLanes=":J5_14_0 S2TL_0" intLanes=":J5_5_0 :J5_13_0 :J5_19_0 :J5_21_0 :J5_21_1"/>
+    <junction id=":J5_29_0" type="internal" x="-3.47" y="-3.34" incLanes=":J5_17_0 N2TL_0 N2TL_1 N2TL_2" intLanes=":J5_0_0 :J5_1_0 :J5_2_0 :J5_3_0 :J5_3_1 :J5_7_0 :J5_9_0 :J5_9_1 :J5_11_0 :J5_19_0 :J5_21_0 :J5_21_1 :J5_23_0"/>
+    <junction id=":J5_30_0" type="internal" x="-14.87" y="-4.15" incLanes=":J5_20_0 W2TL_0" intLanes=":J5_1_0 :J5_3_0 :J5_3_1 :J5_11_0 :J5_19_0"/>
+    <junction id=":J5_31_0" type="internal" x="-3.34" y="3.47" incLanes=":J5_23_0 E2TL_0 E2TL_1 E2TL_2" intLanes=":J5_1_0 :J5_3_0 :J5_3_1 :J5_5_0 :J5_6_0 :J5_7_0 :J5_8_0 :J5_9_0 :J5_9_1 :J5_13_0 :J5_15_0 :J5_15_1 :J5_17_0"/>
+
     <connection from="E2TL" to="E4" fromLane="0" toLane="0" via=":J5_6_0" tl="TL" linkIndex="6" dir="r" state="o"/>
     <connection from="E2TL" to="-E3" fromLane="0" toLane="0" via=":J5_7_0" tl="TL" linkIndex="7" dir="s" state="o"/>
-    <connection from="E2TL" to="-E3" fromLane="1" toLane="1" via=":J5_7_1" tl="TL" linkIndex="8" dir="s" state="o"/>
-    <connection from="E2TL" to="-E3" fromLane="2" toLane="2" via=":J5_7_2" tl="TL" linkIndex="9" dir="s" state="o"/>
-    <connection from="E2TL" to="-E3" fromLane="3" toLane="3" via=":J5_7_3" tl="TL" linkIndex="10" dir="s" state="o"/>
+    <connection from="E2TL" to="E4" fromLane="1" toLane="1" via=":J5_8_0" tl="TL" linkIndex="8" dir="r" state="o"/>
+    <connection from="E2TL" to="-E3" fromLane="1" toLane="1" via=":J5_9_0" tl="TL" linkIndex="9" dir="s" state="o"/>
+    <connection from="E2TL" to="-E3" fromLane="2" toLane="2" via=":J5_9_1" tl="TL" linkIndex="10" dir="s" state="o"/>
     <connection from="E2TL" to="E5" fromLane="3" toLane="3" via=":J5_11_0" tl="TL" linkIndex="11" dir="l" state="o"/>
     <connection from="N2TL" to="-E3" fromLane="0" toLane="0" via=":J5_0_0" tl="TL" linkIndex="0" dir="r" state="O"/>
     <connection from="N2TL" to="E5" fromLane="0" toLane="0" via=":J5_1_0" tl="TL" linkIndex="1" dir="s" state="O"/>
-    <connection from="N2TL" to="E5" fromLane="1" toLane="1" via=":J5_1_1" tl="TL" linkIndex="2" dir="s" state="O"/>
-    <connection from="N2TL" to="E5" fromLane="2" toLane="2" via=":J5_1_2" tl="TL" linkIndex="3" dir="s" state="O"/>
-    <connection from="N2TL" to="E5" fromLane="3" toLane="3" via=":J5_1_3" tl="TL" linkIndex="4" dir="s" state="O"/>
+    <connection from="N2TL" to="-E3" fromLane="1" toLane="1" via=":J5_2_0" tl="TL" linkIndex="2" dir="r" state="o"/>
+    <connection from="N2TL" to="E5" fromLane="1" toLane="1" via=":J5_3_0" tl="TL" linkIndex="3" dir="s" state="O"/>
+    <connection from="N2TL" to="E5" fromLane="2" toLane="2" via=":J5_3_1" tl="TL" linkIndex="4" dir="s" state="O"/>
     <connection from="N2TL" to="E6" fromLane="3" toLane="3" via=":J5_5_0" tl="TL" linkIndex="5" dir="l" state="o"/>
     <connection from="S2TL" to="E6" fromLane="0" toLane="0" via=":J5_12_0" tl="TL" linkIndex="12" dir="r" state="O"/>
     <connection from="S2TL" to="E4" fromLane="0" toLane="0" via=":J5_13_0" tl="TL" linkIndex="13" dir="s" state="O"/>
-    <connection from="S2TL" to="E4" fromLane="1" toLane="1" via=":J5_13_1" tl="TL" linkIndex="14" dir="s" state="O"/>
-    <connection from="S2TL" to="E4" fromLane="2" toLane="2" via=":J5_13_2" tl="TL" linkIndex="15" dir="s" state="O"/>
-    <connection from="S2TL" to="E4" fromLane="3" toLane="3" via=":J5_13_3" tl="TL" linkIndex="16" dir="s" state="O"/>
+    <connection from="S2TL" to="E6" fromLane="1" toLane="1" via=":J5_14_0" tl="TL" linkIndex="14" dir="r" state="o"/>
+    <connection from="S2TL" to="E4" fromLane="1" toLane="1" via=":J5_15_0" tl="TL" linkIndex="15" dir="s" state="O"/>
+    <connection from="S2TL" to="E4" fromLane="2" toLane="2" via=":J5_15_1" tl="TL" linkIndex="16" dir="s" state="O"/>
     <connection from="S2TL" to="-E3" fromLane="3" toLane="3" via=":J5_17_0" tl="TL" linkIndex="17" dir="l" state="o"/>
     <connection from="W2TL" to="E5" fromLane="0" toLane="0" via=":J5_18_0" tl="TL" linkIndex="18" dir="r" state="o"/>
     <connection from="W2TL" to="E6" fromLane="0" toLane="0" via=":J5_19_0" tl="TL" linkIndex="19" dir="s" state="o"/>
-    <connection from="W2TL" to="E6" fromLane="1" toLane="1" via=":J5_19_1" tl="TL" linkIndex="20" dir="s" state="o"/>
-    <connection from="W2TL" to="E6" fromLane="2" toLane="2" via=":J5_19_2" tl="TL" linkIndex="21" dir="s" state="o"/>
-    <connection from="W2TL" to="E6" fromLane="3" toLane="3" via=":J5_19_3" tl="TL" linkIndex="22" dir="s" state="o"/>
+    <connection from="W2TL" to="E5" fromLane="1" toLane="1" via=":J5_20_0" tl="TL" linkIndex="20" dir="r" state="o"/>
+    <connection from="W2TL" to="E6" fromLane="1" toLane="1" via=":J5_21_0" tl="TL" linkIndex="21" dir="s" state="o"/>
+    <connection from="W2TL" to="E6" fromLane="2" toLane="2" via=":J5_21_1" tl="TL" linkIndex="22" dir="s" state="o"/>
     <connection from="W2TL" to="E4" fromLane="3" toLane="3" via=":J5_23_0" tl="TL" linkIndex="23" dir="l" state="o"/>
 
     <connection from=":J5_0" to="-E3" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":J5_1" to="E5" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":J5_1" to="E5" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":J5_1" to="E5" fromLane="2" toLane="2" dir="s" state="M"/>
-    <connection from=":J5_1" to="E5" fromLane="3" toLane="3" dir="s" state="M"/>
-    <connection from=":J5_5" to="E6" fromLane="0" toLane="3" dir="l" state="M"/>
+    <connection from=":J5_2" to="-E3" fromLane="0" toLane="1" via=":J5_24_0" dir="r" state="m"/>
+    <connection from=":J5_24" to="-E3" fromLane="0" toLane="1" dir="r" state="M"/>
+    <connection from=":J5_3" to="E5" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J5_3" to="E5" fromLane="1" toLane="2" dir="s" state="M"/>
+    <connection from=":J5_5" to="E6" fromLane="0" toLane="3" via=":J5_25_0" dir="l" state="m"/>
+    <connection from=":J5_25" to="E6" fromLane="0" toLane="3" dir="l" state="M"/>
     <connection from=":J5_6" to="E4" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":J5_7" to="-E3" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":J5_7" to="-E3" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":J5_7" to="-E3" fromLane="2" toLane="2" dir="s" state="M"/>
-    <connection from=":J5_7" to="-E3" fromLane="3" toLane="3" dir="s" state="M"/>
-    <connection from=":J5_11" to="E5" fromLane="0" toLane="3" dir="l" state="M"/>
+    <connection from=":J5_8" to="E4" fromLane="0" toLane="1" via=":J5_26_0" dir="r" state="m"/>
+    <connection from=":J5_26" to="E4" fromLane="0" toLane="1" dir="r" state="M"/>
+    <connection from=":J5_9" to="-E3" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J5_9" to="-E3" fromLane="1" toLane="2" dir="s" state="M"/>
+    <connection from=":J5_11" to="E5" fromLane="0" toLane="3" via=":J5_27_0" dir="l" state="m"/>
+    <connection from=":J5_27" to="E5" fromLane="0" toLane="3" dir="l" state="M"/>
     <connection from=":J5_12" to="E6" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":J5_13" to="E4" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":J5_13" to="E4" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":J5_13" to="E4" fromLane="2" toLane="2" dir="s" state="M"/>
-    <connection from=":J5_13" to="E4" fromLane="3" toLane="3" dir="s" state="M"/>
-    <connection from=":J5_17" to="-E3" fromLane="0" toLane="3" dir="l" state="M"/>
+    <connection from=":J5_14" to="E6" fromLane="0" toLane="1" via=":J5_28_0" dir="r" state="m"/>
+    <connection from=":J5_28" to="E6" fromLane="0" toLane="1" dir="r" state="M"/>
+    <connection from=":J5_15" to="E4" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J5_15" to="E4" fromLane="1" toLane="2" dir="s" state="M"/>
+    <connection from=":J5_17" to="-E3" fromLane="0" toLane="3" via=":J5_29_0" dir="l" state="m"/>
+    <connection from=":J5_29" to="-E3" fromLane="0" toLane="3" dir="l" state="M"/>
     <connection from=":J5_18" to="E5" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":J5_19" to="E6" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":J5_19" to="E6" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":J5_19" to="E6" fromLane="2" toLane="2" dir="s" state="M"/>
-    <connection from=":J5_19" to="E6" fromLane="3" toLane="3" dir="s" state="M"/>
-    <connection from=":J5_23" to="E4" fromLane="0" toLane="3" dir="l" state="M"/>
+    <connection from=":J5_20" to="E5" fromLane="0" toLane="1" via=":J5_30_0" dir="r" state="m"/>
+    <connection from=":J5_30" to="E5" fromLane="0" toLane="1" dir="r" state="M"/>
+    <connection from=":J5_21" to="E6" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J5_21" to="E6" fromLane="1" toLane="2" dir="s" state="M"/>
+    <connection from=":J5_23" to="E4" fromLane="0" toLane="3" via=":J5_31_0" dir="l" state="m"/>
+    <connection from=":J5_31" to="E4" fromLane="0" toLane="3" dir="l" state="M"/>
 
 </net>

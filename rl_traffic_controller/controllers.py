@@ -108,9 +108,9 @@ class SUMOController:
         self.config_file = config_file
 
         self.phases = [
-            "GGGGGrrrrrrrGGGGGrrrrrrr",
+            "GGgGGrrrrrrrGGgGGrrrrrrr",
             "rrrrrGrrrrrrrrrrrGrrrrrr",
-            "rrrrrrGGGGGrrrrrrrGGGGGr",
+            "rrrrrrGGgGGrrrrrrrGGgGGr",
             "rrrrrrrrrrrGrrrrrrrrrrrG",
         ]
         self.amber_phases = [
@@ -216,7 +216,7 @@ class SUMOController:
         root = tree.getroot()
 
         for flow in root.findall('.//flow'):
-            probability = random.uniform(0.05, 0.50)
+            probability = random.uniform(0.01, 0.1)
             flow.set('probability', str(probability))
 
         tree.write(file_path)
