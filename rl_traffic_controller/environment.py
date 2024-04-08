@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from rl_traffic_controller.controllers import VNCController, SUMOController
+from rl_traffic_controller.controllers import SUMOController
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -10,11 +10,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class Environment:
 
     def __init__(self) -> None:
-        self.vnc_controller = VNCController(
-            "localhost::5901",
-            "abcabc",
-            "data/simulation.png"
-        )
         self.simulation_controller = SUMOController(
             r"./simulation/v1.sumocfg"
         )
@@ -54,4 +49,4 @@ class Environment:
         return state, reward, done
 
     def destroy(self) -> None:
-        self.vnc_controller.shutdown()
+        pass
