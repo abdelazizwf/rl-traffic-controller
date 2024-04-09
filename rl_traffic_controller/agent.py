@@ -255,7 +255,7 @@ class Agent:
         
         Args:
             env: The problem environment.
-            num_episodes: Number of episodes to use in training.
+            num_episodes: Number of episodes to sample during training.
             checkpoints: A flag to enable saving of the model after each episode.
         """
         for i_episode in range(num_episodes):

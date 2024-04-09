@@ -8,11 +8,25 @@ logger = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("mode", type=str)
-parser.add_argument("image_paths", type=str, nargs="*", default=[], action="extend")
-parser.add_argument("-c", "--continue", action="store_true", dest="load_nets")
-parser.add_argument("-r", "--remote", action="store_true")
-parser.add_argument("-e", "--episodes", type=int, default=50)
+parser.add_argument(
+    "mode", type=str, help="train or eval"
+)
+parser.add_argument(
+    "image_paths", type=str, nargs="*", default=[], action="extend",
+    help="paths of images (observations) to test the agent on"
+)
+parser.add_argument(
+    "-c", "--continue", action="store_true", dest="load_nets",
+    help="load the saved network and continue training"
+)
+parser.add_argument(
+    "-r", "--remote", action="store_true",
+    help="setup the VNC client connection"
+)
+parser.add_argument(
+    "-e", "--episodes", type=int, default=50,
+    help="number of episodes sampled during training (default: %(default)s)"
+)
 
 args = parser.parse_args()
 
