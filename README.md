@@ -1,5 +1,10 @@
 # RL Traffic Controller
 
+## Warning
+
+Right now, this project doesn't work on Microsoft Windows because SUMO (`sumo-gui`) will randomly hang when
+capturing a screenshot of the simulation using `traci`.
+
 ## Setup
 
 1. Install Python version 3.11.4
