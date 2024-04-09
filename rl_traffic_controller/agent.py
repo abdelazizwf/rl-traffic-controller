@@ -249,14 +249,12 @@ class Agent:
         self,
         env: Environment,
         num_episodes: int = 50,
-        checkpoints: bool = False
     ) -> None:
         """Performs the main training loops for the given number of episodes.
         
         Args:
             env: The problem environment.
             num_episodes: Number of episodes to sample during training.
-            checkpoints: A flag to enable saving of the model after each episode.
         """
         for i_episode in range(num_episodes):
             logger.info(f"Starting episode number {i_episode + 1}.")
@@ -299,13 +297,12 @@ class Agent:
                     logger.debug(f"Finished episode {i_episode + 1}.")
                     break
             
-            if checkpoints is True:
-                try:
-                    torch.save(self.target_net.state_dict(), "models/target_net.pt")
-                    torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
-                    logger.debug("Saved models.")
-                except Exception:
-                    logger.exception("Couldn't save models.")
+            try:
+                torch.save(self.target_net.state_dict(), "models/target_net.pt")
+                torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
+                logger.debug("Saved models.")
+            except Exception:
+                logger.exception("Couldn't save models.")
     
     def evaluate(self, state: torch.Tensor) -> tuple[list[float], int]:
         """Returns the action values of the agent given the input state.

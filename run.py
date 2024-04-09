@@ -43,9 +43,9 @@ if args.remote is True:
 
 if args.mode.lower() == "train":
     train(
-        checkpoints=True,
         load_nets=args.load_nets,
-        num_episodes=args.episodes
+        num_episodes=args.episodes,
+        image_paths=args.image_paths
     )
 elif args.mode.lower() == "eval":
     evaluate(

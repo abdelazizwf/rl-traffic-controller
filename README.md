@@ -41,6 +41,12 @@ To see the agent's action values (using a previously saved Q network), run the f
 python run.py eval firstPicture.png secondPicture.png ...
 ```
 
+To see the agent's action values after the training is finished, provide the pictures when you start the training.
+
+```bash
+python run.py train firstPicture.png secondPicture.png ... --episodes N
+```
+
 ### Notes
 
 - The agent automatically saves the Q network after each episode in the `models/` directory.

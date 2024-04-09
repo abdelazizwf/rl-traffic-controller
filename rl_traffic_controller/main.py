@@ -43,7 +43,7 @@ def init_agent(load_nets: bool = False) -> Agent:
 def train(
     load_nets: bool = False,
     num_episodes: int = 50,
-    checkpoints: bool = True
+    image_paths: list[str] = []
 ) -> None:
     """Trains the agent.
     
@@ -51,6 +51,8 @@ def train(
         load_nets: Loads a saved network if `True`.
         num_episodes: The number of episodes used in training.
         checkpoints: A flag to enable saving the network after each episode.
+        image_paths: A list of image paths representing observations to be used
+            to evaluate the agent.
     """
     agent = init_agent(load_nets)
     
@@ -58,9 +60,11 @@ def train(
     
     logger.info('Started training.')
     
-    agent.train(env, num_episodes, checkpoints)
+    agent.train(env, num_episodes)
     
     logger.info('Finished training.')
+    
+    evaluate(image_paths, agent)
 
 
 def evaluate(image_paths: list[str], agent: Agent | None = None) -> None:
