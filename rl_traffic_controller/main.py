@@ -13,6 +13,14 @@ logger = logging.getLogger(__name__)
 
 
 def init_agent(load_nets: bool = False) -> Agent:
+    """Initializes the agent with a new or a previously saved network.
+    
+    Args:
+        load_nets: Loads a saved network if `True`.
+    
+    Returns:
+        A new `Agent` instance.
+    """
     n_actions = 4
     
     policy_net = DQN(n_actions).to(device)
@@ -37,6 +45,13 @@ def train(
     num_episodes: int = 50,
     checkpoints: bool = True
 ) -> None:
+    """Trains the agent.
+    
+    Args:
+        load_nets: Loads a saved network if `True`.
+        num_episodes: The number of episodes used in training.
+        checkpoints: A flag to enable saving the network after each episode.
+    """
     agent = init_agent(load_nets)
     
     env = Environment()
@@ -46,11 +61,15 @@ def train(
     agent.train(env, num_episodes, checkpoints)
     
     logger.info('Finished training.')
-    
-    env.destroy()
 
 
 def evaluate(image_paths: list[str], agent: Agent | None = None) -> None:
+    """Prints the action chosen by the agent given the input observations.
+    
+    Args:
+        image_paths: A list of image paths representing observations.
+        agent: An optional agent that is already initialized.
+    """
     if agent is None:
         agent = init_agent(True)
     

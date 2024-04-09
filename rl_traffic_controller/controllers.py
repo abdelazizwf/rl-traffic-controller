@@ -204,7 +204,7 @@ class SUMOController:
         logger.info("Simulation closed.")
     
     def tweak_probability(self) -> None:
-        """Change the probabilities of car flows."""
+        """Changes the probabilities of car flows."""
         file_path = "simulation/v1.rou.xml"
         
         tree = ET.parse(file_path)

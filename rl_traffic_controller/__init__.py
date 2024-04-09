@@ -3,6 +3,7 @@ import sys
 
 from rl_traffic_controller.main import train, evaluate
 
+# Setup the parent logger of the entire package.
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

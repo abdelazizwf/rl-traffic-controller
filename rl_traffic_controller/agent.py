@@ -99,6 +99,14 @@ class DQN(nn.Module):
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Implements the forward step for the network.
+        
+        Args:
+            x: The input tensor.
+        
+        Returns:
+            The output of the network in the form of a tensor.
+        """
         return self.layer_stack(x)
 
 
@@ -183,7 +191,7 @@ class Agent:
         return action
     
     def optimize_model(self) -> None:
-        """Performs the model optimization step using batch gradient descent."""
+        """Performs the model optimization step using stochastic gradient descent."""
         if len(self.memory) < self.BATCH_SIZE:
             logger.debug(
                 f"Memory size ({len(self.memory)}) is less than the batch size ({self.BATCH_SIZE})."
@@ -299,7 +307,16 @@ class Agent:
                 except Exception:
                     logger.exception("Couldn't save models.")
     
-    def evaluate(self, state: torch.Tensor) -> int:
+    def evaluate(self, state: torch.Tensor) -> tuple[list[float], int]:
+        """Returns the action values of the agent given the input state.
+        
+        Args:
+            state: The input state.
+        
+        Returns:
+            A list of the action values and the index of the chosen action (i.e.
+            the action with the maximum value).
+        """
         with torch.no_grad():
             actions = self.target_net(state.unsqueeze(0))
         actions = list(actions.squeeze(0).tolist())
