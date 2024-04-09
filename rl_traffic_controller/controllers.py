@@ -166,23 +166,18 @@ class SUMOController:
     
     def start(self) -> None:
         """Starts the simulation using the provided config file."""
+        commands = [
+            "sumo-gui", "--start",
+            "-c", self.config_file,
+            "--step-length", str(self.step_time),
+            "--time-to-teleport", str(-1),
+        ]
+
         try:
-            traci.start(
-                [
-                    "sumo-gui", "--start",
-                    "-c", self.config_file,
-                    "--step-length", str(self.step_time)
-                ]
-            )
+            traci.start(commands)
             logger.info(f"Started up the simulation from the config file {self.config_file}.")
         except traci.exceptions.TraCIException:
-            traci.load(
-                [
-                    "--start",
-                    "-c", self.config_file,
-                    "--step-length", str(self.step_time)
-                ]
-            )
+            traci.load(commands[1:])
         
     def step(self, seconds: int = 1) -> bool:
         """Runs the simulation for a given amount of time.
