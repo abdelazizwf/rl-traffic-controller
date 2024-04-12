@@ -68,48 +68,6 @@ class ReplayMemory:
         return len(self.memory)
 
 
-class DQN(nn.Module):
-    """A CNN to predict Q-values.
-    
-    Attributes:
-        layer_stack: A sequence containing the network's layers.
-    """
-
-    def __init__(self, n_actions: int) -> None:
-        """
-        Args:
-            n_actions: Number of output Q values associated with actions.
-        """
-        super(DQN, self).__init__()
-        self.layer_stack = nn.Sequential(
-            nn.Conv2d(3, 16, 7, 3),
-            nn.ReLU(),
-            nn.Conv2d(16, 64, 5, 2),
-            nn.ReLU(),
-            nn.Conv2d(64, 128, 3, 1),
-            nn.ReLU(),
-            nn.Conv2d(128, 256, 3, 1),
-            nn.ReLU(),
-            nn.Flatten(),
-            nn.Linear(256 * 30 * 24, n_actions)
-        )
-        
-        logger.debug(f"Created DQN.\n{self.layer_stack}")
-
-    # Called with either one element to determine next action, or a batch
-    # during optimization. Returns tensor([[left0exp,right0exp]...]).
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Implements the forward step for the network.
-        
-        Args:
-            x: The input tensor.
-        
-        Returns:
-            The output of the network in the form of a tensor.
-        """
-        return self.layer_stack(x)
-
-
 class Agent:
     """The Reinforcement Learning agent.
     

@@ -3,7 +3,8 @@ import logging
 import numpy as np
 from PIL import Image
 
-from rl_traffic_controller.agent import DQN, Agent
+from rl_traffic_controller.agent import Agent
+from rl_traffic_controller.networks import DQN, stacks
 from rl_traffic_controller.environment import Environment
 
 
@@ -12,24 +13,25 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 logger = logging.getLogger(__name__)
 
 
-def init_agent(load_nets: bool = False) -> Agent:
+def init_agent(stack_name: str, load_nets: bool = False) -> Agent:
     """Initializes the agent with a new or a previously saved network.
     
     Args:
+        stack_name: ID of the layer stack.
         load_nets: Loads a saved network if `True`.
     
     Returns:
         A new `Agent` instance.
     """
-    n_actions = 4
+    stack = stacks[stack_name]
     
-    policy_net = DQN(n_actions).to(device)
-    target_net = DQN(n_actions).to(device)
+    policy_net = DQN(stack, stack_name).to(device)
+    target_net = DQN(stack, stack_name).to(device)
     
     if load_nets is True:
         try:
-            policy_net.load_state_dict(torch.load("models/policy_net.pt"))
-            target_net.load_state_dict(torch.load("models/target_net.pt"))
+            policy_net.load_state_dict(torch.load(f"models/{stack_name}_policy_net.pt"))
+            target_net.load_state_dict(torch.load(f"models/{stack_name}_target_net.pt"))
             logger.info("Loaded models successfully")
         except Exception:
             logger.exception("Failed to load models.")
@@ -41,6 +43,7 @@ def init_agent(load_nets: bool = False) -> Agent:
 
 
 def train(
+    stack_name: str,
     load_nets: bool = False,
     num_episodes: int = 50,
     image_paths: list[str] = []
@@ -48,13 +51,14 @@ def train(
     """Trains the agent.
     
     Args:
+        stack_name: ID of the layer stack.
         load_nets: Loads a saved network if `True`.
         num_episodes: The number of episodes used in training.
         checkpoints: A flag to enable saving the network after each episode.
         image_paths: A list of image paths representing observations to be used
             to evaluate the agent.
     """
-    agent = init_agent(load_nets)
+    agent = init_agent(stack_name, load_nets)
     
     env = Environment()
     
@@ -67,15 +71,20 @@ def train(
     evaluate(image_paths, agent)
 
 
-def evaluate(image_paths: list[str], agent: Agent | None = None) -> None:
+def evaluate(
+    stack_name: str,
+    image_paths: list[str],
+    agent: Agent | None = None
+) -> None:
     """Prints the action chosen by the agent given the input observations.
     
     Args:
+        stack_name: ID of the layer stack.
         image_paths: A list of image paths representing observations.
         agent: An optional agent that is already initialized.
     """
     if agent is None:
-        agent = init_agent(True)
+        agent = init_agent(stack_name, True)
     
     for path in image_paths:
         try:

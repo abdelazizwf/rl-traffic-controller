@@ -3,6 +3,7 @@ import logging
 from vncdotool import api
 
 from rl_traffic_controller import train, evaluate
+from rl_traffic_controller.networks import stacks
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +11,9 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument(
     "mode", type=str, help="train or eval"
+)
+parser.add_argument(
+    "stack", type=str, help="layer stack to use", choices=list(stacks.keys())
 )
 parser.add_argument(
     "image_paths", type=str, nargs="*", default=[], action="extend",
@@ -43,12 +47,14 @@ if args.remote is True:
 
 if args.mode.lower() == "train":
     train(
+        stack_name=args.stack,
         load_nets=args.load_nets,
         num_episodes=args.episodes,
         image_paths=args.image_paths
     )
 elif args.mode.lower() == "eval":
     evaluate(
+        stack_name=args.stack,
         agent=None,
         image_paths=args.image_paths
     )
