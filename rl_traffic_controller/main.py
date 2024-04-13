@@ -1,4 +1,5 @@
 import torch
+import os
 import logging
 import numpy as np
 import matplotlib.pyplot as plt
@@ -78,6 +79,7 @@ def display_results(
     image: Image.Image,
     result: Image.Image,
     action_value: float,
+    path: str,
 ) -> None:
     """Displays the input image and the chosen action.
     
@@ -90,6 +92,7 @@ def display_results(
         
     ax1.imshow(np.array(image))
     ax1.axis("off")
+    ax1.set_title(path)
     
     ax2.imshow(np.array(result))
     ax2.axis("off")
@@ -115,28 +118,44 @@ def evaluate(
     if agent is None:
         agent = init_agent(stack_name, True)
     
+    exts = [".png", ".jpg", ".jpeg"]
+    
     for path in image_paths:
-        try:
-            image = Image.open(path)
-        except Exception:
-            logger.exception(f"Failed to open image {path}.")
-            continue
+        is_dir = os.path.isdir(path)
         
-        resized_image = image.resize(consts.IMAGE_SIZE).convert("RGB")
+        paths = []
+        if is_dir is True:
+            for file in os.listdir(path):
+                _, ext = os.path.splitext(file)
+                if ext in exts:
+                    paths.append(
+                        os.path.join(path, file)
+                    )
+        else:
+            paths.append(path)
         
-        state = torch.tensor(
-            np.array(resized_image),
-            dtype=torch.float32,
-            device=device
-        ).permute(2, 0, 1)
-        
-        values, action = agent.evaluate(state)
-        
-        print(
-            f"\nAction values for {path} are {values}.\n",
-            f"The chosen action's index is {action}.\n"
-        )
-        
-        result = Image.open(f"data/phase{action}.jpg")
-        
-        display_results(image, result, values[action])
+        for path in paths:
+            try:
+                image = Image.open(path)
+            except Exception:
+                logger.exception(f"Failed to open image {path}.")
+                continue
+            
+            resized_image = image.resize(consts.IMAGE_SIZE).convert("RGB")
+            
+            state = torch.tensor(
+                np.array(resized_image),
+                dtype=torch.float32,
+                device=device
+            ).permute(2, 0, 1)
+            
+            values, action = agent.evaluate(state)
+            
+            print(
+                f"\nAction values for {path} are {values}.\n",
+                f"The chosen action's index is {action}.\n"
+            )
+            
+            result = Image.open(f"data/phase{action}.jpg")
+            
+            display_results(image, result, values[action], path)

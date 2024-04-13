@@ -26,19 +26,19 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python run.py -h
 
-usage: run.py [-h] [-c] [-r] [-e EPISODES] mode {V1,V2} [image_paths ...]
+usage: run.py [-h] [-c] [-r] [-e N] mode {V1,V2} [image_paths ...]
 
 positional arguments:
-  mode                  train or eval
-  {V1,V2}               layer stack to use
-  image_paths           paths of images (observations) to test the agent on
+  mode                train or eval
+  {V1,V2}             layer stack to use
+  image_paths         paths of images (observations), and/or directories containing
+                      images, to test the agent on
 
 options:
-  -h, --help            show this help message and exit
-  -c, --continue        load the saved network and continue training
-  -r, --remote          setup the VNC client connection
-  -e EPISODES, --episodes EPISODES
-                        number of episodes sampled during training (default: 50)
+  -h, --help          show this help message and exit
+  -c, --continue      load the saved network and continue training
+  -r, --remote        setup the VNC client connection
+  -e N, --episodes N  number of episodes sampled during training (default: 50)
 ```
 
 The agent can use a variety of network configurations, available in `rl_traffic_controller/networks.py`, one of them must be selected in the command line. The list of available configurations can be viewed in the help message, `python run.py -h`. The commands below use the `V2` configuration.
@@ -55,16 +55,16 @@ To continue training the agent using a previously saved Q network, run the follo
 python run.py train V2 --episodes N --continue
 ```
 
-To see the agent's action values (using a previously saved Q network), run the following command and provide as many pictures as you want.
+To see the agent's action values (using a previously saved Q network), run the following command and provide as many pictures, and directories containing multiple pictures, as you want. The directories will be searched for pictures in the first level only.
 
 ```bash
-python run.py eval V2 firstPicture.png secondPicture.png ...
+python run.py eval V2 firstPicture.png secondPicture.png pictureDir/ ...
 ```
 
-To see the agent's action values after the training is finished, provide the pictures when you start the training.
+To see the agent's action values after the training is finished, provide the pictures and/or directories when you start the training.
 
 ```bash
-python run.py train V2 firstPicture.png secondPicture.png ... --episodes N
+python run.py train V2 firstPicture.png secondPicture.png pictureDir/ ... --episodes N
 ```
 
 ### Notes

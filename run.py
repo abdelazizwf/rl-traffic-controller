@@ -17,7 +17,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "image_paths", type=str, nargs="*", default=[], action="extend",
-    help="paths of images (observations) to test the agent on"
+    help="paths of images (observations), and/or directories containing images, to test the agent on"
 )
 parser.add_argument(
     "-c", "--continue", action="store_true", dest="load_nets",
@@ -28,7 +28,7 @@ parser.add_argument(
     help="setup the VNC client connection"
 )
 parser.add_argument(
-    "-e", "--episodes", type=int, default=50,
+    "-e", "--episodes", type=int, default=50, metavar="N",
     help="number of episodes sampled during training (default: %(default)s)"
 )
 
