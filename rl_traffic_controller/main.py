@@ -69,7 +69,8 @@ def train(
     
     logger.info('Finished training.')
     
-    evaluate(image_paths, agent)
+    if len(image_paths) > 0:
+        evaluate(stack_name, image_paths, agent)
 
 
 def evaluate(
