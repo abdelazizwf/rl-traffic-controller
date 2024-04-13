@@ -7,6 +7,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
+from rl_traffic_controller import consts
 from rl_traffic_controller.environment import Environment
 
 
@@ -86,13 +87,13 @@ class Agent:
         memory: The replay memory.
         steps_done: A time step counter used to calculate the epsilon threshold.
     """
-    BATCH_SIZE = 32
-    GAMMA = 0.99
-    EPS_START = 0.9
-    EPS_END = 0.05
-    EPS_DECAY = 1000
-    TAU = 0.005
-    LR = 1e-4
+    BATCH_SIZE = consts.BATCH_SIZE
+    GAMMA = consts.GAMMA
+    EPS_START = consts.EPS_START
+    EPS_END = consts.EPS_END
+    EPS_DECAY = consts.EPS_DECAY
+    TAU = consts.TAU
+    LR = consts.LR
     
     def __init__(self, policy_net: nn.Module, target_net: nn.Module) -> None:
         """
@@ -105,7 +106,7 @@ class Agent:
 
         self.optimizer = optim.AdamW(policy_net.parameters(), lr=self.LR, amsgrad=True)
         self.loss_fn = nn.SmoothL1Loss()
-        self.memory = ReplayMemory(2000)
+        self.memory = ReplayMemory(consts.MEMORY_SIZE)
 
         self.steps_done = 0
         
@@ -259,8 +260,8 @@ class Agent:
             logger.debug("Updated target network.")
             
             try:
-                torch.save(self.target_net.state_dict(), "models/target_net.pt")
-                torch.save(self.policy_net.state_dict(), "models/policy_net.pt")
+                torch.save(self.target_net.state_dict(), f"models/{self.target_net.name}_target_net.pt")
+                torch.save(self.policy_net.state_dict(), f"models/{self.policy_net.name}_policy_net.pt")
                 logger.debug("Saved models.")
             except Exception:
                 logger.exception("Couldn't save models.")

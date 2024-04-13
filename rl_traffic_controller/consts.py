@@ -1,0 +1,12 @@
+"""A module to hold constants."""
+
+IMAGE_SIZE = (200, 133)
+
+BATCH_SIZE = 32
+GAMMA = 0.99
+EPS_START = 0.9
+EPS_END = 0.05
+EPS_DECAY = 1000
+TAU = 0.005
+LR = 0.0001
+MEMORY_SIZE = 2000

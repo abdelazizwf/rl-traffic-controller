@@ -2,6 +2,7 @@ import torch
 import numpy as np
 
 from rl_traffic_controller.controllers import SUMOController
+from rl_traffic_controller import consts
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -31,7 +32,7 @@ class Environment:
         Returns:
             The new observation in the form of a `torch.Tensor`.
         """
-        image = self.simulation_controller.get_screenshot().resize((220, 186))
+        image = self.simulation_controller.get_screenshot().resize(consts.IMAGE_SIZE)
         return torch.tensor(
             np.array(image.convert("RGB")),
             dtype=torch.float32,
