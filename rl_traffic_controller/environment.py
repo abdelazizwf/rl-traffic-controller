@@ -1,9 +1,8 @@
-import torch
 import numpy as np
+import torch
 
-from rl_traffic_controller.controllers import SUMOController
 from rl_traffic_controller import consts
-
+from rl_traffic_controller.controllers import SUMOController
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

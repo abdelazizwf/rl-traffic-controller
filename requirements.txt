@@ -9,6 +9,7 @@ fsspec==2023.4.0
 hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0
+isort==5.13.2
 Jinja2==3.1.2
 kiwisolver==1.4.5
 MarkupSafe==2.1.3

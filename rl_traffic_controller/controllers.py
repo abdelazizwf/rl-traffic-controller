@@ -1,12 +1,11 @@
-import traci.exceptions
-from vncdotool import api
-from PIL import Image
-import traci
-
 import logging
 import random
 import xml.etree.ElementTree as ET
 
+import traci
+import traci.exceptions
+from PIL import Image
+from vncdotool import api
 
 logger = logging.getLogger(__name__)
 

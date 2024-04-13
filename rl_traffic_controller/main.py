@@ -1,15 +1,15 @@
-import torch
-import os
 import logging
-import numpy as np
+import os
+
 import matplotlib.pyplot as plt
+import numpy as np
+import torch
 from PIL import Image
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.agent import Agent
-from rl_traffic_controller.networks import DQN, stacks
 from rl_traffic_controller.environment import Environment
-
+from rl_traffic_controller.networks import DQN, stacks
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

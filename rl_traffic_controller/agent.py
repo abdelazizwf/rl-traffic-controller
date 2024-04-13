@@ -1,7 +1,7 @@
-import random
-import math
 import logging
-from collections import namedtuple, deque
+import math
+import random
+from collections import deque, namedtuple
 
 import torch
 import torch.nn as nn
@@ -9,7 +9,6 @@ import torch.optim as optim
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.environment import Environment
-
 
 # Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
