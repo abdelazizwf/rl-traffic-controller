@@ -242,18 +242,21 @@ class Agent:
 
                 # Soft update of the target network's weights
                 # θ′ ← τ θ + (1 −τ )θ′
-                target_net_state_dict = self.target_net.state_dict()
-                policy_net_state_dict = self.policy_net.state_dict()
-                for key in policy_net_state_dict:
-                    target_net_state_dict[key] = (policy_net_state_dict[key] * self.TAU) + \
-                        (target_net_state_dict[key] * (1 - self.TAU))
-                self.target_net.load_state_dict(target_net_state_dict)
+                # target_net_state_dict = self.target_net.state_dict()
+                # policy_net_state_dict = self.policy_net.state_dict()
+                # for key in policy_net_state_dict:
+                #     target_net_state_dict[key] = (policy_net_state_dict[key] * self.TAU) + \
+                #         (target_net_state_dict[key] * (1 - self.TAU))
+                # self.target_net.load_state_dict(target_net_state_dict)
                 
-                logger.debug("Updated target network.")
+                # logger.debug("Updated target network.")
 
                 if done:
                     logger.debug(f"Finished episode {i_episode + 1}.")
                     break
+            
+            self.target_net.load_state_dict(self.policy_net.state_dict())
+            logger.debug("Updated target network.")
             
             try:
                 torch.save(self.target_net.state_dict(), "models/target_net.pt")
