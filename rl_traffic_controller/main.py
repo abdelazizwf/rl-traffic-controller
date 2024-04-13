@@ -1,6 +1,7 @@
 import torch
 import logging
 import numpy as np
+import matplotlib.pyplot as plt
 from PIL import Image
 
 from rl_traffic_controller import consts
@@ -73,6 +74,32 @@ def train(
         evaluate(stack_name, image_paths, agent)
 
 
+def display_results(
+    image: Image.Image,
+    result: Image.Image,
+    action_value: float,
+) -> None:
+    """Displays the input image and the chosen action.
+    
+    Args:
+        image: The input image.
+        result: The image of the chosen action.
+        action_value: The Q value of the chosen action.
+    """
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+        
+    ax1.imshow(np.array(image))
+    ax1.axis("off")
+    
+    ax2.imshow(np.array(result))
+    ax2.axis("off")
+    ax2.set_title(f"Q Value: {str(action_value)}")
+    
+    fig.tight_layout()
+    
+    plt.show()
+
+
 def evaluate(
     stack_name: str,
     image_paths: list[str],
@@ -95,10 +122,10 @@ def evaluate(
             logger.exception(f"Failed to open image {path}.")
             continue
         
-        image = image.resize(consts.IMAGE_SIZE).convert("RGB")
+        resized_image = image.resize(consts.IMAGE_SIZE).convert("RGB")
         
         state = torch.tensor(
-            np.array(image),
+            np.array(resized_image),
             dtype=torch.float32,
             device=device
         ).permute(2, 0, 1)
@@ -109,3 +136,7 @@ def evaluate(
             f"\nAction values for {path} are {values}.\n",
             f"The chosen action's index is {action}.\n"
         )
+        
+        result = Image.open(f"data/phase{action}.jpg")
+        
+        display_results(image, result, values[action])
