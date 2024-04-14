@@ -41,7 +41,7 @@ class DQN(nn.Module):
 
 
 stacks = {
-    "V1": nn.Sequential(
+    "v1": nn.Sequential(
         nn.Conv2d(3, 16, 7, 3),
         nn.ReLU(),
         nn.Conv2d(16, 64, 5, 2),
@@ -54,7 +54,7 @@ stacks = {
         nn.Linear(256 * 30 * 24, 4)
     ),
     
-    "V2": nn.Sequential(
+    "v2": nn.Sequential(
         nn.Conv2d(3, 16, 5, 2),
         nn.ReLU(),
         nn.Conv2d(16, 64, 3, 1),
@@ -64,4 +64,15 @@ stacks = {
         nn.Flatten(),
         nn.Linear(128 * 94 * 61, 4)
     ),
+    
+    "v3": nn.Sequential(
+        nn.Conv2d(3, 8, (5, 3), 2),
+        nn.ReLU(),
+        nn.Conv2d(8, 16, (3, 5), 2),
+        nn.ReLU(),
+        nn.Conv2d(16, 64, 5, 1),
+        nn.ReLU(),
+        nn.Flatten(),
+        nn.Linear(78848, 4)
+    )
 }
