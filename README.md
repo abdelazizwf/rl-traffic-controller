@@ -29,8 +29,8 @@ $ python run.py -h
 usage: run.py [-h] [-c] [-r] [-e N] mode {v1,v2,v3} [image_paths ...]
 
 positional arguments:
-  mode                train or eval
-  {v1,v2,v3}             layer stack to use
+  mode                train or eval or demo
+  {v1,v2,v3}          layer stack to use
   image_paths         paths of images (observations), and/or directories containing
                       images, to test the agent on
 
@@ -65,6 +65,12 @@ To see the agent's action values after the training is finished, provide the pic
 
 ```bash
 python run.py train v3 firstPicture.png secondPicture.png pictureDir/ ... --episodes N
+```
+
+To demo the agent in a running environment use the following command.
+
+```bash
+python run.py demo v3
 ```
 
 ### Notes

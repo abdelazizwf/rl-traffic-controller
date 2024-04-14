@@ -279,3 +279,18 @@ class Agent:
             actions = self.target_net(state.unsqueeze(0))
         actions = list(actions.squeeze(0).tolist())
         return [round(x, 3) for x in actions], actions.index(max(actions))
+    
+    def demo(self, env: Environment) -> None:
+        """Uses the target network to always select the best action.
+        
+        Args:
+            env: The problem environment.
+        """
+        state = env.reset()
+        while True:
+            _, action = self.evaluate(state)
+            observation, _, done = env.step(action)
+            next_state = observation if not done else None
+            state = next_state
+            if done:
+                break

@@ -2,7 +2,7 @@ import argparse
 import logging
 from vncdotool import api
 
-from rl_traffic_controller import train, evaluate
+from rl_traffic_controller import train, evaluate, demo
 from rl_traffic_controller.networks import stacks
 
 logger = logging.getLogger(__name__)
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "mode", type=str, help="train or eval"
+    "mode", type=str, help="train or eval or demo"
 )
 parser.add_argument(
     "stack", type=str, help="layer stack to use", choices=list(stacks.keys())
@@ -58,6 +58,8 @@ elif args.mode.lower() == "eval":
         agent=None,
         image_paths=args.image_paths
     )
+elif args.mode.lower() == "demo":
+    demo(stack_name=args.stack)
 
 if args.remote is True:
     api.shutdown()

@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from rl_traffic_controller.main import evaluate, train
+from rl_traffic_controller.main import demo, evaluate, train
 
 # Setup the parent logger of the entire package.
 

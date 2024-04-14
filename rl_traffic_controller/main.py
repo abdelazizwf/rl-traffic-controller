@@ -75,6 +75,23 @@ def train(
         evaluate(stack_name, image_paths, agent)
 
 
+def demo(stack_name: str) -> None:
+    """Runs a demo of the agent.
+    
+    Args:
+        stack_name: ID of the layer stack.
+    """
+    agent = init_agent(stack_name, True)
+    
+    env = Environment()
+    
+    logger.info('Starting demo.')
+    
+    agent.demo(env)
+    
+    logger.info('Finished demo.')
+
+
 def display_results(
     image: Image.Image,
     result: Image.Image,
