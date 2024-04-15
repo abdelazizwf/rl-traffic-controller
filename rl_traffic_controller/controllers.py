@@ -167,6 +167,7 @@ class SUMOController:
         """Starts the simulation using the provided config file."""
         commands = [
             "sumo-gui", "--start",
+            "--window-size", "1010,882",
             "-c", self.config_file,
             "--step-length", str(self.step_time),
             "--time-to-teleport", str(-1),
