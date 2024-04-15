@@ -26,7 +26,7 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python run.py -h
 
-usage: run.py [-h] [-c] [-r] [-e N] mode {v1,v2,v3,v4,v5} [image_paths ...]
+usage: run.py [-h] [-c] [-e N] mode {v1,v2,v3,v4,v5} [image_paths ...]
 
 positional arguments:
   mode                train or eval or demo
@@ -37,7 +37,6 @@ positional arguments:
 options:
   -h, --help          show this help message and exit
   -c, --continue      load the saved network and continue training
-  -r, --remote        setup the VNC client connection
   -e N, --episodes N  number of episodes sampled during training (default: 50)
 ```
 

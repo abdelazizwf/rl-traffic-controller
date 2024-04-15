@@ -1,8 +1,6 @@
 import argparse
 import logging
 
-from vncdotool import api
-
 from rl_traffic_controller.main import demo, evaluate, train
 from rl_traffic_controller.networks import stacks
 
@@ -25,26 +23,11 @@ parser.add_argument(
     help="load the saved network and continue training"
 )
 parser.add_argument(
-    "-r", "--remote", action="store_true",
-    help="setup the VNC client connection"
-)
-parser.add_argument(
     "-e", "--episodes", type=int, default=50, metavar="N",
     help="number of episodes sampled during training (default: %(default)s)"
 )
 
 args = parser.parse_args()
-
-if args.remote is True:
-    vnc_server = "localhost::5901"
-    password = "abcabc"
-        
-    try:
-        client = api.connect(vnc_server, password=password)
-        logger.info(f"VNC connection to {vnc_server} established.")
-    except Exception:
-        logger.exception("VNC connection error.")
-        exit()
 
 if args.mode.lower() == "train":
     train(
@@ -61,7 +44,3 @@ elif args.mode.lower() == "eval":
     )
 elif args.mode.lower() == "demo":
     demo(stack_name=args.stack)
-
-if args.remote is True:
-    api.shutdown()
-    logger.info("VNC connection closed.")

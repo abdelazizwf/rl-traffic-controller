@@ -34,5 +34,4 @@ torchvision==0.17.2+cpu
 traci==1.19.0
 Twisted==24.3.0
 typing_extensions==4.8.0
-vncdotool==1.2.0
 zope.interface==6.2
