@@ -74,5 +74,29 @@ stacks = {
         nn.ReLU(),
         nn.Flatten(),
         nn.Linear(78848, 4)
-    )
+    ),
+    
+    "v4": nn.Sequential(
+        nn.Conv2d(3, 16, (8, 6), 2),
+        nn.ReLU(),
+        nn.Conv2d(16, 32, (5, 7), 2),
+        nn.ReLU(),
+        nn.Conv2d(32, 64, 3, 1),
+        nn.ReLU(),
+        nn.Flatten(),
+        nn.Linear(78848, 4)
+    ),
+    
+    "v5": nn.Sequential(
+        nn.Conv2d(1, 16, 8, 4),
+        nn.ReLU(),
+        nn.Conv2d(16, 32, 4, 4),
+        nn.ReLU(),
+        nn.Conv2d(32, 64, 3, 1),
+        nn.ReLU(),
+        nn.Flatten(),
+        nn.Linear(64 * 60, 512),
+        nn.ReLU(),
+        nn.Linear(512, 4),
+    ),
 }
