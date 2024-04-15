@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+from PIL.Image import Image
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.controllers import SUMOController
@@ -25,18 +26,35 @@ class Environment:
         )
         self.prev_count = 0
     
+    @classmethod
+    def image_to_observation(cls, image: Image) -> torch.Tensor:
+        """Transforms a raw image into the appropriate observation format.
+        
+        Args:
+            image: The raw image.
+        
+        Returns:
+            The new observation in the form of a `torch.Tensor`.
+        """
+        image = image.resize(consts.IMAGE_SIZE).convert(consts.IMAGE_FORMAT)
+        observation = torch.tensor(
+            np.array(image),
+            dtype=torch.float32,
+            device=device
+        )
+        
+        if len(observation.shape) == 3:
+            return observation.permute(2, 0, 1)
+        return observation.unsqueeze(0)
+    
     def get_observation(self) -> torch.Tensor:
         """Fetches a new observation and converts it to a tensor.
         
         Returns:
             The new observation in the form of a `torch.Tensor`.
         """
-        image = self.simulation_controller.get_screenshot().resize(consts.IMAGE_SIZE)
-        return torch.tensor(
-            np.array(image.convert("RGB")),
-            dtype=torch.float32,
-            device=device
-        ).permute(2, 0, 1)
+        image = self.simulation_controller.get_screenshot()
+        return self.image_to_observation(image)
     
     def reset(self) -> torch.Tensor:
         """Resets the environment to prepare for a new episode.

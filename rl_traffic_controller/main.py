@@ -6,7 +6,6 @@ import numpy as np
 import torch
 from PIL import Image
 
-from rl_traffic_controller import consts
 from rl_traffic_controller.agent import Agent
 from rl_traffic_controller.environment import Environment
 from rl_traffic_controller.networks import DQN, stacks
@@ -158,13 +157,7 @@ def evaluate(
                 logger.exception(f"Failed to open image {path}.")
                 continue
             
-            resized_image = image.resize(consts.IMAGE_SIZE).convert("RGB")
-            
-            state = torch.tensor(
-                np.array(resized_image),
-                dtype=torch.float32,
-                device=device
-            ).permute(2, 0, 1)
+            state = Environment.image_to_observation(image)
             
             values, action = agent.evaluate(state)
             
