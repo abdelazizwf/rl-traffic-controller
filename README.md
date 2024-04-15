@@ -26,11 +26,11 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python run.py -h
 
-usage: run.py [-h] [-c] [-r] [-e N] mode {v1,v2,v3} [image_paths ...]
+usage: run.py [-h] [-c] [-r] [-e N] mode {v1,v2,v3,v4,v5} [image_paths ...]
 
 positional arguments:
   mode                train or eval or demo
-  {v1,v2,v3}          layer stack to use
+  {v1,v2,v3,v4,v5}    ID of the network architecture to use
   image_paths         paths of images (observations), and/or directories containing
                       images, to test the agent on
 
@@ -41,7 +41,7 @@ options:
   -e N, --episodes N  number of episodes sampled during training (default: 50)
 ```
 
-The agent can use a variety of network configurations, available in `rl_traffic_controller/networks.py`, one of them must be selected in the command line. The list of available configurations can be viewed in the help message, `python run.py -h`. The commands below use the `v3` configuration.
+The agent can use a variety of network architectures, available in `rl_traffic_controller/networks.py`, one of them must be selected in the command line. The list of available architectures can be viewed in the help message, `python run.py -h`. The commands below use the `v3` architecture.
 
 To train the agent from scratch, run the following command and replace `N` with the number of episodes you want.
 

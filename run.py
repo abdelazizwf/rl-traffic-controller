@@ -1,8 +1,9 @@
 import argparse
 import logging
+
 from vncdotool import api
 
-from rl_traffic_controller import train, evaluate, demo
+from rl_traffic_controller.main import demo, evaluate, train
 from rl_traffic_controller.networks import stacks
 
 logger = logging.getLogger(__name__)
@@ -13,7 +14,7 @@ parser.add_argument(
     "mode", type=str, help="train or eval or demo"
 )
 parser.add_argument(
-    "stack", type=str, help="layer stack to use", choices=list(stacks.keys())
+    "stack", type=str, help="ID of the network architecture to use", choices=list(stacks.keys())
 )
 parser.add_argument(
     "image_paths", type=str, nargs="*", default=[], action="extend",
