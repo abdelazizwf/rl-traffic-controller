@@ -6,6 +6,8 @@ import traci
 import traci.exceptions
 from PIL import Image
 
+from rl_traffic_controller import consts
+
 logger = logging.getLogger(__name__)
 
 
@@ -148,7 +150,7 @@ class SUMOController:
         root = tree.getroot()
 
         for flow in root.findall('.//flow'):
-            probability = random.uniform(0.01, 0.1)
+            probability = random.uniform(*consts.FLOW_PROBABILITY)
             flow.set('probability', str(probability))
 
         tree.write(file_path)
