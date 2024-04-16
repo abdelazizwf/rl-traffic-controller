@@ -64,6 +64,7 @@ class Environment:
         """
         self.simulation_controller.tweak_probability()
         self.simulation_controller.start()
+        self.prev_count = 0
         return self.get_observation()
     
     def step(self, action: int) -> tuple[torch.Tensor, int, bool]:

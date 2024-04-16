@@ -23,6 +23,10 @@ parser.add_argument(
     help="load the saved network and continue training"
 )
 parser.add_argument(
+    "-s", "--save", action="store_true", dest="save",
+    help="save the network after every training episode"
+)
+parser.add_argument(
     "-e", "--episodes", type=int, default=50, metavar="N",
     help="number of episodes sampled during training (default: %(default)s)"
 )
@@ -33,6 +37,7 @@ if args.mode.lower() == "train":
     train(
         stack_name=args.stack,
         load_nets=args.load_nets,
+        save=args.save,
         num_episodes=args.episodes,
         image_paths=args.image_paths
     )

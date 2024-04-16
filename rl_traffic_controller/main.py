@@ -3,50 +3,18 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 from PIL import Image
 
 from rl_traffic_controller.agent import Agent
 from rl_traffic_controller.environment import Environment
-from rl_traffic_controller.networks import DQN, stacks
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 logger = logging.getLogger(__name__)
-
-
-def init_agent(stack_name: str, load_nets: bool = False) -> Agent:
-    """Initializes the agent with a new or a previously saved network.
-    
-    Args:
-        stack_name: ID of the layer stack.
-        load_nets: Loads a saved network if `True`.
-    
-    Returns:
-        A new `Agent` instance.
-    """
-    stack = stacks[stack_name]
-    
-    policy_net = DQN(stack, stack_name).to(device)
-    target_net = DQN(stack, stack_name).to(device)
-    
-    if load_nets is True:
-        try:
-            policy_net.load_state_dict(torch.load(f"models/{stack_name}_policy_net.pt"))
-            target_net.load_state_dict(torch.load(f"models/{stack_name}_target_net.pt"))
-            logger.info("Loaded models successfully")
-        except Exception:
-            logger.exception("Failed to load models.")
-            exit()
-    else:
-        target_net.load_state_dict(policy_net.state_dict())
-    
-    return Agent(policy_net, target_net)
 
 
 def train(
     stack_name: str,
     load_nets: bool = False,
+    save: bool = False,
     num_episodes: int = 50,
     image_paths: list[str] = []
 ) -> None:
@@ -55,12 +23,13 @@ def train(
     Args:
         stack_name: ID of the layer stack.
         load_nets: Loads a saved network if `True`.
+        save: Save the networks if `True`.
         num_episodes: The number of episodes used in training.
         checkpoints: A flag to enable saving the network after each episode.
         image_paths: A list of image paths representing observations to be used
             to evaluate the agent.
     """
-    agent = init_agent(stack_name, load_nets)
+    agent = Agent(stack_name, load_nets, save)
     
     env = Environment()
     
@@ -80,7 +49,7 @@ def demo(stack_name: str) -> None:
     Args:
         stack_name: ID of the layer stack.
     """
-    agent = init_agent(stack_name, True)
+    agent = Agent(stack_name, True)
     
     env = Environment()
     
@@ -132,7 +101,7 @@ def evaluate(
         agent: An optional agent that is already initialized.
     """
     if agent is None:
-        agent = init_agent(stack_name, True)
+        agent = Agent(stack_name, True)
     
     exts = [".png", ".jpg", ".jpeg"]
     
