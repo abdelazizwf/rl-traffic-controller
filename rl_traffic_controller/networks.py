@@ -114,5 +114,19 @@ stacks = {
         nn.Linear(64 * 60, 512),
         nn.ReLU(),
         nn.Linear(512, 4),
-    )
+    ),
+    
+    "v7": nn.Sequential(
+        nn.Conv2d(1, 16, (8, 6), 2),
+        nn.ReLU(),
+        nn.BatchNorm2d(16),
+        nn.Conv2d(16, 32, (5, 7), 2),
+        nn.ReLU(),
+        nn.BatchNorm2d(32),
+        nn.Conv2d(32, 64, 3, 1),
+        nn.ReLU(),
+        nn.BatchNorm2d(64),
+        nn.Flatten(),
+        nn.Linear(78848, 4)
+    ),
 }

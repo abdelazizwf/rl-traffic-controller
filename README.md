@@ -26,51 +26,52 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python3.11 run.py --help
 
-usage: run.py [-h] [-c] [-s] [-e N] mode {v1,v2,v3,v4,v5,v6} [image_paths ...]
+usage: run.py [-h] [-c] [-s] [-e N] mode {v1,v2,v3,v4,v5,v6,v7} [image_paths ...]
 
 positional arguments:
-  mode                 train or eval or demo
-  {v1,v2,v3,v4,v5,v6}  ID of the network architecture to use
-  image_paths          paths of images (observations), and/or directories containing
+  mode                  train or eval or demo
+  {v1,v2,v3,v4,v5,v6,v7}
+                        ID of the network architecture to use
+  image_paths           paths of images (observations), and/or directories containing
                         images, to test the agent on
 
 options:
-  -h, --help           show this help message and exit
-  -c, --continue       load the saved network and continue training
-  -s, --save           save the network after every training episode
-  -e N, --episodes N   number of episodes sampled during training (default: 50)
+  -h, --help            show this help message and exit
+  -c, --continue        load the saved network and continue training
+  -s, --save            save the network after every training episode
+  -e N, --episodes N    number of episodes sampled during training (default: 50)
 ```
 
-The agent can use a variety of network architectures, available in `rl_traffic_controller/networks.py`, one of them must be selected in the command line. The list of available architectures can be viewed in the help message, `python3.11 run.py --help`. The commands below use the `v6` architecture.
+The agent can use a variety of network architectures, available in `rl_traffic_controller/networks.py`, one of them must be selected in the command line. The list of available architectures can be viewed in the help message, `python3.11 run.py --help`. The commands below use the `v7` architecture.
 
 To train the agent from scratch, run the following command and replace `N` with the number of episodes you want. Remove `--save` if you don't want to save the Q network after every episode.
 
 ```bash
-python3.11 run.py train v6 --episodes N --save
+python3.11 run.py train v7 --episodes N --save
 ```
 
 To continue training the agent using a previously saved Q network, run the following command.
 
 ```bash
-python3.11 run.py train v6 --episodes N --continue
+python3.11 run.py train v7 --episodes N --continue
 ```
 
 To see the agent's action values (using a previously saved Q network), run the following command and provide as many images, and directories containing multiple images, as you want. The directories will be searched for images in the first level only.
 
 ```bash
-python3.11 run.py eval v6 firstPicture.png secondPicture.png imagesDir/ ...
+python3.11 run.py eval v7 firstPicture.png secondPicture.png imagesDir/ ...
 ```
 
 To see the agent's action values after the training is finished, provide the images and/or directories when you start the training.
 
 ```bash
-python3.11 run.py train v6 firstPicture.png secondPicture.png imagesDir/ ... --episodes N
+python3.11 run.py train v7 firstPicture.png secondPicture.png imagesDir/ ... --episodes N
 ```
 
 To demo the agent in a running environment use the following command.
 
 ```bash
-python3.11 run.py demo v6
+python3.11 run.py demo v7
 ```
 
 ### Notes
