@@ -309,8 +309,7 @@ class Agent:
             env: The problem environment.
         """
         state = env.reset()
-        while True:
+        done = False
+        while not done:
             _, action = self.evaluate(state)
             state, _, done = env.step(action)
-            if done:
-                break
