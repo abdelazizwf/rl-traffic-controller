@@ -1,9 +1,12 @@
+from functools import partial
 from logging import getLogger
 
 import torch
 import torch.nn as nn
 
 logger = getLogger(__name__)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class DQN(nn.Module):
@@ -40,93 +43,99 @@ class DQN(nn.Module):
         return self.layer_stack(x)
 
 
+# Partial functions to set default arguments for layers.
+conv2d = partial(nn.Conv2d, device=device, dtype=torch.float32)
+batchnorm = partial(nn.BatchNorm2d, device=device, dtype=torch.float32)
+linear = partial(nn.Linear, device=device, dtype=torch.float32)
+
+
 stacks = {
     "v1": nn.Sequential(
-        nn.Conv2d(3, 16, 7, 3),
+        conv2d(3, 16, 7, 3),
         nn.ReLU(),
-        nn.Conv2d(16, 64, 5, 2),
+        conv2d(16, 64, 5, 2),
         nn.ReLU(),
-        nn.Conv2d(64, 128, 3, 1),
+        conv2d(64, 128, 3, 1),
         nn.ReLU(),
-        nn.Conv2d(128, 256, 3, 1),
+        conv2d(128, 256, 3, 1),
         nn.ReLU(),
         nn.Flatten(),
-        nn.Linear(256 * 30 * 24, 4)
+        linear(256 * 30 * 24, 4)
     ),
     
     "v2": nn.Sequential(
-        nn.Conv2d(3, 16, 5, 2),
+        conv2d(3, 16, 5, 2),
         nn.ReLU(),
-        nn.Conv2d(16, 64, 3, 1),
+        conv2d(16, 64, 3, 1),
         nn.ReLU(),
-        nn.Conv2d(64, 128, 3, 1),
+        conv2d(64, 128, 3, 1),
         nn.ReLU(),
         nn.Flatten(),
-        nn.Linear(128 * 94 * 61, 4)
+        linear(128 * 94 * 61, 4)
     ),
     
     "v3": nn.Sequential(
-        nn.Conv2d(3, 8, (5, 3), 2),
+        conv2d(3, 8, (5, 3), 2),
         nn.ReLU(),
-        nn.Conv2d(8, 16, (3, 5), 2),
+        conv2d(8, 16, (3, 5), 2),
         nn.ReLU(),
-        nn.Conv2d(16, 64, 5, 1),
+        conv2d(16, 64, 5, 1),
         nn.ReLU(),
         nn.Flatten(),
-        nn.Linear(78848, 4)
+        linear(78848, 4)
     ),
     
     "v4": nn.Sequential(
-        nn.Conv2d(1, 16, (8, 6), 2),
+        conv2d(1, 16, (8, 6), 2),
         nn.ReLU(),
-        nn.Conv2d(16, 32, (5, 7), 2),
+        conv2d(16, 32, (5, 7), 2),
         nn.ReLU(),
-        nn.Conv2d(32, 64, 3, 1),
+        conv2d(32, 64, 3, 1),
         nn.ReLU(),
         nn.Flatten(),
-        nn.Linear(78848, 4)
+        linear(78848, 4)
     ),
     
     "v5": nn.Sequential(
-        nn.Conv2d(1, 16, 8, 4),
+        conv2d(1, 16, 8, 4),
         nn.ReLU(),
-        nn.Conv2d(16, 32, 4, 4),
+        conv2d(16, 32, 4, 4),
         nn.ReLU(),
-        nn.Conv2d(32, 64, 3, 1),
+        conv2d(32, 64, 3, 1),
         nn.ReLU(),
         nn.Flatten(),
-        nn.Linear(64 * 60, 512),
+        linear(64 * 60, 512),
         nn.ReLU(),
-        nn.Linear(512, 4),
+        linear(512, 4),
     ),
     
     "v6": nn.Sequential(
-        nn.Conv2d(1, 16, 8, 4),
+        conv2d(1, 16, 8, 4),
         nn.ReLU(),
-        nn.BatchNorm2d(16),
-        nn.Conv2d(16, 32, 4, 4),
+        batchnorm(16),
+        conv2d(16, 32, 4, 4),
         nn.ReLU(),
-        nn.BatchNorm2d(32),
-        nn.Conv2d(32, 64, 3, 1),
+        batchnorm(32),
+        conv2d(32, 64, 3, 1),
         nn.ReLU(),
-        nn.BatchNorm2d(64),
+        batchnorm(64),
         nn.Flatten(),
-        nn.Linear(64 * 60, 512),
+        linear(64 * 60, 512),
         nn.ReLU(),
-        nn.Linear(512, 4),
+        linear(512, 4),
     ),
     
     "v7": nn.Sequential(
-        nn.Conv2d(1, 16, (8, 6), 2),
+        conv2d(1, 16, (8, 6), 2),
         nn.ReLU(),
-        nn.BatchNorm2d(16),
-        nn.Conv2d(16, 32, (5, 7), 2),
+        batchnorm(16),
+        conv2d(16, 32, (5, 7), 2),
         nn.ReLU(),
-        nn.BatchNorm2d(32),
-        nn.Conv2d(32, 64, 3, 1),
+        batchnorm(32),
+        conv2d(32, 64, 3, 1),
         nn.ReLU(),
-        nn.BatchNorm2d(64),
+        batchnorm(64),
         nn.Flatten(),
-        nn.Linear(78848, 4)
+        linear(78848, 4)
     ),
 }
