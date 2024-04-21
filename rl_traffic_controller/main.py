@@ -42,6 +42,8 @@ def train(
     
     if len(image_paths) > 0:
         evaluate(stack_name, image_paths, agent)
+    
+    env.finish()
 
 
 def demo(stack_name: str) -> None:
@@ -59,6 +61,8 @@ def demo(stack_name: str) -> None:
     agent.demo(env)
     
     logger.info('Finished demo.')
+    
+    env.finish()
 
 
 def display_results(

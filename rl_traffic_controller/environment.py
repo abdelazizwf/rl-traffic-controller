@@ -95,3 +95,7 @@ class Environment:
             self.simulation_controller.step(16)
         
         return state, reward, done
+    
+    def finish(self) -> None:
+        """Cleans up."""
+        self.simulation_controller.shutdown()
