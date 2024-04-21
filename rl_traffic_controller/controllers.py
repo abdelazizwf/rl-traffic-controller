@@ -45,29 +45,23 @@ class SUMOController:
         """
         self.config_file = config_file
 
-        self.phases = [
-            "GGgGGrrrrrrrGGgGGrrrrrrr",
-            "rrrrrGrrrrrrrrrrrGrrrrrr",
-            "rrrrrrGGgGGrrrrrrrGGgGGr",
-            "rrrrrrrrrrrGrrrrrrrrrrrG",
-        ]
-        self.amber_phases = [
-            "yyyyyrrrrrrryyyyyrrrrrrr",
-            "rrrrryrrrrrrrrrrryrrrrrr",
-            "rrrrrryyyyyrrrrrrryyyyyr",
-            "rrrrrrrrrrryrrrrrrrrrrry"
-        ]
+        self.phases = consts.SIMULATION_PHASES
+        self.amber_phases = consts.SIMULATION_AMBER_PHASES
         
-        self.edge_ids = ["E2TL", "N2TL", "S2TL", "W2TL"]
+        self.edge_ids = consts.SIMULATION_EDGE_IDS
         self.step_time = step_time
         self.prev_phase = -1
     
-    def get_screenshot(self):
-        image_path = "data/simulation.png"
+    def get_screenshot(self) -> Image.Image:
+        """Takes a screenshot of the simulation, saves it to disk, and returns it.
+        
+        Returns:
+            A screenshot of the simulation.
+        """
         try:
-            traci.gui.screenshot(traci.gui.DEFAULT_VIEW, image_path)
+            traci.gui.screenshot(traci.gui.DEFAULT_VIEW, consts.IMAGE_PATH)
             self.step(1)
-            return Image.open(image_path)
+            return Image.open(consts.IMAGE_PATH)
         except Exception:
             logger.exception("Error getting screenshot.")
 
@@ -81,9 +75,15 @@ class SUMOController:
             A boolean value indicating if the simulation is not over.
         """
         if self.prev_phase != phase_index:
-            traci.trafficlight.setRedYellowGreenState("TL", self.amber_phases[self.prev_phase])
+            traci.trafficlight.setRedYellowGreenState(
+                consts.SIMULATION_TRAFFIC_LIGHT_ID,
+                self.amber_phases[self.prev_phase]
+            )
             f = self.step(3)
-            traci.trafficlight.setRedYellowGreenState("TL", self.phases[phase_index])
+            traci.trafficlight.setRedYellowGreenState(
+                consts.SIMULATION_TRAFFIC_LIGHT_ID,
+                self.phases[phase_index]
+            )
             self.prev_phase = phase_index
         else:
             f = self.step(3)
@@ -144,13 +144,11 @@ class SUMOController:
     
     def tweak_probability(self) -> None:
         """Changes the probabilities of car flows."""
-        file_path = "simulation/v1.rou.xml"
-        
-        tree = ET.parse(file_path)
+        tree = ET.parse(consts.SIMULATION_ROUTE_PATH)
         root = tree.getroot()
 
         for flow in root.findall('.//flow'):
-            probability = random.uniform(*consts.FLOW_PROBABILITY)
+            probability = random.uniform(*consts.SIMULATION_FLOW_PROBABILITY)
             flow.set('probability', str(probability))
 
-        tree.write(file_path)
+        tree.write(consts.SIMULATION_ROUTE_PATH)

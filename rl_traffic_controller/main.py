@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
+from rl_traffic_controller import consts
 from rl_traffic_controller.agent import Agent
 from rl_traffic_controller.environment import Environment
 
@@ -102,9 +103,7 @@ def evaluate(
     """
     if agent is None:
         agent = Agent(stack_name, True)
-    
-    exts = [".png", ".jpg", ".jpeg"]
-    
+        
     for path in image_paths:
         is_dir = os.path.isdir(path)
         
@@ -112,7 +111,7 @@ def evaluate(
         if is_dir is True:
             for file in os.listdir(path):
                 _, ext = os.path.splitext(file)
-                if ext in exts:
+                if ext in consts.IMAGE_EXTENSIONS:
                     paths.append(
                         os.path.join(path, file)
                     )

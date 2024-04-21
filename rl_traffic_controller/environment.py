@@ -22,7 +22,7 @@ class Environment:
 
     def __init__(self) -> None:
         self.simulation_controller = SUMOController(
-            r"./simulation/v1.sumocfg"
+            consts.SIMULATION_CONFIG_PATH
         )
         self.prev_count = 0
     
