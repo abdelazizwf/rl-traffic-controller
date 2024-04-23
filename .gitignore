@@ -4,3 +4,5 @@ data/simulation.png
 models/
 logs/
 sample/
+.python-version
+
