@@ -1,10 +1,7 @@
 import argparse
-import logging
 
 from rl_traffic_controller.main import demo, evaluate, train
 from rl_traffic_controller.networks import stacks
-
-logger = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser()
 
@@ -33,7 +30,8 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-if args.mode.lower() == "train":
+mode = args.mode.lower()
+if mode == "train":
     train(
         stack_name=args.stack,
         load_nets=args.load_nets,
@@ -41,7 +39,7 @@ if args.mode.lower() == "train":
         num_episodes=args.episodes,
         image_paths=args.image_paths
     )
-if args.mode.lower() == "dry-run":
+if mode == "dry-run":
     train(
         stack_name=args.stack,
         stub=True,
@@ -50,11 +48,14 @@ if args.mode.lower() == "dry-run":
         num_episodes=args.episodes,
         image_paths=args.image_paths
     )
-elif args.mode.lower() == "eval":
+elif mode == "eval":
     evaluate(
         stack_name=args.stack,
         agent=None,
         image_paths=args.image_paths
     )
-elif args.mode.lower() == "demo":
+elif mode == "demo":
     demo(stack_name=args.stack)
+else:
+    print(f"ERROR: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more.")
+    exit(1)

@@ -124,9 +124,12 @@ class Agent:
                 self.policy_net.load_state_dict(torch.load(f"models/{stack_name}_policy_net.pt"))
                 self.target_net.load_state_dict(torch.load(f"models/{stack_name}_target_net.pt"))
                 logger.info("Loaded models successfully")
+            except FileNotFoundError:
+                logger.error("Saved models were not found. Consider running without '-c' or '--continue'.")
             except Exception:
                 logger.exception("Failed to load models.")
-                exit()
+            finally:
+                exit(2)
         else:
             self.target_net.load_state_dict(self.policy_net.state_dict())
             self.steps_done = 0

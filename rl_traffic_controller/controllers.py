@@ -117,6 +117,12 @@ class SUMOController:
             logger.info(f"Started up the simulation from the config file {self.config_file}.")
         except traci.exceptions.TraCIException:
             traci.load(commands[1:])
+        except FileNotFoundError:
+            logger.error("SUMO is not available.")
+            exit(3)
+        except Exception:
+            logger.exception("Couldn't start the simulation.")
+            exit(3)
         
     def step(self, seconds: int = 1) -> bool:
         """Runs the simulation for a given amount of time.

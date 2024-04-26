@@ -3,7 +3,7 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.agent import Agent
@@ -124,10 +124,17 @@ def evaluate(
             paths.append(path)
         
         for path in paths:
+            
             try:
                 image = Image.open(path)
+            except FileNotFoundError:
+                logger.error(f"Image {path!r} does not exist.")
+                continue
+            except UnidentifiedImageError:
+                logger.error(f"{path!r} is not an image or is a corrupted image.")
+                continue
             except Exception:
-                logger.exception(f"Failed to open image {path}.")
+                logger.exception(f"Error while opening {path!r}.")
                 continue
             
             state = Environment.image_to_observation(image)
