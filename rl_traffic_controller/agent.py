@@ -167,8 +167,10 @@ class Agent:
                 # t.max(1) will return the largest column value of each row.
                 # second column on max result is index of where max element was
                 # found, so we pick action with the largest expected reward.
-                action = self.policy_net(state).max(1).indices.view(1, 1)
-                logger.debug(f"Selected action {action.item()} using the policy.")
+                result = self.policy_net(state)
+                value = result.max(1).values.view(1, 1).item()
+                action = result.max(1).indices.view(1, 1)
+            logger.debug(f"Selected action {action.item()} with value {round(value, 3)} using the policy.")
         else:
             action = torch.tensor(
                 [[random.randint(0, 3)]], device=device, dtype=torch.long

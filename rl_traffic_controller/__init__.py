@@ -11,17 +11,18 @@ for directory in ["models/", "logs/"]:
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-fmt = "%(asctime)s %(name)s %(levelname)s: %(message)s"
+file_fmt = "%(asctime)s %(name)s %(levelname)s: %(message)s"
 datefmt = "%H:%M:%S"
-formatter = logging.Formatter(fmt=fmt, datefmt=datefmt)
-
+file_formatter = logging.Formatter(fmt=file_fmt, datefmt=datefmt)
 file_handler = logging.FileHandler("logs/run.log", mode="w")
 file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(formatter)
+file_handler.setFormatter(file_formatter)
 
+stream_fmt = "%(levelname)s: %(message)s"
+stream_formatter = logging.Formatter(fmt=stream_fmt)
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setLevel(logging.INFO)
-stream_handler.setFormatter(formatter)
+stream_handler.setFormatter(stream_formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
