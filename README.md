@@ -23,7 +23,7 @@ $ python3.11 run.py --help
 usage: run.py [-h] [-c] [-s] [-e N] mode {v1,v2,v3,v4,v5,v6,v7} [image_paths ...]
 
 positional arguments:
-  mode                  train or eval or demo
+  mode                  train or eval or demo or dry-run
   {v1,v2,v3,v4,v5,v6,v7}
                         ID of the network architecture to use
   image_paths           paths of images (observations), and/or directories containing
@@ -66,6 +66,12 @@ To demo the agent in a running environment use the following command.
 
 ```bash
 python3.11 run.py demo v7
+```
+
+If you want to test the code without using SUMO, use the `dry-run` mode to simulate the training process. It functions exactly as the `train` mode.
+
+```bash
+python3.11 run.py dry-run v7
 ```
 
 ### Notes

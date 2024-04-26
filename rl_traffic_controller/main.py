@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 def train(
     stack_name: str,
+    stub: bool = False,
     load_nets: bool = False,
     save: bool = False,
     num_episodes: int = 50,
@@ -32,7 +33,7 @@ def train(
     """
     agent = Agent(stack_name, load_nets, save)
     
-    env = Environment()
+    env = Environment(stub)
     
     logger.info('Started training.')
     

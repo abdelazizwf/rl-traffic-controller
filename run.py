@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "mode", type=str, help="train or eval or demo"
+    "mode", type=str, help="train or eval or demo or dry-run"
 )
 parser.add_argument(
     "stack", type=str, help="ID of the network architecture to use", choices=list(stacks.keys())
@@ -36,6 +36,15 @@ args = parser.parse_args()
 if args.mode.lower() == "train":
     train(
         stack_name=args.stack,
+        load_nets=args.load_nets,
+        save=args.save,
+        num_episodes=args.episodes,
+        image_paths=args.image_paths
+    )
+if args.mode.lower() == "dry-run":
+    train(
+        stack_name=args.stack,
+        stub=True,
         load_nets=args.load_nets,
         save=args.save,
         num_episodes=args.episodes,

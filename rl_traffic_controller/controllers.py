@@ -152,3 +152,32 @@ class SUMOController:
             flow.set('probability', str(probability))
 
         tree.write(consts.SIMULATION_ROUTE_PATH)
+
+
+class StubController(SUMOController):
+    """A class to simulate `SUMOController` for testing only."""
+    t = 0
+    max_t = 1000
+    image = Image.new("RGB", (400, 266))
+    
+    def get_screenshot(self) -> Image.Image:
+        return self.image
+    
+    def set_traffic_phase(self, phase_index: int) -> bool:
+        return self.step(1)
+    
+    def get_vehicle_count(self) -> int:
+        return random.randint(1, 60)
+    
+    def start(self) -> None:
+        self.t = 0
+    
+    def step(self, seconds: int = 1) -> bool:
+        self.t += seconds
+        return False if self.t > self.max_t else True
+    
+    def shutdown(self) -> None:
+        return
+    
+    def tweak_probability(self) -> None:
+        return

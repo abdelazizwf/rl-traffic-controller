@@ -3,7 +3,7 @@ import torch
 from PIL.Image import Image
 
 from rl_traffic_controller import consts
-from rl_traffic_controller.controllers import SUMOController
+from rl_traffic_controller.controllers import SUMOController, StubController
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -20,10 +20,20 @@ class Environment:
             reward.
     """
 
-    def __init__(self) -> None:
-        self.simulation_controller = SUMOController(
-            consts.SIMULATION_CONFIG_PATH
-        )
+    def __init__(self, stub: bool = False) -> None:
+        """
+        Args:
+            stub: Use a stub controller to simulate `SUMOController` for testing.
+        """
+        if stub is True:
+            self.simulation_controller = StubController(
+                consts.SIMULATION_CONFIG_PATH
+            )
+        else:
+            self.simulation_controller = SUMOController(
+                consts.SIMULATION_CONFIG_PATH
+            )
+        
         self.prev_count = 0
     
     @classmethod
