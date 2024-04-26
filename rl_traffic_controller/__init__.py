@@ -1,6 +1,10 @@
 import logging
+import os
 import sys
 
+# Create required directories
+for directory in ["models/", "logs/"]:
+    os.makedirs(os.path.join(".", directory), exist_ok=True)
 
 # Setup the parent logger of the entire package.
 

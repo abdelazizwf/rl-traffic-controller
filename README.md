@@ -15,12 +15,6 @@ capturing a screenshot of the simulation using `traci`.
    pip3.11 install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
    ```
 
-4. Create required directories
-
-    ```bash
-    mkdir logs models
-    ```
-
 ## Usage
 
 ```text
