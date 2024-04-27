@@ -126,9 +126,9 @@ class Agent:
                 logger.info("Loaded models successfully")
             except FileNotFoundError:
                 logger.error("Saved models were not found. Consider running without '-c' or '--continue'.")
+                exit(2)
             except Exception:
                 logger.exception("Failed to load models.")
-            finally:
                 exit(2)
         else:
             self.target_net.load_state_dict(self.policy_net.state_dict())
