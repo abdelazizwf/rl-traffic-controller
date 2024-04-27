@@ -1,4 +1,5 @@
 import argparse
+from functools import partial
 
 from rl_traffic_controller.main import demo, evaluate, train
 from rl_traffic_controller.networks import stacks
@@ -24,30 +25,26 @@ parser.add_argument(
     help="save the network after every training episode"
 )
 parser.add_argument(
-    "-e", "--episodes", type=int, default=50, metavar="N",
+    "-e", "--episodes", type=int, default=1, metavar="N",
     help="number of episodes sampled during training (default: %(default)s)"
 )
 
 args = parser.parse_args()
 
+train = partial(
+    train,
+    stack_name=args.stack,
+    load_nets=args.load_nets,
+    save=args.save,
+    num_episodes=args.episodes,
+    image_paths=args.image_paths,
+)
+
 mode = args.mode.lower()
 if mode == "train":
-    train(
-        stack_name=args.stack,
-        load_nets=args.load_nets,
-        save=args.save,
-        num_episodes=args.episodes,
-        image_paths=args.image_paths
-    )
+    train()
 if mode == "dry-run":
-    train(
-        stack_name=args.stack,
-        stub=True,
-        load_nets=args.load_nets,
-        save=args.save,
-        num_episodes=args.episodes,
-        image_paths=args.image_paths
-    )
+    train(stub=True)
 elif mode == "eval":
     evaluate(
         stack_name=args.stack,

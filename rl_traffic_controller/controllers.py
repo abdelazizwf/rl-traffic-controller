@@ -88,7 +88,7 @@ class SUMOController:
         else:
             f = self.step(3)
             
-        logger.debug(f"Set the traffic light to phase {phase_index}: {self.phases[phase_index]}.")
+        logger.debug(f"Set the traffic light to phase {phase_index!r}: {self.phases[phase_index]!r}.")
 
         return f
 
@@ -114,7 +114,7 @@ class SUMOController:
 
         try:
             traci.start(commands)
-            logger.info(f"Started up the simulation from the config file {self.config_file}.")
+            logger.info(f"Started up the simulation from the config file {self.config_file!r}.")
         except traci.exceptions.TraCIException:
             traci.load(commands[1:])
         except FileNotFoundError:

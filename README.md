@@ -33,7 +33,7 @@ options:
   -h, --help            show this help message and exit
   -c, --continue        load the saved network and continue training
   -s, --save            save the network after every training episode
-  -e N, --episodes N    number of episodes sampled during training (default: 50)
+  -e N, --episodes N    number of episodes sampled during training (default: 1)
 ```
 
 The agent can use a variety of network architectures, available in `rl_traffic_controller/networks.py`, one of them must be selected in the command line. The list of available architectures can be viewed in the help message, `python3.11 run.py --help`. The commands below use the `v7` architecture.

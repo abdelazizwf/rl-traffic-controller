@@ -27,7 +27,7 @@ class DQN(nn.Module):
         self.layer_stack = layer_stack
         self.name = name
         
-        logger.debug(f"Created DQN with stack {name}.\n{self.layer_stack}")
+        logger.debug(f"Created DQN with stack {name!r}.\n{self.layer_stack!r}")
 
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).

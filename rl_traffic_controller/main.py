@@ -142,8 +142,8 @@ def evaluate(
             values, action = agent.evaluate(state)
             
             print(
-                f"\nAction values for {path} are {values}.\n",
-                f"The chosen action's index is {action}.\n"
+                f"\nAction values for {path!r} are {values!r}.\n",
+                f"The chosen action's index is {action!r}.\n"
             )
             
             result = Image.open(f"data/phase{action}.jpg")

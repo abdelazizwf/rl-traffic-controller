@@ -80,7 +80,6 @@ class Agent:
         EPS_END: The final value of epsilon.
         EPS_DECAY: Controls the rate of exponential decay of epsilon,
             higher means a slower decay.
-        TAU: The update rate of the target network.
         LR: The learning rate of the optimizer.
         policy_net: The policy Q-network.
         target_net: The target Q-network.
@@ -97,7 +96,6 @@ class Agent:
     EPS_START = consts.EPS_START
     EPS_END = consts.EPS_END
     EPS_DECAY = consts.EPS_DECAY
-    TAU = consts.TAU
     LR = consts.LR
     
     def __init__(
@@ -145,7 +143,6 @@ class Agent:
             f"Starting epsilon: {self.EPS_START}\n" +
             f"Final epsilon: {self.EPS_END}\n" +
             f"Epsilon exponential decay rate: {self.EPS_DECAY}\n" +
-            f"Tau: {self.TAU}\n" +
             f"Learning rate: {self.LR}"
         )
         
@@ -167,15 +164,15 @@ class Agent:
                 # t.max(1) will return the largest column value of each row.
                 # second column on max result is index of where max element was
                 # found, so we pick action with the largest expected reward.
-                result = self.policy_net(state)
-                value = result.max(1).values.view(1, 1).item()
-                action = result.max(1).indices.view(1, 1)
-            logger.debug(f"Selected action {action.item()} with value {round(value, 3)} using the policy.")
+                result = self.policy_net(state).max(1)
+                value = result.values.view(1, 1).item()
+                action = result.indices.view(1, 1)
+            logger.debug(f"Selected action {action.item()!r} with value {round(value, 3)!r} using the policy.")
         else:
             action = torch.tensor(
                 [[random.randint(0, 3)]], device=device, dtype=torch.long
             )
-            logger.debug(f"Selected action {action.item()} randomly.")
+            logger.debug(f"Selected action {action.item()!r} randomly.")
         
         return action
     
@@ -183,7 +180,7 @@ class Agent:
         """Performs the model optimization step using stochastic gradient descent."""
         if len(self.memory) < self.BATCH_SIZE:
             logger.debug(
-                f"Memory size ({len(self.memory)}) is less than the batch size ({self.BATCH_SIZE})."
+                f"Memory size ({len(self.memory)!r}) is less than the batch size ({self.BATCH_SIZE!r})."
             )
             return
         
@@ -237,7 +234,7 @@ class Agent:
     def train(
         self,
         env: Environment,
-        num_episodes: int = 50,
+        num_episodes: int = 1,
     ) -> None:
         """Performs the main training loops for the given number of episodes.
         
@@ -249,8 +246,8 @@ class Agent:
             with open(f"models/{self.policy_net.name}_steps.pkl", "rb") as f:
                 self.steps_done = pickle.load(f)
         
-        for i_episode in range(num_episodes):
-            logger.info(f"Starting episode number {i_episode + 1}.")
+        for i_episode in range(1, num_episodes + 1):
+            logger.info(f"Starting episode number {i_episode!r}.")
             
             # Initialize the environment and get its state
             state = env.reset().unsqueeze(0)
@@ -259,7 +256,7 @@ class Agent:
                 observation, reward, done = env.step(action.item())
                 reward = torch.tensor([reward], device=device)
                 
-                logger.debug(f"Received reward {reward.item()}.")
+                logger.debug(f"Received reward {reward.item()!r}.")
 
                 if done:
                     next_state = None
@@ -276,7 +273,7 @@ class Agent:
                 self.optimize_model()
 
                 if done:
-                    logger.debug(f"Finished episode {i_episode + 1}.")
+                    logger.debug(f"Finished episode {i_episode!r}.")
                     break
             
             self.target_net.load_state_dict(self.policy_net.state_dict())
