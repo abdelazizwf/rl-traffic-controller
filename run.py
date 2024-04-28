@@ -43,7 +43,7 @@ train = partial(
 mode = args.mode.lower()
 if mode == "train":
     train()
-if mode == "dry-run":
+elif mode == "dry-run":
     train(stub=True)
 elif mode == "eval":
     evaluate(

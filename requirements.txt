@@ -3,6 +3,7 @@ Automat==22.10.0
 constantly==23.10.4
 contourpy==1.2.0
 cycler==0.12.1
+eclipse-sumo==1.19.0
 filelock==3.9.0
 fonttools==4.50.0
 fsspec==2023.4.0

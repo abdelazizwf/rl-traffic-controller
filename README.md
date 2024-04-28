@@ -8,8 +8,7 @@ capturing a screenshot of the simulation using `traci`.
 ## Setup
 
 1. Install Python version 3.11.4
-2. Install [SUMO](https://eclipse.dev/sumo/) version 1.19.0
-3. Install the reqiured Python libraries
+2. Install the reqiured Python libraries
 
    ```bash
    pip3.11 install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
