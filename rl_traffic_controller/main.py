@@ -128,13 +128,13 @@ def evaluate(
             try:
                 image = Image.open(path)
             except FileNotFoundError:
-                logger.error(f"Image {path!r} does not exist.")
+                logger.warning(f"Image {path!r} does not exist.")
                 continue
             except UnidentifiedImageError:
-                logger.error(f"{path!r} is not an image or is a corrupted image.")
+                logger.warning(f"{path!r} is not an image or is a corrupted image.")
                 continue
             except Exception:
-                logger.exception(f"Error while opening {path!r}.")
+                logger.warning(f"Error while opening {path!r}.")
                 continue
             
             state = Environment.image_to_observation(image)

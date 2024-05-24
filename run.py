@@ -55,4 +55,4 @@ elif mode == "demo":
     demo(stack_name=args.stack)
 else:
     print(f"ERROR: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more.")
-    exit(1)
+    exit(-1)

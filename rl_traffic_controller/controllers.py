@@ -64,6 +64,7 @@ class SUMOController:
             return Image.open(consts.IMAGE_PATH)
         except Exception:
             logger.exception("Error getting screenshot.")
+            exit(-5)
 
     def set_traffic_phase(self, phase_index: int) -> bool:
         """Sets the traffic phase of the simulation.
@@ -119,10 +120,10 @@ class SUMOController:
             traci.load(commands[1:])
         except FileNotFoundError:
             logger.error("SUMO is not available.")
-            exit(3)
+            exit(-3)
         except Exception:
             logger.exception("Couldn't start the simulation.")
-            exit(3)
+            exit(-3)
         
     def step(self, seconds: int = 1) -> bool:
         """Runs the simulation for a given amount of time.

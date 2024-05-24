@@ -1,6 +1,7 @@
 import logging
 import os
-import sys
+
+from rich.logging import RichHandler
 
 # Create required directories
 for directory in ["models/", "logs/"]:
@@ -18,9 +19,14 @@ file_handler = logging.FileHandler("logs/run.log", mode="w")
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(file_formatter)
 
-stream_fmt = "%(levelname)s: %(message)s"
+stream_fmt = "%(message)s"
 stream_formatter = logging.Formatter(fmt=stream_fmt)
-stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler = RichHandler(
+    omit_repeated_times=False,
+    show_path=False,
+    rich_tracebacks=True,
+    log_time_format="[%X]",
+)
 stream_handler.setLevel(logging.INFO)
 stream_handler.setFormatter(stream_formatter)
 

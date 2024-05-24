@@ -124,10 +124,10 @@ class Agent:
                 logger.info("Loaded models successfully")
             except FileNotFoundError:
                 logger.error("Saved models were not found. Consider running without '-c' or '--continue'.")
-                exit(2)
+                exit(-2)
             except Exception:
                 logger.exception("Failed to load models.")
-                exit(2)
+                exit(-2)
         else:
             self.target_net.load_state_dict(self.policy_net.state_dict())
             self.steps_done = 0
@@ -288,6 +288,7 @@ class Agent:
                     logger.debug("Saved models.")
                 except Exception:
                     logger.exception("Couldn't save models.")
+                    exit(-4)
     
     @torch.inference_mode()
     def evaluate(self, state: torch.Tensor) -> tuple[list[float], int]:
