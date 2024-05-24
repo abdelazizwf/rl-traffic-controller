@@ -1,3 +1,5 @@
+#!/usr/bin/bash python3
+
 import argparse
 from functools import partial
 
@@ -10,11 +12,11 @@ parser.add_argument(
     "mode", type=str, help="train or eval or demo or dry-run"
 )
 parser.add_argument(
-    "stack", type=str, help="ID of the network architecture to use", choices=list(stacks.keys())
-)
-parser.add_argument(
-    "image_paths", type=str, nargs="*", default=[], action="extend",
-    help="paths of images (observations), and/or directories containing images, to test the agent on"
+    "--arch", type=str,
+    choices=list(stacks.keys()),
+    default="v7",
+    help="ID of the network architecture to use (default: %(default)s)",
+    dest="stack",
 )
 parser.add_argument(
     "-c", "--continue", action="store_true", dest="load_nets",
@@ -27,6 +29,10 @@ parser.add_argument(
 parser.add_argument(
     "-e", "--episodes", type=int, default=1, metavar="N",
     help="number of episodes sampled during training (default: %(default)s)"
+)
+parser.add_argument(
+    "--images", type=str, nargs="+", action="extend", metavar="", dest="image_paths",
+    help="paths of images (observations), and/or directories containing images, to test the agent on"
 )
 
 args = parser.parse_args()

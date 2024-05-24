@@ -4,6 +4,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image, UnidentifiedImageError
+from rich import print
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.agent import Agent
@@ -143,7 +144,7 @@ def evaluate(
             
             print(
                 f"\nAction values for {path!r} are {values!r}.\n",
-                f"The chosen action's index is {action!r}.\n"
+                f"The chosen action is [bold blue]phase {action!r}[/bold blue].\n"
             )
             
             result = Image.open(f"data/phase{action}.jpg")
