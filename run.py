@@ -3,6 +3,8 @@
 import argparse
 from functools import partial
 
+from rich import print
+
 from rl_traffic_controller.main import demo, evaluate, train
 from rl_traffic_controller.networks import stacks
 
@@ -31,7 +33,7 @@ parser.add_argument(
     help="number of episodes sampled during training (default: %(default)s)"
 )
 parser.add_argument(
-    "--images", type=str, nargs="+", action="extend", metavar="", dest="image_paths",
+    "--images", type=str, nargs="+", action="extend", metavar="", dest="image_paths", default=[],
     help="paths of images (observations), and/or directories containing images, to test the agent on"
 )
 
@@ -52,6 +54,12 @@ if mode == "train":
 elif mode == "dry-run":
     train(stub=True)
 elif mode == "eval":
+    if args.image_paths is None:
+        print(
+            "[red]ERROR[/red]: You must use the '--images' option when using 'eval' mode.",
+            "Use 'python3.11 run.py --help' to know more."
+        )
+        exit(-6)
     evaluate(
         stack_name=args.stack,
         agent=None,
@@ -60,5 +68,7 @@ elif mode == "eval":
 elif mode == "demo":
     demo(stack_name=args.stack)
 else:
-    print(f"ERROR: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more.")
+    print(
+        f"[red]ERROR[/red]: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more."
+    )
     exit(-1)
