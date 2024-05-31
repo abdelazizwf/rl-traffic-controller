@@ -1,15 +1,15 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     
-    <flow id="f_0" begin="0.00" fromJunction="J4" toJunction="J6" end="3600.00" probability="0.03095227267891608" />
-    <flow id="f_1" begin="0.00" fromJunction="J4" toJunction="J8" end="3600.00" probability="0.02894463774291165" />
-    <flow id="f_10" begin="0.00" fromJunction="J7" toJunction="J6" end="3600.00" probability="0.055243707419807886" />
-    <flow id="f_11" begin="0.00" fromJunction="J7" toJunction="J4" end="3600.00" probability="0.03814844527694461" />
-    <flow id="f_2" begin="0.00" fromJunction="J4" toJunction="J7" end="3600.00" probability="0.09897131672597996" />
-    <flow id="f_3" begin="0.00" fromJunction="J6" toJunction="J4" end="3600.00" probability="0.06110399005300538" />
-    <flow id="f_4" begin="0.00" fromJunction="J6" toJunction="J8" end="3600.00" probability="0.029136827777307583" />
-    <flow id="f_5" begin="0.00" fromJunction="J6" toJunction="J7" end="3600.00" probability="0.09492162613277633" />
-    <flow id="f_6" begin="0.00" fromJunction="J8" toJunction="J6" end="3600.00" probability="0.05949370884930542" />
-    <flow id="f_7" begin="0.00" fromJunction="J8" toJunction="J4" end="3600.00" probability="0.018477418820881716" />
-    <flow id="f_8" begin="0.00" fromJunction="J8" toJunction="J7" end="3600.00" probability="0.010597421396296052" />
-    <flow id="f_9" begin="0.00" fromJunction="J7" toJunction="J8" end="3600.00" probability="0.015596072803997982" />
+    <flow id="f_0" begin="0.00" fromJunction="J4" toJunction="J6" end="3600.00" probability="0.026547241482350777" />
+    <flow id="f_1" begin="0.00" fromJunction="J4" toJunction="J8" end="3600.00" probability="0.010892777740231244" />
+    <flow id="f_10" begin="0.00" fromJunction="J7" toJunction="J6" end="3600.00" probability="0.05071748723859809" />
+    <flow id="f_11" begin="0.00" fromJunction="J7" toJunction="J4" end="3600.00" probability="0.016256961209523392" />
+    <flow id="f_2" begin="0.00" fromJunction="J4" toJunction="J7" end="3600.00" probability="0.03703823562510083" />
+    <flow id="f_3" begin="0.00" fromJunction="J6" toJunction="J4" end="3600.00" probability="0.060999625031829804" />
+    <flow id="f_4" begin="0.00" fromJunction="J6" toJunction="J8" end="3600.00" probability="0.01791071785344421" />
+    <flow id="f_5" begin="0.00" fromJunction="J6" toJunction="J7" end="3600.00" probability="0.04361224956830273" />
+    <flow id="f_6" begin="0.00" fromJunction="J8" toJunction="J6" end="3600.00" probability="0.024670837876805234" />
+    <flow id="f_7" begin="0.00" fromJunction="J8" toJunction="J4" end="3600.00" probability="0.03078937063027111" />
+    <flow id="f_8" begin="0.00" fromJunction="J8" toJunction="J7" end="3600.00" probability="0.06900824902546307" />
+    <flow id="f_9" begin="0.00" fromJunction="J7" toJunction="J8" end="3600.00" probability="0.020928792853901597" />
 </routes>

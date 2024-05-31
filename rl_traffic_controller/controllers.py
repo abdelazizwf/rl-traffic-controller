@@ -1,6 +1,7 @@
 import logging
 import random
 import xml.etree.ElementTree as ET
+from collections import defaultdict
 
 import traci
 import traci.exceptions
@@ -51,6 +52,16 @@ class SUMOController:
         self.edge_ids = consts.SIMULATION_EDGE_IDS
         self.step_time = step_time
         self.prev_phase = -1
+        
+        self.detector_counts = defaultdict(int)
+        # Construct detectors
+        self.detectors = []
+        for edge in consts.SIMULATION_EDGE_IDS:
+            for lane_num in range(0, 4):
+                # ex: "E2TL_0_en"
+                prefix = edge + "_" + str(lane_num) + "_"
+                self.detectors.append(prefix + "en")
+                self.detectors.append(prefix + "ex")
     
     def get_screenshot(self) -> Image.Image:
         """Takes a screenshot of the simulation, saves it to disk, and returns it.
@@ -94,14 +105,12 @@ class SUMOController:
         return f
 
     def get_vehicle_count(self) -> int:
-        """Retrieves the number of vehicles on each edge and prints the result.
+        """Retrieves the number of vehicles headed to the intersection.
         
         Returns:
-            The number of vehicles headed towards the intersection.
+            The number of vehicles.
         """
-        return sum(
-            [traci.edge.getLastStepVehicleNumber(x) for x in self.edge_ids]
-        )
+        return sum(self.detector_counts.values())
     
     def start(self) -> None:
         """Starts the simulation using the provided config file."""
@@ -117,6 +126,7 @@ class SUMOController:
             traci.start(commands)
             logger.info(f"Started up the simulation from the config file {self.config_file!r}.")
         except traci.exceptions.TraCIException:
+            self.detector_counts = defaultdict(int)
             traci.load(commands[1:])
         except FileNotFoundError:
             logger.error("SUMO is not available.")
@@ -137,12 +147,22 @@ class SUMOController:
         steps = int(seconds / self.step_time)
         
         for _ in range(steps):
+            self.update_detectors()
             if traci.simulation.getMinExpectedNumber() > 0:
                 traci.simulationStep()
             else:
                 return False
         
         return True
+    
+    def update_detectors(self) -> None:
+        """Calculates the number of vehicles between each pair of entry and exit detectors."""
+        for detector in self.detectors:
+            num = traci.inductionloop.getIntervalVehicleNumber(detector)
+            if detector.endswith("n"):
+                self.detector_counts[detector[:4]] += num
+            else:
+                self.detector_counts[detector[:4]] -= num
     
     def shutdown(self) -> None:
         """Closes the simulation."""
