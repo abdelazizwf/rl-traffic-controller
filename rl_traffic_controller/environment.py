@@ -41,7 +41,8 @@ class Environment:
         
         self.prev_count = 0
         
-        self.metrics = Metrics([], [], [])
+        self.avg_metrics = Metrics([], [], [])
+        self.episode_metrics = Metrics([], [], [])
     
     @classmethod
     def image_to_observation(cls, image: Image) -> torch.Tensor:
@@ -84,6 +85,20 @@ class Environment:
         self.prev_count = 0
         return self.get_observation()
     
+    def reset_metrics(self) -> None:
+        """Resets the metric variables for the new episode."""
+        n = len(self.episode_metrics.max_queue)
+        
+        self.avg_metrics.max_queue.append(
+            sum(self.episode_metrics.max_queue) / n
+        )
+        
+        self.avg_metrics.throughput.append(
+            sum(self.episode_metrics.throughput) / n
+        )
+        
+        self.episode_metrics = Metrics([], [], [])
+    
     def step(self, action: int) -> tuple[torch.Tensor, int, bool]:
         """Applies the chosen action to the environment and returns the results.
         
@@ -112,8 +127,11 @@ class Environment:
             self.simulation_controller.step(16)
         
         # Record metrics
-        self.metrics.max_queue.append(self.simulation_controller.get_max_length())
-        self.metrics.throughput.append(self.simulation_controller.get_throughput())
+        self.episode_metrics.max_queue.append(self.simulation_controller.get_max_length())
+        self.episode_metrics.throughput.append(self.simulation_controller.get_throughput())
+        
+        if done:
+            self.reset_metrics()
         
         return state, reward, done
     
