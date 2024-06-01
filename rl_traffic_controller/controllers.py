@@ -62,6 +62,9 @@ class SUMOController:
                 prefix = edge + "_" + str(lane_num) + "_"
                 self.detectors.append(prefix + "en")
                 self.detectors.append(prefix + "ex")
+        
+        # Store the throughput during the last traffic phase
+        self.throughput = 0
     
     def get_screenshot(self) -> Image.Image:
         """Takes a screenshot of the simulation, saves it to disk, and returns it.
@@ -155,6 +158,24 @@ class SUMOController:
         
         return True
     
+    def get_max_length(self) -> int:
+        """Calculates the maximum queue length.
+        
+        Returns:
+            The maximum queue length.
+        """
+        return max(self.detector_counts.values())
+    
+    def get_throughput(self) -> int:
+        """Gets the throughput of the intersection using exit detectors.
+
+        Returns:
+            The throughput of the intersection.
+        """
+        result = self.throughput
+        self.throughput = 0
+        return result
+    
     def update_detectors(self) -> None:
         """Calculates the number of vehicles between each pair of entry and exit detectors."""
         for detector in self.detectors:
@@ -163,6 +184,7 @@ class SUMOController:
                 self.detector_counts[detector[:4]] += num
             else:
                 self.detector_counts[detector[:4]] -= num
+                self.throughput += num
     
     def shutdown(self) -> None:
         """Closes the simulation."""
@@ -205,6 +227,12 @@ class StubController(SUMOController):
     
     def shutdown(self) -> None:
         return
+    
+    def get_max_length(self) -> int:
+        return 0
+    
+    def get_throughput(self) -> int:
+        return 0
     
     def tweak_probability(self) -> None:
         return

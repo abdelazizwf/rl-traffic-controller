@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 import numpy as np
 import torch
 from PIL.Image import Image
@@ -6,6 +8,9 @@ from rl_traffic_controller import consts
 from rl_traffic_controller.controllers import SUMOController, StubController
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+Metrics = namedtuple("Metrics", ["max_queue", "throughput", "max_delay"])
 
 
 class Environment:
@@ -35,6 +40,8 @@ class Environment:
             )
         
         self.prev_count = 0
+        
+        self.metrics = Metrics([], [], [])
     
     @classmethod
     def image_to_observation(cls, image: Image) -> torch.Tensor:
@@ -103,6 +110,10 @@ class Environment:
         
         if not done:
             self.simulation_controller.step(16)
+        
+        # Record metrics
+        self.metrics.max_queue.append(self.simulation_controller.get_max_length())
+        self.metrics.throughput.append(self.simulation_controller.get_throughput())
         
         return state, reward, done
     
