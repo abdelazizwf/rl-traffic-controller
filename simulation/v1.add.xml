@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2024-05-31 23:27:30 by Eclipse SUMO netedit Version 1.19.0
+<!-- generated on 2024-06-24 14:11:43 by Eclipse SUMO netedit Version 1.19.0
 -->
 
-<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
     <!-- Detectors -->
-    <inductionLoop id="E2TL_0_en" lane="E2TL_0" pos="151.77" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_0_ex" lane="E2TL_0" pos="283.01" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_1_en" lane="E2TL_1" pos="151.77" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_1_ex" lane="E2TL_1" pos="283.01" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_2_en" lane="E2TL_2" pos="151.77" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_2_ex" lane="E2TL_2" pos="283.01" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_3_en" lane="E2TL_3" pos="151.77" period="1.00" file="NUL" />
-    <inductionLoop id="E2TL_3_ex" lane="E2TL_3" pos="283.01" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_0_en" lane="N2TL_0" pos="200.82" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_0_ex" lane="N2TL_0" pos="282.95" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_1_en" lane="N2TL_1" pos="200.82" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_1_ex" lane="N2TL_1" pos="282.95" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_2_en" lane="N2TL_2" pos="200.82" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_2_ex" lane="N2TL_2" pos="282.95" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_3_en" lane="N2TL_3" pos="200.82" period="1.00" file="NUL" />
-    <inductionLoop id="N2TL_3_ex" lane="N2TL_3" pos="282.95" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_0_en" lane="S2TL_0" pos="201.37" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_0_ex" lane="S2TL_0" pos="283.10" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_1_en" lane="S2TL_1" pos="201.37" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_1_ex" lane="S2TL_1" pos="283.10" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_2_en" lane="S2TL_2" pos="201.37" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_2_ex" lane="S2TL_2" pos="283.10" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_3_en" lane="S2TL_3" pos="201.37" period="1.00" file="NUL" />
-    <inductionLoop id="S2TL_3_ex" lane="S2TL_3" pos="283.10" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_0_en" lane="W2TL_0" pos="149.39" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_0_ex" lane="W2TL_0" pos="282.97" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_1_en" lane="W2TL_1" pos="149.39" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_1_ex" lane="W2TL_1" pos="282.97" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_2_en" lane="W2TL_2" pos="149.39" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_2_ex" lane="W2TL_2" pos="282.97" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_3_en" lane="W2TL_3" pos="149.39" period="1.00" file="NUL" />
-    <inductionLoop id="W2TL_3_ex" lane="W2TL_3" pos="282.97" period="1.00" file="NUL" />
+    <inductionLoop id="E2TL_0_en" lane="E2TL_0" pos="118.00" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_0_ex" lane="E2TL_0" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_1_en" lane="E2TL_1" pos="117.00" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_1_ex" lane="E2TL_1" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_2_en" lane="E2TL_2" pos="116.00" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_2_ex" lane="E2TL_2" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_3_en" lane="E2TL_3" pos="115.00" period="1.00" file="NUL"/>
+    <inductionLoop id="E2TL_3_ex" lane="E2TL_3" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_0_en" lane="N2TL_0" pos="160.00" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_0_ex" lane="N2TL_0" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_1_en" lane="N2TL_1" pos="159.00" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_1_ex" lane="N2TL_1" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_2_en" lane="N2TL_2" pos="158.00" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_2_ex" lane="N2TL_2" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_3_en" lane="N2TL_3" pos="157.00" period="1.00" file="NUL"/>
+    <inductionLoop id="N2TL_3_ex" lane="N2TL_3" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_0_en" lane="S2TL_0" pos="160.00" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_0_ex" lane="S2TL_0" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_1_en" lane="S2TL_1" pos="159.00" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_1_ex" lane="S2TL_1" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_2_en" lane="S2TL_2" pos="158.00" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_2_ex" lane="S2TL_2" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_3_en" lane="S2TL_3" pos="157.00" period="1.00" file="NUL"/>
+    <inductionLoop id="S2TL_3_ex" lane="S2TL_3" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_0_en" lane="W2TL_0" pos="118.00" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_0_ex" lane="W2TL_0" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_1_en" lane="W2TL_1" pos="117.00" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_1_ex" lane="W2TL_1" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_2_en" lane="W2TL_2" pos="116.00" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_2_ex" lane="W2TL_2" pos="220.37" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_3_en" lane="W2TL_3" pos="115.00" period="1.00" file="NUL"/>
+    <inductionLoop id="W2TL_3_ex" lane="W2TL_3" pos="220.37" period="1.00" file="NUL"/>
 </additional>
