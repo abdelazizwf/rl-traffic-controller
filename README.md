@@ -19,21 +19,18 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python3.11 run.py --help
 
-usage: run.py [-h] [--arch {v1,v2,v3,v4,v5,v6,v7}] [-c] [-s] [-e N] [--images  [...]]
-              mode
+usage: run.py [-h] [-c] [-s] [-e N] [--images  [...]] mode
 
 positional arguments:
-  mode                  train or eval or demo or dry-run
+  mode                train or eval or demo or dry-run
 
 options:
-  -h, --help            show this help message and exit
-  --arch {v1,v2,v3,v4,v5,v6,v7}
-                        ID of the network architecture to use (default: v7)
-  -c, --continue        load the saved network and continue training
-  -s, --save            save the network after every training episode
-  -e N, --episodes N    number of episodes sampled during training (default: 1)
-  --images  [ ...]      paths of images (observations), and/or directories containing
-                        images, to test the agent on
+  -h, --help          show this help message and exit
+  -c, --continue      load the saved network and continue training
+  -s, --save          save the network after every training episode
+  -e N, --episodes N  number of episodes sampled during training (default: 1)
+  --images  [ ...]    paths of images (observations), and/or directories containing
+                      images, to test the agent on
 ```
 
 To train the agent from scratch, run the following command and replace `N` with the number of episodes you want. Remove `--save` if you don't want to save the Q network after every episode.
@@ -74,7 +71,6 @@ python3.11 run.py dry-run
 
 ### Notes
 
-- The agent can use a variety of network architectures, available in `rl_traffic_controller/networks.py`. Use `python3.11 run.py --help` to find out how to select a specific architecture.
 - The agent saves the Q network and related variables after each episode in the `models/` directory.
 - The `logs/run.log` provides extensive logs during the training process.
 - During training, it's preferable to keep the simulation window visible, as it will make capturing screenshots noticably faster.

@@ -6,19 +6,11 @@ from functools import partial
 from rich import print
 
 from rl_traffic_controller.main import demo, evaluate, train
-from rl_traffic_controller.networks import stacks
 
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
     "mode", type=str, help="train or eval or demo or dry-run"
-)
-parser.add_argument(
-    "--arch", type=str,
-    choices=list(stacks.keys()),
-    default="v7",
-    help="ID of the network architecture to use (default: %(default)s)",
-    dest="stack",
 )
 parser.add_argument(
     "-c", "--continue", action="store_true", dest="load_nets",
@@ -41,7 +33,6 @@ args = parser.parse_args()
 
 train = partial(
     train,
-    stack_name=args.stack,
     load_nets=args.load_nets,
     save=args.save,
     num_episodes=args.episodes,
@@ -61,12 +52,11 @@ elif mode == "eval":
         )
         exit(-6)
     evaluate(
-        stack_name=args.stack,
         agent=None,
         image_paths=args.image_paths
     )
 elif mode == "demo":
-    demo(stack_name=args.stack)
+    demo()
 else:
     print(
         f"[red]ERROR[/red]: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more."

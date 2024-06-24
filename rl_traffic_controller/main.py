@@ -7,14 +7,13 @@ from PIL import Image, UnidentifiedImageError
 from rich import print
 
 from rl_traffic_controller import consts
-from rl_traffic_controller.agent import Agent
+from rl_traffic_controller.agent import DQNAgent
 from rl_traffic_controller.environment import Environment
 
 logger = logging.getLogger(__name__)
 
 
 def train(
-    stack_name: str,
     stub: bool = False,
     load_nets: bool = False,
     save: bool = False,
@@ -24,7 +23,6 @@ def train(
     """Trains the agent.
     
     Args:
-        stack_name: ID of the layer stack.
         load_nets: Loads a saved network if `True`.
         save: Save the networks if `True`.
         num_episodes: The number of episodes used in training.
@@ -32,7 +30,7 @@ def train(
         image_paths: A list of image paths representing observations to be used
             to evaluate the agent.
     """
-    agent = Agent(stack_name, load_nets, save)
+    agent = DQNAgent(load_nets, save)
     
     env = Environment(stub)
     
@@ -43,18 +41,14 @@ def train(
     logger.info('Finished training.')
     
     if len(image_paths) > 0:
-        evaluate(stack_name, image_paths, agent)
+        evaluate(image_paths, agent)
     
     env.finish()
 
 
-def demo(stack_name: str) -> None:
-    """Runs a demo of the agent.
-    
-    Args:
-        stack_name: ID of the layer stack.
-    """
-    agent = Agent(stack_name, True)
+def demo() -> None:
+    """Runs a demo of the agent."""
+    agent = DQNAgent(load_nets=True)
     
     env = Environment()
     
@@ -96,19 +90,17 @@ def display_results(
 
 
 def evaluate(
-    stack_name: str,
     image_paths: list[str],
-    agent: Agent | None = None
+    agent: DQNAgent | None = None
 ) -> None:
     """Prints the action chosen by the agent given the input observations.
     
     Args:
-        stack_name: ID of the layer stack.
         image_paths: A list of image paths representing observations.
         agent: An optional agent that is already initialized.
     """
     if agent is None:
-        agent = Agent(stack_name, True)
+        agent = DQNAgent(load_nets=True)
         
     for path in image_paths:
         is_dir = os.path.isdir(path)

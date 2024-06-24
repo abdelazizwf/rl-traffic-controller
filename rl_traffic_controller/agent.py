@@ -10,7 +10,7 @@ import torch.optim as optim
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.environment import Environment
-from rl_traffic_controller.networks import DQN, stacks
+from rl_traffic_controller.networks import DQN
 
 # Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -70,7 +70,7 @@ class ReplayMemory:
         return len(self.memory)
 
 
-class Agent:
+class DQNAgent:
     """The Reinforcement Learning agent.
     
     Attributes:
@@ -99,28 +99,25 @@ class Agent:
     LR = consts.LR
     
     def __init__(
-        self, stack_name: str,
+        self,
         load_nets: bool = False,
         save: bool = False
     ) -> None:
         """
         Args:
-            stack_name: ID of the layer stack.
             load_nets: Load a saved network if `True`.
             save: Save the networks if `True`.
         """
-        stack = stacks[stack_name]
-        
         self.cont = load_nets
         self.save = save
     
-        self.policy_net = DQN(stack, stack_name).to(device)
-        self.target_net = DQN(stack, stack_name).to(device)
+        self.policy_net = DQN().to(device)
+        self.target_net = DQN().to(device)
         
         if load_nets is True:
             try:
-                self.policy_net.load_state_dict(torch.load(f"models/{stack_name}_policy_net.pt"))
-                self.target_net.load_state_dict(torch.load(f"models/{stack_name}_target_net.pt"))
+                self.policy_net.load_state_dict(torch.load("models/dqn_policy_net.pt"))
+                self.target_net.load_state_dict(torch.load("models/dqn_target_net.pt"))
                 logger.info("Loaded models successfully")
             except FileNotFoundError:
                 logger.error("Saved models were not found. Consider running without '-c' or '--continue'.")
@@ -243,7 +240,7 @@ class Agent:
             num_episodes: Number of episodes to sample during training.
         """
         if self.cont is True:
-            with open(f"models/{self.policy_net.name}_steps.pkl", "rb") as f:
+            with open("models/dqn_steps.pkl", "rb") as f:
                 self.steps_done = pickle.load(f)
         
         for i_episode in range(1, num_episodes + 1):
@@ -281,9 +278,9 @@ class Agent:
             
             if self.save is True:
                 try:
-                    torch.save(self.target_net.state_dict(), f"models/{self.target_net.name}_target_net.pt")
-                    torch.save(self.policy_net.state_dict(), f"models/{self.policy_net.name}_policy_net.pt")
-                    with open(f"models/{self.target_net.name}_steps.pkl", "wb") as f:
+                    torch.save(self.target_net.state_dict(), "models/dqn_target_net.pt")
+                    torch.save(self.policy_net.state_dict(), "models/dqn_policy_net.pt")
+                    with open("models/dqn_steps.pkl", "wb") as f:
                         pickle.dump(self.steps_done, f)
                     logger.debug("Saved models.")
                 except Exception:
