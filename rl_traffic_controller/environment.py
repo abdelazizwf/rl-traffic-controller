@@ -10,7 +10,7 @@ from rl_traffic_controller.controllers import SUMOController, StubController
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-Metrics = namedtuple("Metrics", ["max_queue", "throughput", "max_delay"])
+Metrics = namedtuple("Metrics", ["max_queue", "throughput", "avg_delay"])
 
 
 class Environment:
@@ -80,7 +80,7 @@ class Environment:
         Returns:
             The very first observation.
         """
-        self.simulation_controller.tweak_probability()
+        # self.simulation_controller.tweak_probability()
         self.simulation_controller.start()
         self.prev_count = 0
         return self.get_observation()
@@ -90,11 +90,15 @@ class Environment:
         n = len(self.episode_metrics.max_queue)
         
         self.avg_metrics.max_queue.append(
-            sum(self.episode_metrics.max_queue) / n
+            max(self.episode_metrics.max_queue)
         )
         
         self.avg_metrics.throughput.append(
-            sum(self.episode_metrics.throughput) / n
+            round(sum(self.episode_metrics.throughput) / n, 3)
+        )
+        
+        self.avg_metrics.avg_delay.append(
+            self.episode_metrics.avg_delay[-1]
         )
         
         self.episode_metrics = Metrics([], [], [])
@@ -124,11 +128,14 @@ class Environment:
         self.prev_count = count
         
         if not done:
-            self.simulation_controller.step(16)
+            done = not self.simulation_controller.step(16)
         
         # Record metrics
         self.episode_metrics.max_queue.append(self.simulation_controller.get_max_length())
         self.episode_metrics.throughput.append(self.simulation_controller.get_throughput())
+        self.episode_metrics.avg_delay.append(
+            round(self.simulation_controller.get_avg_delay(), 3)
+        )
         
         if done:
             self.reset_metrics()

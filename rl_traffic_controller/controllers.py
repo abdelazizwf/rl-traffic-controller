@@ -65,6 +65,7 @@ class SUMOController:
         
         # Store the throughput during the last traffic phase
         self.throughput = 0
+        self.vehicle_delays = defaultdict(float)
     
     def get_screenshot(self) -> Image.Image:
         """Takes a screenshot of the simulation, saves it to disk, and returns it.
@@ -123,6 +124,7 @@ class SUMOController:
             "-c", self.config_file,
             "--step-length", str(self.step_time),
             "--time-to-teleport", str(-1),
+            "--waiting-time-memory", str(6000),
         ]
 
         try:
@@ -130,6 +132,7 @@ class SUMOController:
             logger.info(f"Started up the simulation from the config file {self.config_file!r}.")
         except traci.exceptions.TraCIException:
             self.detector_counts = defaultdict(int)
+            self.vehicle_delays = defaultdict(float)
             traci.load(commands[1:])
         except FileNotFoundError:
             logger.error("SUMO is not available.")
@@ -176,6 +179,18 @@ class SUMOController:
         self.throughput = 0
         return result
     
+    def get_avg_delay(self) -> float:
+        """Calculates the average delay of current vehicles.
+        
+        Returns:
+            The average delay.
+        """
+        vehicles = traci.vehicle.getIDList()
+        for v in vehicles:
+            self.vehicle_delays[v] = traci.vehicle.getAccumulatedWaitingTime(v)
+        delay = sum(self.vehicle_delays.values())
+        return delay / len(self.vehicle_delays)
+    
     def update_detectors(self) -> None:
         """Calculates the number of vehicles between each pair of entry and exit detectors."""
         for detector in self.detectors:
@@ -203,11 +218,14 @@ class SUMOController:
         tree.write(consts.SIMULATION_ROUTE_PATH)
 
 
-class StubController(SUMOController):
+class StubController:
     """A class to simulate `SUMOController` for testing only."""
     t = 0
     max_t = 1000
     image = Image.new("RGB", (400, 266))
+    
+    def __init__(self, config_file: str, step_time: float = 1.0) -> None:
+        pass
     
     def get_screenshot(self) -> Image.Image:
         return self.image
@@ -233,6 +251,12 @@ class StubController(SUMOController):
     
     def get_throughput(self) -> int:
         return 0
+    
+    def get_avg_delay(self) -> float:
+        return 0
+    
+    def update_detectors(self) -> None:
+        return
     
     def tweak_probability(self) -> None:
         return
