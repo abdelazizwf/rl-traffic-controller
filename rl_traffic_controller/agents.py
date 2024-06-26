@@ -2,7 +2,6 @@ import logging
 import math
 import pickle
 import random
-from collections import deque, namedtuple
 
 import torch
 import torch.nn as nn
@@ -11,6 +10,7 @@ import torch.optim as optim
 from rl_traffic_controller import consts
 from rl_traffic_controller.environment import Environment
 from rl_traffic_controller.networks import DQN
+from rl_traffic_controller.utils import ReplayMemory, Transition
 
 # Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -18,60 +18,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 logger = logging.getLogger(__name__)
 
 
-Transition = namedtuple(
-    'Transition',
-    ('state', 'action', 'next_state', 'reward')
-)
-Transition.__doc__ = """\
-A data record of the environment transition.
-
-Attributes:
-    state: Current state.
-    action: Action taken.
-    next_state: Resulting observation.
-    reward: Reward earned.
-"""
-
-
-class ReplayMemory:
-    """A memory buffer to store and sample transitions.
-    
-    Attributes:
-        memory: A `collection.deque` object to hold transitions.
-    """
-
-    def __init__(self, capacity: int) -> None:
-        """
-        Args:
-            capacity: Maximum number of stored transitions.
-        """
-        self.memory = deque([], maxlen=capacity)
-
-    def push(self, *args):
-        """Saves a transition.
-        
-        Args:
-            *args: Transition elements.
-        """
-        self.memory.append(Transition(*args))
-
-    def sample(self, batch_size: int) -> list[Transition]:
-        """Samples a random number of transitions.
-        
-        Args:
-            batch_size: Number of randomly sampled transitions.
-        
-        Returns:
-            A list of sampled transitions.
-        """
-        return random.sample(self.memory, batch_size)
-
-    def __len__(self) -> int:
-        return len(self.memory)
-
-
 class DQNAgent:
-    """The Reinforcement Learning agent.
+    """The DQN agent.
     
     Attributes:
         BATCH_SIZE: The number of transitions sampled from the replay buffer.
@@ -313,3 +261,41 @@ class DQNAgent:
         while not done:
             _, action = self.evaluate(state)
             state, _, done = env.step(action)
+
+
+class FixedAgent:
+    """A class simulating a traditional time-based traffic light controller."""
+    
+    def __init__(
+        self,
+        load_nets: bool = False,
+        save: bool = False
+    ) -> None:
+        self.current_phase = 0
+    
+    def _next_phase(self) -> int:
+        self.current_phase = (self.current_phase + 1) % 4
+        return self.current_phase
+    
+    def train(
+        self,
+        env: Environment,
+        num_episodes: int = 1,
+    ) -> None:
+        for _ in range(num_episodes):
+            env.reset()
+            while True:
+                action = self._next_phase()
+                _, _, done = env.step(action)
+
+                if done:
+                    break
+    
+    def demo(self, env: Environment) -> None:
+        env.reset()
+        done = False
+        while not done:
+            _, _, done = env.step(self._next_phase())
+
+    def evaluate(self, state: torch.Tensor) -> tuple[list[float], int]:
+        raise NotImplementedError(f"This operation is not valid for {self.__class__.__name__}.")

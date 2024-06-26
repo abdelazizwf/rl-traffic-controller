@@ -25,6 +25,10 @@ parser.add_argument(
     help="number of episodes sampled during training (default: %(default)s)"
 )
 parser.add_argument(
+    "-a", "--agent", type=str, default="dqn", metavar="agent_name", dest="agent_name",
+    help="which agent to use, dqn or fixed (default: %(default)s)"
+)
+parser.add_argument(
     "--images", type=str, nargs="+", action="extend", metavar="", dest="image_paths", default=[],
     help="paths of images (observations), and/or directories containing images, to test the agent on"
 )
@@ -33,6 +37,7 @@ args = parser.parse_args()
 
 train = partial(
     train,
+    agent_name=args.agent_name,
     load_nets=args.load_nets,
     save=args.save,
     num_episodes=args.episodes,
@@ -51,12 +56,17 @@ elif mode == "eval":
             "Use 'python3.11 run.py --help' to know more."
         )
         exit(-6)
+    if args.agent_name.lower() == "fixed":
+        print(
+            "[red]ERROR[/red]: The 'fixed' agent doesn't support 'eval' mode."
+        )
+        exit(-7)
     evaluate(
         agent=None,
         image_paths=args.image_paths
     )
 elif mode == "demo":
-    demo()
+    demo(agent_name=args.agent_name)
 else:
     print(
         f"[red]ERROR[/red]: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more."

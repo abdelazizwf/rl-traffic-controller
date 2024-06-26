@@ -7,12 +7,30 @@ from PIL import Image, UnidentifiedImageError
 from rich import print
 
 from rl_traffic_controller import consts
-from rl_traffic_controller.agent import DQNAgent
+from rl_traffic_controller.agents import DQNAgent, FixedAgent
 from rl_traffic_controller.environment import Environment, Metrics
 
 logger = logging.getLogger(__name__)
 
 plt.style.use('seaborn-v0_8-darkgrid')
+
+
+def get_agent_class(agent_name: str) -> type[DQNAgent] | type[FixedAgent]:
+    """Selects the agent class based on the name.
+    
+    Args:
+        agent_name: The name of the agent.
+    
+    Returns:
+        The agent class selected by the user.
+    """
+    if agent_name.lower() == "dqn":
+        return DQNAgent
+    elif agent_name.lower() == "fixed":
+        return FixedAgent
+    else:
+        logger.error("Unknown agent option. Use 'python3.11 run.py --help' to know more.")
+        exit(-8)
 
 
 def plot_metrics(metrics: Metrics) -> None:
@@ -47,6 +65,7 @@ def plot_metrics(metrics: Metrics) -> None:
 
 
 def train(
+    agent_name: str,
     stub: bool = False,
     load_nets: bool = False,
     save: bool = False,
@@ -56,6 +75,7 @@ def train(
     """Trains the agent.
     
     Args:
+        agent_name: The name of the agent to train.
         load_nets: Loads a saved network if `True`.
         save: Save the networks if `True`.
         num_episodes: The number of episodes used in training.
@@ -63,7 +83,10 @@ def train(
         image_paths: A list of image paths representing observations to be used
             to evaluate the agent.
     """
-    agent = DQNAgent(load_nets, save)
+    agent_class = get_agent_class(agent_name)
+    agent = agent_class(load_nets, save)
+    
+    logger.info(f"Initialized agent '{agent_name}'.")
     
     env = Environment(stub)
     
@@ -81,9 +104,16 @@ def train(
     env.finish()
 
 
-def demo() -> None:
-    """Runs a demo of the agent."""
-    agent = DQNAgent(load_nets=True)
+def demo(agent_name: str) -> None:
+    """Runs a demo of the agent.
+    
+    Args:
+        agent_name: The name of the agent to demo.
+    """
+    agent_class = get_agent_class(agent_name)
+    agent = agent_class()
+    
+    logger.info(f"Initialized agent '{agent_name}'.")
     
     env = Environment()
     
@@ -92,6 +122,8 @@ def demo() -> None:
     agent.demo(env)
     
     logger.info('Finished demo.')
+    
+    plot_metrics(env.episode_metrics)
     
     env.finish()
 

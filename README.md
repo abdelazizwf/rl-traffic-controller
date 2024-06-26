@@ -19,18 +19,20 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python3.11 run.py --help
 
-usage: run.py [-h] [-c] [-s] [-e N] [--images  [...]] mode
+usage: run.py [-h] [-c] [-s] [-e N] [-a agent_name] [--images  [...]] mode
 
 positional arguments:
-  mode                train or eval or demo or dry-run
+  mode                  train or eval or demo or dry-run
 
 options:
-  -h, --help          show this help message and exit
-  -c, --continue      load the saved network and continue training
-  -s, --save          save the network after every training episode
-  -e N, --episodes N  number of episodes sampled during training (default: 1)
-  --images  [ ...]    paths of images (observations), and/or directories containing
-                      images, to test the agent on
+  -h, --help            show this help message and exit
+  -c, --continue        load the saved network and continue training
+  -s, --save            save the network after every training episode
+  -e N, --episodes N    number of episodes sampled during training (default: 1)
+  -a agent_name, --agent agent_name
+                        which agent to use, dqn or fixed (default: dqn)
+  --images  [ ...]      paths of images (observations), and/or directories containing
+                        images, to test the agent on
 ```
 
 To train the agent from scratch, run the following command and replace `N` with the number of episodes you want. Remove `--save` if you don't want to save the Q network after every episode.
@@ -43,6 +45,12 @@ To continue training the agent using a previously saved Q network, run the follo
 
 ```bash
 python3.11 run.py train --episodes N --continue
+```
+
+The `--agent` option specifies which agent to use. Use `python3.11 run.py --help` to know the available agents and which agent is used by default.
+
+```bash
+python3.11 run.py train --agent agent_name --episodes N
 ```
 
 To see the agent's action values (using a previously saved Q network), run the following command and provide as many images, and directories containing multiple images, as you want. The directories will be searched for images in the first level only. The `--images` option should be the last option used in the command.
@@ -71,7 +79,8 @@ python3.11 run.py dry-run
 
 ### Notes
 
-- The agent saves the Q network and related variables after each episode in the `models/` directory.
+- The agents save any networks and related variables after each episode in the `models/` directory.
 - The `logs/run.log` provides extensive logs during the training process.
 - During training, it's preferable to keep the simulation window visible, as it will make capturing screenshots noticably faster.
 - Network configurations depend on the size and format of the input image, thus some configurations may not work with the current settings (specified in `rl_traffic_controller/consts.py`).
+- The `fixed` agent runs a traditional timer-based traffic light controller. It's used as a benchmark for other agents, and can't be used in `eval` mode.

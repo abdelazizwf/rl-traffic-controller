@@ -83,9 +83,10 @@ class Environment:
         # self.simulation_controller.tweak_probability()
         self.simulation_controller.start()
         self.prev_count = 0
+        self.episode_metrics = Metrics([], [], [])
         return self.get_observation()
     
-    def reset_metrics(self) -> None:
+    def aggregate_metrics(self) -> None:
         """Resets the metric variables for the new episode."""
         n = len(self.episode_metrics.max_queue)
         
@@ -100,8 +101,6 @@ class Environment:
         self.avg_metrics.avg_delay.append(
             self.episode_metrics.avg_delay[-1]
         )
-        
-        self.episode_metrics = Metrics([], [], [])
     
     def step(self, action: int) -> tuple[torch.Tensor, int, bool]:
         """Applies the chosen action to the environment and returns the results.
@@ -138,7 +137,7 @@ class Environment:
         )
         
         if done:
-            self.reset_metrics()
+            self.aggregate_metrics()
         
         return state, reward, done
     
