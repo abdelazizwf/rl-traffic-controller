@@ -8,9 +8,42 @@ from rich import print
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.agent import DQNAgent
-from rl_traffic_controller.environment import Environment
+from rl_traffic_controller.environment import Environment, Metrics
 
 logger = logging.getLogger(__name__)
+
+plt.style.use('seaborn-v0_8-darkgrid')
+
+
+def plot_metrics(metrics: Metrics) -> None:
+    """Plots the environment metrics.
+
+    Args:
+        metrics: The environment metrics.
+    """
+    fig, (ax1, ax2, ax3) = plt.subplots(ncols=1, nrows=3, figsize=(7, 9))
+    n = len(metrics.avg_delay)
+    
+    # Average Delay
+    ax1.plot(range(1, n + 1), metrics.avg_delay)
+    ax1.set_xlabel("Episode")
+    ax1.set_ylabel("Delay [s]")
+    ax1.set_title("Average Delay per Episode")
+    
+    # Max Queue Length
+    ax2.plot(range(1, n + 1), metrics.max_queue)
+    ax2.set_xlabel("Episode")
+    ax2.set_ylabel("Queue Length [vehicle]")
+    ax2.set_title("Max Queue Length per Episode")
+    
+    # Average Throughput
+    ax3.plot(range(1, n + 1), metrics.throughput)
+    ax3.set_xlabel("Episode")
+    ax3.set_ylabel("Throughput [vehicle]")
+    ax3.set_title("Average Throughput per Episode")
+    
+    plt.subplots_adjust(hspace=0.5)
+    plt.show()
 
 
 def train(
@@ -42,6 +75,8 @@ def train(
     
     if len(image_paths) > 0:
         evaluate(image_paths, agent)
+    
+    plot_metrics(env.avg_metrics)
     
     env.finish()
 
