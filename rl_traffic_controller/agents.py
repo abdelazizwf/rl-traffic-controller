@@ -190,6 +190,8 @@ class DQNAgent:
         if self.cont is True:
             with open("models/dqn_steps.pkl", "rb") as f:
                 self.steps_done = pickle.load(f)
+            with open("models/dqn_env_avg_metrics.pkl", "rb") as f:
+                env.avg_metrics = pickle.load(f)
         
         for i_episode in range(1, num_episodes + 1):
             logger.info(f"Starting episode number {i_episode!r}.")
@@ -230,6 +232,8 @@ class DQNAgent:
                     torch.save(self.policy_net.state_dict(), "models/dqn_policy_net.pt")
                     with open("models/dqn_steps.pkl", "wb") as f:
                         pickle.dump(self.steps_done, f)
+                    with open("models/dqn_env_avg_metrics.pkl", "wb") as f:
+                        pickle.dump(env.avg_metrics, f)
                     logger.debug("Saved models.")
                 except Exception:
                     logger.exception("Couldn't save models.")
