@@ -19,15 +19,16 @@ capturing a screenshot of the simulation using `traci`.
 ```text
 $ python3.11 run.py --help
 
-usage: run.py [-h] [-c] [-s] [-e N] [-a agent_name] [--images  [...]] mode
+usage: run.py [-h] [-c] [-s] [-p] [-e N] [-a agent_name] [--images  [...]] mode
 
 positional arguments:
   mode                  train or eval or demo or dry-run
 
 options:
   -h, --help            show this help message and exit
-  -c, --continue        load the saved network and continue training
-  -s, --save            save the network after every training episode
+  -c, --continue        load the saved networks and continue training
+  -s, --save            save the networks after every training episode
+  -p, --plot            plot the metrics after training
   -e N, --episodes N    number of episodes sampled during training (default: 1)
   -a agent_name, --agent agent_name
                         which agent to use, dqn or fixed (default: dqn)
@@ -51,6 +52,12 @@ The `--agent` option specifies which agent to use. Use `python3.11 run.py --help
 
 ```bash
 python3.11 run.py train --agent agent_name --episodes N
+```
+
+To plot the metrics collected in the training run, use the option `--plot`.
+
+```bash
+python3.11 run.py train --episodes N --plot
 ```
 
 To see the agent's action values (using a previously saved Q network), run the following command and provide as many images, and directories containing multiple images, as you want. The directories will be searched for images in the first level only. The `--images` option should be the last option used in the command.

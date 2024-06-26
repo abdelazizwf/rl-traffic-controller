@@ -14,11 +14,15 @@ parser.add_argument(
 )
 parser.add_argument(
     "-c", "--continue", action="store_true", dest="load_nets",
-    help="load the saved network and continue training"
+    help="load the saved networks and continue training"
 )
 parser.add_argument(
     "-s", "--save", action="store_true", dest="save",
-    help="save the network after every training episode"
+    help="save the networks after every training episode"
+)
+parser.add_argument(
+    "-p", "--plot", action="store_true",
+    help="plot the metrics after training"
 )
 parser.add_argument(
     "-e", "--episodes", type=int, default=1, metavar="N",
@@ -42,6 +46,7 @@ train = partial(
     save=args.save,
     num_episodes=args.episodes,
     image_paths=args.image_paths,
+    plot=args.plot,
 )
 
 mode = args.mode.lower()
@@ -66,7 +71,7 @@ elif mode == "eval":
         image_paths=args.image_paths
     )
 elif mode == "demo":
-    demo(agent_name=args.agent_name)
+    demo(agent_name=args.agent_name, plot=args.plot)
 else:
     print(
         f"[red]ERROR[/red]: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more."

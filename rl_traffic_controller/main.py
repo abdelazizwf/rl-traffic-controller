@@ -70,7 +70,8 @@ def train(
     load_nets: bool = False,
     save: bool = False,
     num_episodes: int = 50,
-    image_paths: list[str] = []
+    image_paths: list[str] = [],
+    plot: bool = False,
 ) -> None:
     """Trains the agent.
     
@@ -82,6 +83,7 @@ def train(
         checkpoints: A flag to enable saving the network after each episode.
         image_paths: A list of image paths representing observations to be used
             to evaluate the agent.
+        plot: A flag to enable plotting the metrics after training.
     """
     agent_class = get_agent_class(agent_name)
     agent = agent_class(load_nets, save)
@@ -99,16 +101,18 @@ def train(
     if len(image_paths) > 0:
         evaluate(image_paths, agent)
     
-    plot_metrics(env.avg_metrics)
+    if plot is True:
+        plot_metrics(env.avg_metrics)
     
     env.finish()
 
 
-def demo(agent_name: str) -> None:
+def demo(agent_name: str, plot: bool = False) -> None:
     """Runs a demo of the agent.
     
     Args:
         agent_name: The name of the agent to demo.
+        plot: A flag to enable plotting the metrics after the demo.
     """
     agent_class = get_agent_class(agent_name)
     agent = agent_class()
@@ -123,7 +127,8 @@ def demo(agent_name: str) -> None:
     
     logger.info('Finished demo.')
     
-    plot_metrics(env.episode_metrics)
+    if plot is True:
+        plot_metrics(env.episode_metrics)
     
     env.finish()
 
