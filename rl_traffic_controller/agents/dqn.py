@@ -2,6 +2,7 @@ import logging
 import math
 import pickle
 import random
+from functools import partial
 
 import torch
 import torch.nn as nn
@@ -9,13 +10,55 @@ import torch.optim as optim
 
 from rl_traffic_controller import consts
 from rl_traffic_controller.environment import Environment
-from rl_traffic_controller.networks import DQN
 from rl_traffic_controller.utils import ReplayMemory, Transition
 
 # Choose cuda if a GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 logger = logging.getLogger(__name__)
+
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Partial functions to set default arguments for layers.
+conv2d = partial(nn.Conv2d, device=device, dtype=torch.float32)
+batchnorm = partial(nn.BatchNorm2d, device=device, dtype=torch.float32)
+linear = partial(nn.Linear, device=device, dtype=torch.float32)
+
+
+class DQN(nn.Module):
+    """A CNN to predict Q-values."""
+
+    def __init__(self) -> None:
+        super(DQN, self).__init__()
+        self.layer_stack = nn.Sequential(
+            conv2d(1, 16, (8, 6), 2),
+            nn.ReLU(),
+            batchnorm(16),
+            conv2d(16, 32, (5, 7), 2),
+            nn.ReLU(),
+            batchnorm(32),
+            conv2d(32, 64, 3, 1),
+            nn.ReLU(),
+            batchnorm(64),
+            nn.Flatten(),
+            linear(78848, 4)
+        )
+        
+        logger.debug(f"Created DQN.\n{self.layer_stack!r}")
+
+    # Called with either one element to determine next action, or a batch
+    # during optimization. Returns tensor([[left0exp,right0exp]...]).
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Implements the forward step for the network.
+        
+        Args:
+            x: The input tensor.
+        
+        Returns:
+            The output of the network in the form of a tensor.
+        """
+        return self.layer_stack(x)
 
 
 class DQNAgent:
@@ -265,41 +308,3 @@ class DQNAgent:
         while not done:
             _, action = self.evaluate(state)
             state, _, done = env.step(action)
-
-
-class FixedAgent:
-    """A class simulating a traditional time-based traffic light controller."""
-    
-    def __init__(
-        self,
-        load_nets: bool = False,
-        save: bool = False
-    ) -> None:
-        self.current_phase = 0
-    
-    def _next_phase(self) -> int:
-        self.current_phase = (self.current_phase + 1) % 4
-        return self.current_phase
-    
-    def train(
-        self,
-        env: Environment,
-        num_episodes: int = 1,
-    ) -> None:
-        for _ in range(num_episodes):
-            env.reset()
-            while True:
-                action = self._next_phase()
-                _, _, done = env.step(action)
-
-                if done:
-                    break
-    
-    def demo(self, env: Environment) -> None:
-        env.reset()
-        done = False
-        while not done:
-            _, _, done = env.step(self._next_phase())
-
-    def evaluate(self, state: torch.Tensor) -> tuple[list[float], int]:
-        raise NotImplementedError(f"This operation is not valid for {self.__class__.__name__}.")

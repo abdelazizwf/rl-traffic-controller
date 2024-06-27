@@ -7,7 +7,8 @@ from PIL import Image, UnidentifiedImageError
 from rich import print
 
 from rl_traffic_controller import consts
-from rl_traffic_controller.agents import DQNAgent, FixedAgent
+from rl_traffic_controller.agents.dqn import DQNAgent
+from rl_traffic_controller.agents.fixed import FixedAgent
 from rl_traffic_controller.environment import Environment, Metrics
 
 logger = logging.getLogger(__name__)
