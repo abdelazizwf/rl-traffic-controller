@@ -46,7 +46,7 @@ def plot_metrics(metrics: Metrics) -> None:
     n = len(metrics.avg_delay)
     
     # Calculate moving averages
-    window_size = n // 10
+    window_size = n // 10 if n // 10 > 0 else 1
     ma_y1 = moving_average(metrics.avg_delay, window_size)
     ma_y2 = moving_average(metrics.max_queue, window_size)
     ma_y3 = moving_average(metrics.throughput, window_size)
