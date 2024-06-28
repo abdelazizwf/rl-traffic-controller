@@ -1,4 +1,8 @@
+import logging
+
 from rl_traffic_controller.environment import Environment
+
+logger = logging.getLogger(__name__)
 
 
 class FixedAgent:
@@ -20,7 +24,8 @@ class FixedAgent:
         env: Environment,
         num_episodes: int = 1,
     ) -> None:
-        for _ in range(num_episodes):
+        for i_episode in range(1, num_episodes + 1):
+            logger.info(f"Starting episode number {i_episode!r}.")
             env.reset()
             while True:
                 action = self._next_phase()

@@ -80,7 +80,7 @@ class Environment:
         Returns:
             The very first observation.
         """
-        # self.simulation_controller.tweak_probability()
+        self.simulation_controller.tweak_probability()
         self.simulation_controller.start()
         self.prev_count = 0
         self.episode_metrics = Metrics([], [], [])

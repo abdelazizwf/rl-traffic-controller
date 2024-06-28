@@ -1,6 +1,6 @@
 """A module to hold constants."""
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 GAMMA = 0.99
 EPS_START = 0.9
 EPS_END = 0.05

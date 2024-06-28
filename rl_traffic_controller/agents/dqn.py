@@ -88,6 +88,7 @@ class DQNAgent:
     EPS_END = consts.EPS_END
     EPS_DECAY = consts.EPS_DECAY
     LR = consts.LR
+    TAU = consts.TAU
     
     def __init__(
         self,
@@ -131,6 +132,7 @@ class DQNAgent:
             f"Starting epsilon: {self.EPS_START}\n" +
             f"Final epsilon: {self.EPS_END}\n" +
             f"Epsilon exponential decay rate: {self.EPS_DECAY}\n" +
+            f"Tau: {self.TAU}\n" +
             f"Learning rate: {self.LR}"
         )
         
@@ -271,7 +273,7 @@ class DQNAgent:
             target_net_state_dict = self.target_net.state_dict()
             policy_net_state_dict = self.policy_net.state_dict()
             for key in policy_net_state_dict:
-                target_net_state_dict[key] = policy_net_state_dict[key] * consts.TAU + target_net_state_dict[key] * (1 - consts.TAU)
+                target_net_state_dict[key] = policy_net_state_dict[key] * self.TAU + target_net_state_dict[key] * (1 - self.TAU)
             self.target_net.load_state_dict(target_net_state_dict)
             
             logger.debug("Updated target network.")
