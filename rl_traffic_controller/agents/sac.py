@@ -347,14 +347,16 @@ class SACAgent:
         action_values = action_values.squeeze(0).tolist()
         return [round(x, 3) for x in action_values], action
     
-    def demo(self, env: Environment) -> None:
+    def demo(self, env: Environment, episodes: int = 1) -> None:
         """Uses the target network to always select the best action.
         
         Args:
             env: The problem environment.
         """
-        state = env.reset()
-        done = False
-        while not done:
-            _, action = self.evaluate(state)
-            state, _, done = env.step(action)
+        for i in range(episodes):
+            logger.info(f"Starting episode number {i + 1!r}.")
+            state = env.reset()
+            done = False
+            while not done:
+                _, action = self.evaluate(state)
+                state, _, done = env.step(action)

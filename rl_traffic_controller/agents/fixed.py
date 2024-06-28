@@ -34,8 +34,10 @@ class FixedAgent:
                 if done:
                     break
     
-    def demo(self, env: Environment) -> None:
-        env.reset()
-        done = False
-        while not done:
-            _, _, done = env.step(self._next_phase())
+    def demo(self, env: Environment, episodes: int = 1) -> None:
+        for i in range(episodes):
+            logger.info(f"Starting episode number {i + 1!r}.")
+            env.reset()
+            done = False
+            while not done:
+                _, _, done = env.step(self._next_phase())

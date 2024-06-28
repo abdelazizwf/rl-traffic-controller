@@ -71,7 +71,7 @@ elif mode == "eval":
         image_paths=args.image_paths
     )
 elif mode == "demo":
-    demo(agent_name=args.agent_name, plot=args.plot)
+    demo(agent_name=args.agent_name, plot=args.plot, episodes=args.episodes)
 else:
     print(
         f"[red]ERROR[/red]: Invalid mode '{mode}'. Use 'python3.11 run.py --help' to know more."

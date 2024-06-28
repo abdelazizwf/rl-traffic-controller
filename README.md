@@ -72,10 +72,10 @@ To see the agent's action values after the training is finished, provide the ima
 python3.11 run.py train --episodes N --images firstPicture.png secondPicture.png imagesDir/ ...
 ```
 
-To demo the agent in a running environment use the following command.
+To demo the agent in a running environment use the following command. You can use the `--episodes` option to specify the number of episodes.
 
 ```bash
-python3.11 run.py demo
+python3.11 run.py demo --episodes N
 ```
 
 If you want to test the code without using SUMO, use the `dry-run` mode to simulate the training process. It functions exactly as the `train` mode.

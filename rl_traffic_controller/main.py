@@ -126,7 +126,7 @@ def train(
     env.finish()
 
 
-def demo(agent_name: str, plot: bool = False) -> None:
+def demo(agent_name: str, episodes: int = 1, plot: bool = False) -> None:
     """Runs a demo of the agent.
     
     Args:
@@ -134,7 +134,7 @@ def demo(agent_name: str, plot: bool = False) -> None:
         plot: A flag to enable plotting the metrics after the demo.
     """
     agent_class = get_agent_class(agent_name)
-    agent = agent_class()
+    agent = agent_class(load_nets=True)
     
     logger.info(f"Initialized agent '{agent_name}'.")
     
@@ -142,7 +142,7 @@ def demo(agent_name: str, plot: bool = False) -> None:
     
     logger.info('Starting demo.')
     
-    agent.demo(env)
+    agent.demo(env, episodes)
     
     logger.info('Finished demo.')
     
