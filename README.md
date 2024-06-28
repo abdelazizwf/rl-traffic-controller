@@ -31,7 +31,7 @@ options:
   -p, --plot            plot the metrics after training
   -e N, --episodes N    number of episodes sampled during training (default: 1)
   -a agent_name, --agent agent_name
-                        which agent to use, dqn or fixed (default: dqn)
+                        which agent to use, dqn or sac or fixed (default: dqn)
   --images  [ ...]      paths of images (observations), and/or directories containing
                         images, to test the agent on
 ```

@@ -9,6 +9,7 @@ from rich import print
 from rl_traffic_controller import consts
 from rl_traffic_controller.agents.dqn import DQNAgent
 from rl_traffic_controller.agents.fixed import FixedAgent
+from rl_traffic_controller.agents.sac import SACAgent
 from rl_traffic_controller.environment import Environment, Metrics
 
 logger = logging.getLogger(__name__)
@@ -16,7 +17,9 @@ logger = logging.getLogger(__name__)
 plt.style.use('seaborn-v0_8-darkgrid')
 
 
-def get_agent_class(agent_name: str) -> type[DQNAgent] | type[FixedAgent]:
+def get_agent_class(
+    agent_name: str
+) -> type[DQNAgent] | type[FixedAgent] | type[SACAgent]:
     """Selects the agent class based on the name.
     
     Args:
@@ -29,6 +32,8 @@ def get_agent_class(agent_name: str) -> type[DQNAgent] | type[FixedAgent]:
         return DQNAgent
     elif agent_name.lower() == "fixed":
         return FixedAgent
+    elif agent_name.lower() == "sac":
+        return SACAgent
     else:
         logger.error("Unknown agent option. Use 'python3.11 run.py --help' to know more.")
         exit(-8)
@@ -100,7 +105,7 @@ def train(
         plot: A flag to enable plotting the metrics after training.
     """
     agent_class = get_agent_class(agent_name)
-    agent = agent_class(load_nets, save)
+    agent = agent_class(load_nets=load_nets, save=save)
     
     logger.info(f"Initialized agent '{agent_name}'.")
     
@@ -177,7 +182,7 @@ def display_results(
 
 def evaluate(
     image_paths: list[str],
-    agent: DQNAgent | None = None
+    agent_name: str
 ) -> None:
     """Prints the action chosen by the agent given the input observations.
     
@@ -185,8 +190,8 @@ def evaluate(
         image_paths: A list of image paths representing observations.
         agent: An optional agent that is already initialized.
     """
-    if agent is None:
-        agent = DQNAgent(load_nets=True)
+    agent_class = get_agent_class(agent_name)
+    agent = agent_class(load_nets=True)
         
     for path in image_paths:
         is_dir = os.path.isdir(path)

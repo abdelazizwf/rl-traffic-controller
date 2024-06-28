@@ -30,7 +30,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "-a", "--agent", type=str, default="dqn", metavar="agent_name", dest="agent_name",
-    help="which agent to use, dqn or fixed (default: %(default)s)"
+    help="which agent to use, dqn or sac or fixed (default: %(default)s)"
 )
 parser.add_argument(
     "--images", type=str, nargs="+", action="extend", metavar="", dest="image_paths", default=[],
@@ -67,7 +67,7 @@ elif mode == "eval":
         )
         exit(-7)
     evaluate(
-        agent=None,
+        agent_name=args.agent_name,
         image_paths=args.image_paths
     )
 elif mode == "demo":
