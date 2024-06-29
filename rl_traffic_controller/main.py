@@ -59,22 +59,22 @@ def plot_metrics(metrics: Metrics) -> None:
     fig, (ax1, ax2, ax3) = plt.subplots(ncols=1, nrows=3, figsize=(7, 9))
     
     # Average Delay
-    ax1.plot(range(1, n + 1), metrics.avg_delay)
-    ax1.plot(range(window_size, n + 1), ma_y1, ls="--", color="gray")
+    ax1.plot(range(1, n + 1), metrics.avg_delay, color="coral")
+    ax1.plot(range(window_size, n + 1), ma_y1, color="gray")
     ax1.set_xlabel("Episode")
     ax1.set_ylabel("Delay [s]")
     ax1.set_title("Average Delay per Episode")
     
     # Max Queue Length
-    ax2.plot(range(1, n + 1), metrics.max_queue)
-    ax2.plot(range(window_size, n + 1), ma_y2, ls="--", color="gray")
+    ax2.plot(range(1, n + 1), metrics.max_queue, color="coral")
+    ax2.plot(range(window_size, n + 1), ma_y2, color="gray")
     ax2.set_xlabel("Episode")
     ax2.set_ylabel("Queue Length [vehicle]")
     ax2.set_title("Max Queue Length per Episode")
     
     # Average Throughput
-    ax3.plot(range(1, n + 1), metrics.throughput)
-    ax3.plot(range(window_size, n + 1), ma_y3, ls="--", color="gray")
+    ax3.plot(range(1, n + 1), metrics.throughput, color="coral")
+    ax3.plot(range(window_size, n + 1), ma_y3, color="gray")
     ax3.set_xlabel("Episode")
     ax3.set_ylabel("Throughput [vehicle]")
     ax3.set_title("Average Throughput per Episode")

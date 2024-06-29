@@ -139,6 +139,13 @@ class Environment:
         if done:
             self.aggregate_metrics()
         
+        delay_penalty = self.episode_metrics.avg_delay[-1] * 0.01
+        max_queue_penalty = self.episode_metrics.max_queue[-1] * 0.01
+        throughput_reward = self.episode_metrics.throughput[-1] * 0.05
+        
+        reward -= (delay_penalty + max_queue_penalty)
+        reward += throughput_reward
+        
         return state, reward, done
     
     def finish(self) -> None:
