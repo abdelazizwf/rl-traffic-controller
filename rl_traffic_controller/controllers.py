@@ -154,10 +154,9 @@ class SUMOController:
         
         for _ in range(steps):
             self.update_detectors()
-            if traci.simulation.getMinExpectedNumber() > 0:
-                traci.simulationStep()
-            else:
+            if traci.simulation.getTime() > consts.SIMULATION_TIME:
                 return False
+            traci.simulationStep()
         
         return True
     
