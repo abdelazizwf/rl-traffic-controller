@@ -10,7 +10,7 @@ from rl_traffic_controller.main import demo, evaluate, train
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "mode", type=str, help="train or eval or demo or dry-run"
+    "mode", type=str, help="train or eval or demo"
 )
 parser.add_argument(
     "-c", "--continue", action="store_true", dest="load_nets",
@@ -52,8 +52,6 @@ train = partial(
 mode = args.mode.lower()
 if mode == "train":
     train()
-elif mode == "dry-run":
-    train(stub=True)
 elif mode == "eval":
     if args.image_paths is None:
         print(

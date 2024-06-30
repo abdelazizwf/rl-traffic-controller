@@ -22,7 +22,7 @@ $ python3.11 run.py --help
 usage: run.py [-h] [-c] [-s] [-p] [-e N] [-a agent_name] [--images  [...]] mode
 
 positional arguments:
-  mode                  train or eval or demo or dry-run
+  mode                  train or eval or demo
 
 options:
   -h, --help            show this help message and exit
@@ -76,12 +76,6 @@ To demo the agent in a running environment use the following command. You can us
 
 ```bash
 python3.11 run.py demo --episodes N
-```
-
-If you want to test the code without using SUMO, use the `dry-run` mode to simulate the training process. It functions exactly as the `train` mode.
-
-```bash
-python3.11 run.py dry-run
 ```
 
 ### Notes
