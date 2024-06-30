@@ -9,7 +9,6 @@ from rich import print
 from rl_traffic_controller import consts
 from rl_traffic_controller.agents.dqn import DQNAgent
 from rl_traffic_controller.agents.fixed import FixedAgent
-from rl_traffic_controller.agents.sac import SACAgent
 from rl_traffic_controller.environment import Environment, Metrics
 
 logger = logging.getLogger(__name__)
@@ -19,7 +18,7 @@ plt.style.use('seaborn-v0_8-darkgrid')
 
 def get_agent_class(
     agent_name: str
-) -> type[DQNAgent] | type[FixedAgent] | type[SACAgent]:
+) -> type[DQNAgent] | type[FixedAgent]:
     """Selects the agent class based on the name.
     
     Args:
@@ -32,8 +31,6 @@ def get_agent_class(
         return DQNAgent
     elif agent_name.lower() == "fixed":
         return FixedAgent
-    elif agent_name.lower() == "sac":
-        return SACAgent
     else:
         logger.error("Unknown agent option. Use 'python3.11 run.py --help' to know more.")
         exit(-8)
