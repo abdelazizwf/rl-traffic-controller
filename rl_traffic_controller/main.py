@@ -128,6 +128,7 @@ def demo(agent_name: str, episodes: int = 1, plot: bool = False) -> None:
     
     Args:
         agent_name: The name of the agent to demo.
+        episodes: The number of episodes to run the demo for.
         plot: A flag to enable plotting the metrics after the demo.
     """
     agent_class = get_agent_class(agent_name)
@@ -144,7 +145,7 @@ def demo(agent_name: str, episodes: int = 1, plot: bool = False) -> None:
     logger.info('Finished demo.')
     
     if plot is True:
-        plot_metrics(env.episode_metrics)
+        plot_metrics(env.avg_metrics)
     
     env.finish()
 
