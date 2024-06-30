@@ -6,15 +6,6 @@ Transition = namedtuple(
     'Transition',
     ('state', 'action', 'next_state', 'reward')
 )
-Transition.__doc__ = """\
-A data record of the environment transition.
-
-Attributes:
-    state: Current state.
-    action: Action taken.
-    next_state: Resulting observation.
-    reward: Reward earned.
-"""
 
 
 class ReplayMemory:
@@ -31,7 +22,7 @@ class ReplayMemory:
         """
         self.memory = deque([], maxlen=capacity)
 
-    def push(self, *args):
+    def push(self, *args) -> None:
         """Saves a transition.
         
         Args:

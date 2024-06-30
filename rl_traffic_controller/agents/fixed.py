@@ -6,18 +6,22 @@ logger = logging.getLogger(__name__)
 
 
 class FixedAgent:
-    """A class simulating a traditional time-based traffic light controller."""
+    """A class simulating a traditional time-based traffic light controller.
+    
+    Attributes:
+        last_action: The last selected action.
+    """
     
     def __init__(
         self,
         load_nets: bool = False,
         save: bool = False
     ) -> None:
-        self.current_phase = 0
+        self.last_action = 0
     
-    def _next_phase(self) -> int:
-        self.current_phase = (self.current_phase + 1) % 4
-        return self.current_phase
+    def _next_action(self) -> int:
+        self.last_action = (self.last_action + 1) % 4
+        return self.last_action
     
     def train(
         self,
@@ -28,7 +32,7 @@ class FixedAgent:
             logger.info(f"Starting episode number {i_episode!r}.")
             env.reset()
             while True:
-                action = self._next_phase()
+                action = self._next_action()
                 _, _, done = env.step(action)
 
                 if done:
@@ -40,4 +44,4 @@ class FixedAgent:
             env.reset()
             done = False
             while not done:
-                _, _, done = env.step(self._next_phase())
+                _, _, done = env.step(self._next_action())

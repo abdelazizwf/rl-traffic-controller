@@ -93,10 +93,10 @@ def train(
     
     Args:
         agent_name: The name of the agent to train.
+        stub: A flag to use the stub controller for testing.
         load_nets: Loads a saved network if `True`.
         save: Save the networks if `True`.
         num_episodes: The number of episodes used in training.
-        checkpoints: A flag to enable saving the network after each episode.
         image_paths: A list of image paths representing observations to be used
             to evaluate the agent.
         plot: A flag to enable plotting the metrics after training.
@@ -161,6 +161,7 @@ def display_results(
         image: The input image.
         result: The image of the chosen action.
         action_value: The Q value of the chosen action.
+        path: The image path.
     """
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
         
@@ -185,7 +186,7 @@ def evaluate(
     
     Args:
         image_paths: A list of image paths representing observations.
-        agent: An optional agent that is already initialized.
+        agent_name: The name of the agent to evaluate.
     """
     agent_class = get_agent_class(agent_name)
     agent = agent_class(load_nets=True)

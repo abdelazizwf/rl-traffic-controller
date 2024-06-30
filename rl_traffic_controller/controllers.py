@@ -17,25 +17,19 @@ class SUMOController:
 
     This class provides methods to control SUMO simulations, such as setting traffic
     phases and retrieving vehicle counts.
-    
-    Examples:
-        Using `SUMOController` to run a simulation and print the number
-        of vehicles::
-        
-            simulation = SUMOController(r"./simulation/sumo_config.sumocfg")
-            simulation.start()
-            done = True
-            while done:
-                done = simulation.step(seconds=1)
-                print(simulation.get_vehicle_count())
-            simulation.shutdown()
 
     Attributes:
-        config_file (str): The file path of the SUMO configuration file.
-        phase_states (list): List of strings representing traffic light phases.
-        edge_ids (list): List of edge IDs for vehicle count retrieval.
-        step_time (float): The time length of each step in seconds [0.001, 1].
-        prev_phase (int): The index of the last phase activated.
+        config_file: The file path of the SUMO configuration file as a string.
+        phase_states: List of strings representing traffic light phases.
+        edge_ids: List of edge IDs for vehicle count retrieval.
+        step_time: The time length of each step in seconds [0.001, 1].
+        prev_phase: The index of the last phase activated.
+        phases: The list of traffic green phases.
+        amber_phases: The list of traffic yellow phases.
+        detectors: A list of detectors deployed in the simulation.
+        detector_counts: A dictionary holding the detector IDs and number of cars passed through them.
+        throughput: Stores the throughput during the last traffic phase.
+        vehicle_delays: Stores the delay time of every vehicle.
     """
 
     def __init__(self, config_file: str, step_time: float = 1.0) -> None:

@@ -21,8 +21,9 @@ class Environment:
     
     Attributes:
         simulation_controller: An instance of `SUMOController` to manage the simulation.
-        prev_count: A variable holding the last car count to use it for calculating the
-            reward.
+        prev_count: A variable holding the last car count to use it for calculating the reward.
+        avg_metrics: A variable to hold the average metrics across the entire run.
+        episode_metrics: A variable to hold the metrics of the current episode.
     """
 
     def __init__(self, stub: bool = False) -> None:
@@ -87,7 +88,7 @@ class Environment:
         return self.get_observation()
     
     def aggregate_metrics(self) -> None:
-        """Resets the metric variables for the new episode."""
+        """Aggregates the episode metrics to store them in `self.avg_metrics`."""
         n = len(self.episode_metrics.max_queue)
         
         self.avg_metrics.max_queue.append(

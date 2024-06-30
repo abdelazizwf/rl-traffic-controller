@@ -27,7 +27,11 @@ linear = partial(nn.Linear, device=device, dtype=torch.float32)
 
 
 class DQN(nn.Module):
-    """A CNN to predict Q-values."""
+    """A CNN to predict Q-values.
+    
+    Attributes:
+        layer_stack: The network's layer architecture.
+    """
 
     def __init__(self) -> None:
         super(DQN, self).__init__()
@@ -311,6 +315,7 @@ class DQNAgent:
         
         Args:
             env: The problem environment.
+            episodes: The number of episodes to run the demo.
         """
         for i in range(episodes):
             logger.info(f"Starting episode number {i + 1!r}.")
